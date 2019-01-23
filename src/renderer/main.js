@@ -7,7 +7,22 @@ import router from './router'
 import store from './store'
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'
+import VeeValidate from 'vee-validate'
+import VueI18n from 'vue-i18n'
+import zh_CN from 'vee-validate/dist/locale/zh_CN'
 
+Vue.use(VueI18n)
+const i18n = new VueI18n({
+  locale: 'zh_CN',
+})
+
+Vue.use(VeeValidate, {
+  i18nRootKey: 'validations', // customize the root path for validation messages.
+  i18n,
+  dictionary: {
+    zh_CN
+  }
+})
 let options = {
   namespace: 'vuejs__', // key prefix
   name: 'ls', // name variable Vue.[ls] or this.[$ls],

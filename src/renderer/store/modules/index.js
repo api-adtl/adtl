@@ -9,7 +9,11 @@ const getters = {
   },
   fruitsCount (state) {
     return state.content_list.length
+  },
+  now_open(state){
+    return state.now_open;
   }
+
 }
 
 const mutations = {

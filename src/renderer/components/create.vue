@@ -23,8 +23,7 @@
 
 <script>
   import fs from 'fs'
-
-  var jsonFormat = require('json-format')
+  import jsonFormat from 'json-format'
 
   export default {
     name: 'create',
@@ -70,7 +69,7 @@
           console.log('不存在')
         } else {
           console.log('存在')
-          this.read();
+          this.read()
 
         }
 
