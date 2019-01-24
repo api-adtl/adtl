@@ -34,7 +34,8 @@
 
 <script>
   import {Validator} from 'vee-validate'
-  import lists from "@/logic/lists";
+  import lists from '@/logic/lists'
+
   Validator.localize('zh_CN', {
     attributes: {
       name: '名字',   //设置表单属性对应的中文名
@@ -51,7 +52,7 @@
           name: '默认名字',
           e_name: 'biaoshi',
           type: 'http',
-          dir:'.'
+          dir: '.'
         },
         validation: {
           name: {
@@ -79,17 +80,17 @@
           console.log(result)
           if (result) {
             // 验证通过
-            this.save_file();
+            this.save_file()
           }
         })
       },
       save_file () {
-        let listo=new lists(this.form.dir);
-        listo.read((data)=>{
-          console.log('89',this,data);
-          listo.add_group(this.form,()=>{
+        let listo = new lists(this.form.dir)
+        listo.read(() => {
 
-          });
+          listo.add_group(this.form, () => {
+
+          })
         })
 
       }

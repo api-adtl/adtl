@@ -1,49 +1,27 @@
 <template>
     <div>
         这是列表
+        <Button @click="view_button" type="primary">现实按钮</Button>
         <br>
-
-        <div style="border: cadetblue solid 1px ;margin: 2px;padding: 2px">
-            <Collapse >
-                <Panel v-for="groupobj in listdata.group" :name="groupobj.e_name">
-                    {{groupobj.name}} <span class="type">{{groupobj.type}}</span>
-                    <p slot="content">
-                        无限嵌套
-                    </p>
-                </Panel>
-
-            </Collapse>
-            <CellGroup>
-
-                <Cell title="Link" extra="details" to="/components/button" />
-
-
-            </CellGroup>
-
-        </div>
-
-            <div style="margin-bottom: 1px">
-                <Button type="primary" @click="add_group">+分组</Button>
-                <Button type="primary" @click="add_api">+API</Button>
-            </div>
-
-
+        <list_index :add="add" dir=".">
+        </list_index>
 
     </div>
 
 </template>
 
 <script>
-  import lists from '@/logic/lists'
+  import list_index from './list/index'
 
   export default {
     name: 'list',
     data () {
       return {
-        listdata: {}
+        listdata: {},
+        add: false
       }
     },
-    components: {},
+    components: {list_index},
     methods: {
       add_group () {
         console.log('增加分组')
@@ -52,21 +30,27 @@
       add_api () {
         console.log('增加API')
         this.$emit('add_content', 'add_api')
+      },
+      view_button () {
+        this.add = !this.add
       }
     },
     created () {
-      let listo = new lists('.')
-      listo.read((data) => {
-        this.listdata = data
-      })
+
     }
   }
 </script>
 
-<style scoped>
-.type{
-    font-size: 1.1em;
-    font-weight: bold;
-    color: brown;
-}
+<style>
+    .type {
+        font-size: 1.1em;
+        font-weight: bold;
+        color: brown;
+    }
+
+    .ivu-cell-extra {
+        font-size: 1.1em;
+        font-weight: bold;
+        color: brown;
+    }
 </style>

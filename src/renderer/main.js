@@ -7,9 +7,14 @@ import router from './router'
 import store from './store'
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'
+import './assets/css/index.css'
 import VeeValidate from 'vee-validate'
 import VueI18n from 'vue-i18n'
 import zh_CN from 'vee-validate/dist/locale/zh_CN'
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
+
+Vue.use(mavonEditor)
 
 Vue.use(VueI18n)
 const i18n = new VueI18n({

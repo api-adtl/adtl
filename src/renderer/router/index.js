@@ -29,21 +29,26 @@ export default new Router({
         }, {
           path: 'add_group',
           component: () => import('@/components/content/add_group')
-        }
+        },
+        {
+          path: 'api/:number',
+          name: 'api',
+          component: () => import('@/components/content/api'),
+          props: true
+        },
       ]
     },
     {
       path: '/create/:index',
       name: 'create',
       component: () => import('@/components/create'),
-      props: true
     },
     {
       path: '/add_api/',
       name: 'add_api',
       component: () => import('@/components/content/add_api'),
-      props: true
     },
+
     {
       path: '*',
       redirect: '/'

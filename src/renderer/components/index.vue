@@ -29,18 +29,16 @@
 
   export default {
     name: 'landing-page',
-    data(){
+    data () {
       return {
-        hist:null
-      };
+        hist: null
+      }
     },
     components: {},
     methods: {
-      open_obj(now){
-        console.log(now);
-        this.$store.dispatch("set_now",{
-          content:now
-        });
+      open_obj (now) {
+        console.log('open', now)
+        this.$store.commit('set_now', now)
 
         this.$router.push({name: 'open'})
       },
@@ -61,9 +59,9 @@
         e.stopPropagation()
       }
     },
-    created(){
-      let hist=this.$ls.get("history");
-      this.hist =hist;
+    created () {
+      let hist = this.$ls.get('history')
+      this.hist = hist
     }
   }
 </script>

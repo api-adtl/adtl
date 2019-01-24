@@ -1,0 +1,7 @@
+.ivu-collapse-content {
+    padding: 0 0px;
+}
+
+.ivu-collapse-content > .ivu-collapse-content-box {
+    padding-top: 0px;
+}

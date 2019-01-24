@@ -1,7 +1,10 @@
 const state = {
   main: 0,
   now_open: '',
-  content_list: {}
+  content_list: {},
+  group_list: [],
+  api_list: {},
+  api_num: 0,
 }
 const getters = {
   getcontent_list: state => {
@@ -10,9 +13,9 @@ const getters = {
   fruitsCount (state) {
     return state.content_list.length
   },
-  now_open(state){
-    return state.now_open;
-  }
+  now_open (state) {
+    return state.now_open
+  },
 
 }
 
@@ -39,6 +42,15 @@ const mutations = {
   content_empty (state) {
     console.log('content_empty')
     state.content_list = {}
+  },
+  add_api (state, api) {
+    state.api_num++
+    api.number = state.api_num
+    state.api_list[state.api_num] = api
+    return state.api_num
+  },
+  add_group (state, group) {
+    return state.group_list.push(group)
   }
 
 }
@@ -48,15 +60,22 @@ const actions = {
     // do something async
     commit('INCREMENT_MAIN_COUNTER')
   },
-  set_now (context,reload) {
+  set_now (context, reload) {
     context.commit('set_now', reload.content)
   },
   content_add (context, reload) {
     console.log('content_add,action')
     context.commit('content_add', reload.content)
   },
+
   content_empty (context) {
     context.commit('content_empty')
+  },
+  add_api (context, reload) {
+    context.commit('add_api', reload.data)
+  },
+  add_group (context, reload) {
+    context.commit('add_group', reload.data)
   }
 }
 

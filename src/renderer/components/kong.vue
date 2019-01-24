@@ -22,13 +22,13 @@
 
     extends: {
       // 扩展
-      },
+    },
     model: {
       //定制v-model,双向绑定
-      },
-    props: {
-      //数据传参
     },
+    props: [
+      //数据传参
+    ],
     computed: {
       //计算属性
     },
