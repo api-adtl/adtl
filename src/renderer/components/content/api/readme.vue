@@ -42,8 +42,10 @@
     methods: {
       //方法列表
       init () {
+        console.log('init')
         this.apiobj = new api(this.dd)
         this.apiobj.readme((data) => {
+          console.log('readme', data)
           this.readme = data
         })
       },
@@ -66,6 +68,15 @@
           this.save()
         }
         console.log(new1)
+      },
+      dd: {
+        immediate: true,
+        handler (value) {
+
+          console.log('readme changge', value)
+          this.init()
+        }
+
       }
     },
     beforeCreate () {

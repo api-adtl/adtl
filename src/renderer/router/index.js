@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import cache from '../logic/cache'
+import store from '../store'
 
 Vue.use(Router)
-
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -26,7 +27,13 @@ export default new Router({
           path: 'add_api',
 
           component: () => import('@/components/content/add_api')
-        }, {
+        },
+        {
+          path: '/',
+
+          component: () => import('@/components/content/index')
+        },
+        {
           path: 'add_group',
           component: () => import('@/components/content/add_group')
         },
@@ -55,3 +62,13 @@ export default new Router({
     }
   ]
 })
+
+router.afterEach((to) => {
+  // ...
+  if (to.fullPath != '/' && to.fullPath != '/open' && to.name != 'create') {
+    console.log('to', to)
+    cache.set([store.state.now_open, 'now'], to.fullPath)
+  }
+
+})
+export default router

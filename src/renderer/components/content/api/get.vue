@@ -1,20 +1,39 @@
 <template>
     <div>
-        基本信息编辑{{edit}}
+        GET信息编辑{{edit}}
         <div v-if="edit">
             编辑
             <form action="">
-                <div>
-                    网址 :
-                    <Input v-model="form.url"/>
-                </div>
+                <table border="1" style="    width: 100%;">
+                    <tr v-for="input,key in form">
+                        <th>
+                            <input type="text" v-model="form[key].name">
+                        </th>
+                        <th><input type="text" v-model="form[key].value"></th>
+                        <th><input type="text" v-model="form[key].description"></th>
+                    </tr>
+                    <tr>
+                        <th colspan="3">
+
+                            <div @click="add_one">
+                                增加一个
+                            </div>
+                        </th>
+                    </tr>
+
+                </table>
 
             </form>
         </div>
 
         <div v-if="!edit">
-            <div>
-                网址 : <span> {{ form.url }}</span>
+            <div v-for="input,key in form2">
+                {{ input.name }} :
+                <Input style="width: 300px" v-model="input.value"/>
+                <span>
+                    {{ input.description }}
+                </span>
+
             </div>
         </div>
     </div>
@@ -24,13 +43,24 @@
   import api from '@/logic/api'
 
   export default {
-    name: 'kong',
+    name: 'get',
 
     data () {
       return {
-        form: {
-          url: ''
-        }
+        form: [
+          {
+            name: '',
+            value: '',
+            description: ''
+          }
+        ],
+        form2: [
+          {
+            name: '',
+            value: '',
+            description: ''
+          }
+        ],
       }
     },
     props: [
@@ -43,17 +73,33 @@
       //方法列表
       init () {
         this.apiobj = new api(this.dd)
-        this.apiobj.read('basic', this.form, (data) => {
+        this.apiobj.read('get', this.form, (data) => {
           console.log('rad', data)
           this.form = data
+          this.form2 = this.$lodash.cloneDeep(this.form)
+
         })
       },
       save () {
-        console.log('save4basic')
-        this.apiobj.save('basic', this.form, () => {
+        console.log('save4get')
+        let newdata = []
+        for (let val of this.form) {
+          if (val.name != '') {
+            newdata.push(val)
+          }
+        }
+        this.form = newdata
+        this.form2 = this.$lodash.cloneDeep(this.form)
+        this.apiobj.save('get', [], () => {
           console.log('保存成功')
         })
-
+      },
+      add_one () {
+        this.form.push({
+          name: '',
+          value: '',
+          description: ''
+        })
       }
     },
     watch: {
@@ -62,6 +108,9 @@
         if (new1 === false) {
           this.save()
         }
+      },
+      dd () {
+        this.init()
       }
     },
     created () {

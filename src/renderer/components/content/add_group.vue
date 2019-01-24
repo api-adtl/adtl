@@ -40,8 +40,7 @@
     attributes: {
       name: '名字',   //设置表单属性对应的中文名
       e_name: '标识',
-      type: '类型',
-
+      type: '类型'
     }
   })
   export default {

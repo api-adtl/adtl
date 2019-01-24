@@ -51,6 +51,9 @@ const mutations = {
   },
   add_group (state, group) {
     return state.group_list.push(group)
+  },
+  api_num (state) {
+    state.api_num = 0
   }
 
 }
@@ -76,6 +79,9 @@ const actions = {
   },
   add_group (context, reload) {
     context.commit('add_group', reload.data)
+  },
+  api_num (context) {
+    context.commit('api_num')
   }
 }
 

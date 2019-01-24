@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="overflow: auto;height: 600px;">
         <div>
             {{dd}}
         </div>
@@ -55,10 +55,20 @@
             </div>
 
             <div v-show="select.get">
-                GET信息
+                <Button @click="()=>{this.edit.jiben=!this.edit.jiben}" icon="ios-search"
+                        shape="circle"
+                        type="primary">编辑
+                </Button>
+                <api_get :dd="dd" :edit="edit.jiben"></api_get>
+
             </div>
             <div v-show="select.form">
-                表单信息
+                <Button @click="()=>{this.edit.form=!this.edit.form}" icon="ios-search"
+                        shape="circle"
+                        type="primary">编辑
+                </Button>
+                <api_form :dd="dd" :edit="edit.form">
+                </api_form>
             </div>
             <div v-show="select.header">
                 表单信息
@@ -74,6 +84,9 @@
 <script>
   import readme from './api/readme'
   import basic from './api/basic'
+  import api_get from './api/get'
+  import api_form from './api/form'
+
   export default {
     name: 'api',
     //混合
@@ -114,7 +127,9 @@
     components: {
       //注册组件
       readme,
-      basic
+      basic,
+      api_get,
+      api_form
     },
     watch: {
       number (new1) {

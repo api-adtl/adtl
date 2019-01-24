@@ -25,7 +25,7 @@ class api {
   save (type, data, callback) {
     let pathjson = path.join(this.path, type + '.json')
 
-    this.create(pathjson, data, callback)
+    this.create(pathjson, jsonFormat(data), callback)
   }
 
   readme (callback) {

@@ -54,6 +54,7 @@
   import path from 'path'
   import list from './list'
   import content_index from './content/index'
+  import cache from '@/logic/cache'
 
   export default {
     data () {
@@ -64,7 +65,7 @@
         iframesrc: '/#/kong',
         content_index: 0,
         content_list: {},
-        now:this.$store.state.now_open
+        now: this.$store.state.now_open
       }
     },
     name: 'open',
@@ -84,25 +85,25 @@
 
         })
       },
-      add_content(content){
-        this.content_index++;
-        this.$set(this.content_list,this.content_index,content);
-        console.log("add_content",'/open/'+content);
-        this.$router.push( '/open/'+content)
+      add_content (content) {
+        this.content_index++
+        this.$set(this.content_list, this.content_index, content)
+        console.log('add_content', '/open/' + content)
+        this.$router.push('/open/' + content)
 
       },
       read () {
         // 读取数据
 
         // 保存历史
-        let hist=this.$ls.get("history");
-        if( hist == null){
-          hist=[];
+        let hist = this.$ls.get('history')
+        if (hist == null) {
+          hist = []
         }
-        hist.push(this.now);
-        hist = this.$lodash.uniq(hist);
-        console.log("当前项目列表",hist);
-        this.$ls.set("history",hist);
+        hist.push(this.now)
+        hist = this.$lodash.uniq(hist)
+        console.log('当前项目列表', hist)
+        this.$ls.set('history', hist)
         fs.readFile(this.index, {
           encoding: 'utf8'
         }, (err, data) => {
@@ -111,6 +112,7 @@
           }
           console.log('这是配置文件的内容:', data)
           this.obj_data = JSON.parse(data)
+          this.open_old()
         })
       },
       edit () {
@@ -121,21 +123,37 @@
       create () {
         //新建一个项目
         this.$router.push({name: 'create', params: {index: this.index}})
+      },
+      open_old () {
+        let old = cache.get([this.now, 'now'])
+        console.log(130, old)
+        if (old) {
+          this.$router.push(old)
+        }
       }
 
     },
+    mounted () {
+
+    },
     created () {
-      console.log(this.now)
+      this.$store.dispatch('api_num')
+      console.log('now', this.now)
       fs.stat(this.now, (err, stats) => {
         console.log(err, stats)
-        if (stats.isDirectory()) {
-          //文件夹
-          console.log('文件夹的处理逻辑!')
-          this.isdir = true
-          this.dir_call()
+        if (err) {
+          throw err
         } else {
-          this.$Message.warning('This is a success tip')
+          if (stats.isDirectory()) {
+            //文件夹
+            console.log('文件夹的处理逻辑!')
+            this.isdir = true
+            this.dir_call()
+          } else {
+            this.$Message.warning('This is a success tip')
+          }
         }
+
       })
     }
   }

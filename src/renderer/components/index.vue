@@ -42,16 +42,14 @@
 
         this.$router.push({name: 'open'})
       },
-      open (link) {
-        this.$electron.shell.openExternal(link)
-      },
+
       dropopen (e) {
         e.preventDefault()
         e.stopPropagation()
         for (let f of e.dataTransfer.files) {
           //跳转
+          this.$store.commit('set_now', f.path)
           this.$router.push({name: 'open', params: {now: f.path}})
-
         }
       },
       dragover (e) {

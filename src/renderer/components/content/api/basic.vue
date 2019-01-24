@@ -24,7 +24,7 @@
   import api from '@/logic/api'
 
   export default {
-    name: 'kong',
+    name: 'basic',
 
     data () {
       return {
