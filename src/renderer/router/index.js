@@ -31,11 +31,11 @@ export default new Router({
           component: () => import('@/components/content/add_group')
         },
         {
-          path: 'api/:number',
+          path: 'api',
           name: 'api',
           component: () => import('@/components/content/api'),
-          props: true
-        },
+          props: (route) => ({number: route.query.number})
+        }
       ]
     },
     {

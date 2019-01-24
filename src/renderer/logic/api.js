@@ -10,16 +10,22 @@ class api {
     this.path = path.join(store.getters.now_open.toString(), this.dir, data.e_name)
   }
 
-  read (type, callback) {
+  read (type, default_data, callback) {
     let pathjson = path.join(this.path, type + '.json')
     fs.access(pathjson, fs.constants.F_OK, (err) => {
       if (err) {
-        this.create(pathjson, jsonFormat({}), callback)
+        this.create(pathjson, jsonFormat(default_data), callback)
       } else {
-        this.read2(pathjson, callback)
+        this.read4json(pathjson, callback)
       }
 
     })
+  }
+
+  save (type, data, callback) {
+    let pathjson = path.join(this.path, type + '.json')
+
+    this.create(pathjson, data, callback)
   }
 
   readme (callback) {
@@ -33,6 +39,12 @@ class api {
       }
 
     })
+  }
+
+  readme_save (data, callback) {
+    let pathjson = path.join(this.path, 'readme.md')
+
+    this.create(pathjson, data, callback)
   }
 
   create (pathjson, data, callback) {
@@ -61,8 +73,19 @@ class api {
       if (err) {
         throw err
       }
-
       callback(data1)
+    })
+  }
+
+  read4json (pathjson, callback) {
+
+    fs.readFile(pathjson, {
+      encoding: 'utf8'
+    }, (err, data1) => {
+      if (err) {
+        throw err
+      }
+      callback(JSON.parse(data1))
     })
   }
 

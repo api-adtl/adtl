@@ -49,7 +49,7 @@
         return path.join(dir, value)
       },
       apito (value) {
-        return {name: 'api', params: {number: value}}
+        return {name: 'api', query: {number: value}}
       }
     },
     components: {list_index},
