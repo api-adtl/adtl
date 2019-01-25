@@ -26,6 +26,7 @@
 </template>
 
 <script>
+  import cache from '@/logic/cache'
 
   export default {
     name: 'landing-page',
@@ -54,11 +55,20 @@
       dragover (e) {
         e.preventDefault()
         e.stopPropagation()
+      },
+      open_old () {
+        let old = cache.get([this.now, 'now'])
+        console.log(130, old)
+        if (old) {
+          this.$router.push(old)
+        }
       }
     },
     created () {
       let hist = this.$ls.get('history')
       this.hist = hist
+      this.open_old();
+
     }
   }
 </script>

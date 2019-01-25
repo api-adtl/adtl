@@ -1,10 +1,14 @@
 <template>
     <div>
         这是列表
-        <Button @click="view_button" type="primary">按钮可见</Button>
+        <Button @click="view_button" size="small" type="primary">按钮可见</Button>
+        <Button @click="f5=!f5" size="small" type="primary">刷新</Button>
         <br>
-        <list_index :add="add" @add_content="add_content" dir=".">
-        </list_index>
+        <div style="width: 170px">
+            <list_index :f5="f5" :add="add" @add_content="add_content" dir=".">
+            </list_index>
+        </div>
+
 
     </div>
 
@@ -18,17 +22,17 @@
     data () {
       return {
         listdata: {},
-        add: false
+        add: true,
+        f5:true
       }
     },
     components: {list_index},
     methods: {
-
       add_content (content) {
-        console.log('增加分组')
         if (this.$lodash.isString(content)) {
           this.$router.push('/open/' + content)
         } else {
+          console.log(content)
           this.$router.push({
             name: content.name,
             query: content.query

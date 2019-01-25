@@ -25,6 +25,7 @@ const router = new Router({
       children: [
         {
           path: 'add_api',
+          name:'add_api',
           component: () => import('@/components/content/add_api'),
           props: (route) => ({
             dir: route.query.dir
@@ -32,6 +33,7 @@ const router = new Router({
         },
         {
           path: 'add_group',
+          name:'add_group',
           component: () => import('@/components/content/add_group'),
           props: (route) => ({
             dir: route.query.dir
@@ -58,12 +60,31 @@ const router = new Router({
             e_name: route.query.e_name
           })
         },
+        {
+          path: 'edit_group',
+          name: 'edit_group',
+          component: () => import('@/components/content/edit_group'),
+          props: (route) => ({
+            dir: route.query.dir,
+            e_name: route.query.e_name
+          })
+        },
+        {
+          path: 'group_info',
+          name: 'group_info',
+          component: () => import('@/components/content/group_info'),
+          props: (route) => ({
+            dir: route.query.dir,
+            e_name: route.query.e_name
+          })
+        },
       ]
     },
     {
       path: '/create/:index',
       name: 'create',
       component: () => import('@/components/create'),
+      props:true
     },
     {
       path: '/add_api/',

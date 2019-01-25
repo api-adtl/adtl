@@ -1,6 +1,6 @@
 <template>
     <div>
-        增加分组
+        编辑分组
         <form name="addgroup">
             <div>
                 名字：
@@ -26,11 +26,6 @@
                 </RadioGroup>
 
             </div>
-            <div>
-                文件夹：
-                <span style="font-size: 15px;font-weight: 900;">{{form.dir}}</span>
-                <span>{{ errors.first('url') }}</span>
-            </div>
             <br>
             <Button type="primary" @click="save">保存</Button>
 
@@ -53,7 +48,7 @@
           name: '默认名字',
           e_name: 'fenzu',
           type: 'http',
-          dir: this.dir
+          dir: '.'
         },
         validation: {
           name: {
@@ -80,14 +75,9 @@
       }
     },
     props:[
-      'dir'
+      'dir',
+      'e_name'
     ],
-    watch:{
-      dir(ddd){
-        this.form.dir=ddd;
-        this.init();
-      }
-    },
     components: {},
     methods: {
       save () {
@@ -103,15 +93,18 @@
       },
       save_file () {
 
-        this.listo.add_group(this.form, () => {
+        this.listo.add_group(this.$lodash.clone(this.form), () => {
 
         })
 
       },
       init () {
-        this.listo = new lists(this.form.dir)
+        console.log("init",this.dir,this.e_name);
+        this.listo = new lists(this.dir)
         this.listo.read((data) => {
           this.lists = data
+          console.log('106',this.lists,this.e_name)
+          this.form=this.$lodash.clone(this.lists.group[this.e_name]);
         })
       }
     },

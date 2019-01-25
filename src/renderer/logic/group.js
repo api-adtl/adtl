@@ -3,15 +3,19 @@ import path from 'path'
 import jsonFormat from 'json-format'
 import store from '@/store'
 
-class api {
-  constructor (data) {
-    this.dir = data.dir
+class group {
+  constructor (dir) {
+    this.dir = dir
     this.obj_data = {}
-    this.path = path.join(store.getters.now_open.toString(), this.dir, data.e_name)
+    this.path = path.join(store.getters.now_open.toString(), this.dir)
   }
 
   read (type, default_data, callback) {
+    if (type == 'list') {
+      return false
+    }
     let pathjson = path.join(this.path, type + '.json')
+    console.log('pathjson',pathjson);
     fs.access(pathjson, fs.constants.F_OK, (err) => {
       if (err) {
         this.create(pathjson, jsonFormat(default_data), callback)
@@ -26,24 +30,6 @@ class api {
     let pathjson = path.join(this.path, type + '.json')
 
     this.create(pathjson, jsonFormat(data), callback)
-  }
-
-  readme (callback) {
-    let pathjson = path.join(this.path, 'readme.md')
-    console.log(pathjson)
-    fs.access(pathjson, fs.constants.F_OK, (err) => {
-      if (err) {
-        this.create(pathjson, '# readme', callback)
-      } else {
-        this.read2(pathjson, callback)
-      }
-    })
-  }
-
-  readme_save (data, callback) {
-    let pathjson = path.join(this.path, 'readme.md')
-
-    this.create(pathjson, data, callback)
   }
 
   create (pathjson, data, callback) {
@@ -72,17 +58,10 @@ class api {
       if (err) {
         throw err
       }
-      if( pathjson.substr(-4)=='json'){
-        callback(JSON.parse(data1))
-      }else{
-        callback(data1)
-      }
-
+      callback(JSON.parse(data1))
     })
   }
 
-
-
 }
 
-export default api
+export default group

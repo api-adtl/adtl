@@ -101,13 +101,7 @@
             '能接受: action,multiple,accept,max-size'
         },
         form: [
-          {
-            name: '',
-            type: 'text',
-            optional: {},
-            value: '',
-            description: ''
-          }
+
         ],
         form2: [],
         form3: {}

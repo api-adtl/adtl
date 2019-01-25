@@ -15,6 +15,9 @@
             </div>
             <br>
             <Button type="success" @click="success">保存</Button>
+            <Button type="success">
+                <router-link to="/open">项目首页</router-link>
+            </Button>
 
 
         </form>
@@ -39,6 +42,7 @@
     components: {},
     methods: {
       success () {
+        console.log(this.index);
         fs.writeFile(this.index, jsonFormat(this.obj_data), {
           encoding: 'utf8',
           flag: 'w+'
@@ -67,6 +71,7 @@
       fs.access(this.index, fs.constants.F_OK, (err) => {
         if (err) {
           console.log('不存在')
+
         } else {
           console.log('存在')
           this.read()

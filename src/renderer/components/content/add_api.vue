@@ -9,7 +9,7 @@
         <div>
             名字：
             <Input name="name" placeholder="请输入分组名字" style="width: 300px"
-                   v-model="form.name" v-validate="validation.name"/>
+                   v-model="form.name"  v-validate="validation.name"/>
             <span>{{ errors.first('name') }}</span>
         </div>
         <br>
@@ -19,7 +19,7 @@
             <Input placeholder="请输API标识(不可修改)" style="width: 300px"
                    v-model="form.e_name" v-validate="validation.ename"/>
 
-            <span>{{ errors.first('ename') }}</span>
+            <span>{{ errors.first('e_name') }}</span>
         </div>
         <br>
 
@@ -44,6 +44,13 @@
                 <Radio label="image"></Radio>
             </RadioGroup>
         </div>
+        <div>
+            文件夹：
+            <span style="font-size: 15px;font-weight: 900;">{{form.dir}}</span>
+            <span>{{ errors.first('url') }}</span>
+        </div>
+
+
         <br>
         <Button @click="save" type="primary">保存</Button>
 
@@ -65,7 +72,7 @@
           request_type: 'post',
           name: '默认名字',
           e_name: 'api',
-          dir: '.',
+          dir: this.dir,
           url: '/'
         },
         validation: {
@@ -94,6 +101,15 @@
         }
       }
     },
+    props:[
+      'dir'
+    ],
+    watch:{
+      dir(ddd){
+        this.form.dir=ddd;
+        this.init();
+      }
+    },
     components: {},
     methods: {
       save () {
@@ -103,14 +119,17 @@
           if (result) {
             // 验证通过
             console.log('验证通过!')
-            //this.save_file()
+            this.save_file()
+          }else{
+            this.$Message.warning(this.$validator.errors.all().toString());
           }
         })
       },
       save_file () {
 
         this.listo.add_api(this.form, () => {
-
+          this.$Message.success("保存成功");
+          this.$router.push('/open')
         })
 
       },
@@ -139,7 +158,7 @@
           ]
           no = lodash.concat(no, this.lists.biaoshi)
           console.log('验证', no, value, lodash.indexOf(no, value))
-          if (lodash.indexOf(no, value)) {
+          if (lodash.indexOf(no, value)>-1) {
             return false
           }
           return true

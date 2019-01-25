@@ -40,7 +40,7 @@
 
                         </Sider>
                         <Content :style="{padding: '2px', minHeight: '380px', background: '#fff'}">
-                            <router-view></router-view>
+                            <router-view v-if="now"></router-view>
                         </Content>
                     </Layout>
                 </Content>
@@ -56,7 +56,6 @@
   import path from 'path'
   import list from './list'
   import content_index from './content/index'
-  import cache from '@/logic/cache'
 
   export default {
     data () {
@@ -111,7 +110,6 @@
           }
           console.log('这是配置文件的内容:', data)
           this.obj_data = JSON.parse(data)
-          this.open_old()
         })
       },
       edit () {
@@ -123,40 +121,37 @@
         //新建一个项目
         this.$router.push({name: 'create', params: {index: this.index}})
       },
-      open_old () {
-        let old = cache.get([this.now, 'now'])
-        console.log(130, old)
-        if (old) {
-          this.$router.push(old)
-        }
-      },
       init () {
         this.$store.dispatch('api_num')
-        console.log('now', this.now)
-        fs.stat(this.now, (err, stats) => {
-          console.log(err, stats)
-          if (err) {
-            throw err
-          } else {
-            if (stats.isDirectory()) {
-              //文件夹
-              console.log('文件夹的处理逻辑!')
-              this.isdir = true
-              this.dir_call()
+        if (this.now) {
+          console.log('now', this.now)
+          fs.stat(this.now, (err, stats) => {
+            console.log(err, stats)
+            if (err) {
+              throw err
             } else {
-              this.$Message.warning('This is a success tip')
+              if (stats.isDirectory()) {
+                //文件夹
+                console.log('文件夹的处理逻辑!')
+                this.isdir = true
+                this.dir_call()
+              } else {
+                this.$Message.warning('This is a success tip')
+              }
             }
-          }
 
-        })
+          })
+        }
+
       }
 
     },
-    mounted () {
-
-    },
     created () {
-      this.init()
+      if (this.now) {
+        this.init()
+      } else {
+        this.$router.push('/')
+      }
 
     }
   }

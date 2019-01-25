@@ -3,6 +3,7 @@ import path from 'path'
 import jsonFormat from 'json-format'
 import store from '@/store'
 import _ from 'lodash'
+import files from '@/libs/files'
 
 class lists {
   constructor (dir) {
@@ -14,7 +15,6 @@ class lists {
       dir: this.dir
     }
     this.all = {}
-
     this.path = path.join(store.getters.now_open.toString(), this.dir, 'list.json')
   }
 
@@ -65,13 +65,13 @@ class lists {
 
       _.forIn(this.obj_data.api, (b, key) => {
         biaoshi.push(b.e_name)
-        store.commit('add_api', b)
+        store.commit('add_api', _.clone(b))
         this.obj_data.api[key].number = store.getters.apinum
 
       })
       _.forIn(this.obj_data.group, (b, key) => {
         biaoshi.push(b.e_name)
-        store.commit('add_group', b)
+        store.commit('add_group', _.clone(b))
         this.obj_data.group[key].number = store.getters.apinum
 
       })
@@ -83,15 +83,31 @@ class lists {
   }
 
   add_group (data, callback) {
-    this.obj_data.group[data.e_name] = data
+    console.log("data",data)
+    this.obj_data.group[data.e_name] = _.clone(data)
     this.create(callback)
 
   }
 
   add_api (data, callback) {
-    this.obj_data.api[data.e_name] = data
+    this.obj_data.api[data.e_name] = _.clone(data)
     this.create(callback)
 
+  }
+
+  remove (e_name, callback) {
+    //删除分组
+    //修改列表文件
+    _.unset(this.obj_data, 'group.' + e_name)
+    let index = path.join(store.getters.now_open.toString(), this.dir, e_name)
+    console.log('remove', this.obj_data, index)
+
+    //修改
+    this.create(() => {
+      files.rmdirSync(index)
+      callback()
+
+    })
   }
 
 }

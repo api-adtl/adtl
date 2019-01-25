@@ -1,35 +1,30 @@
 <template>
     <div>
-        增加分组
+        分组信息{{dir}}  || {{e_name}}
         <form name="addgroup">
             <div>
                 名字：
-                <Input v-model="form.name" name="name" v-validate="validation.name"
-                       placeholder="请输入分组名字" style="width: 300px"/>
-                <span>{{ errors.first('name') }}</span>
+                <Input v-model="form.domain" name="domain" v-validate="validation.domain"
+                       placeholder="域名" style="width: 300px"/>
+                <span>{{ errors.first('domain') }}</span>
             </div>
             <br>
 
             <div>
                 标识：
-                <Input name="ename" placeholder="请输入分组标识(不可修改)" style="width: 300px"
-                       v-model="form.e_name" v-validate="validation.e_name"/>
-                <span>{{ errors.first('ename') }}</span>
+                <Input name="port" placeholder="端口" style="width: 300px"
+                       v-model="form.port" v-validate="validation.port"/>
+                <span>{{ errors.first('port') }}</span>
             </div>
             <br>
 
             <div>
                 接口类型：
-                <RadioGroup v-model="form.type" v-validate="validation.e_name">
-                    <Radio label="http"></Radio>
-                    <Radio label="ws"></Radio>
+                <RadioGroup v-model="form.persistence" v-validate="validation.persistence">
+                    <Radio label="1"></Radio>
+                    <Radio label="0"></Radio>
                 </RadioGroup>
 
-            </div>
-            <div>
-                文件夹：
-                <span style="font-size: 15px;font-weight: 900;">{{form.dir}}</span>
-                <span>{{ errors.first('url') }}</span>
             </div>
             <br>
             <Button type="primary" @click="save">保存</Button>
@@ -40,37 +35,23 @@
 
 <script>
 
-  import lists from '@/logic/lists'
+  import group from '@/logic/group'
   import lodash from 'lodash'
 
   export default {
     name: 'add_group',
     data () {
       return {
-        listo: {},
-        lists: {},
+        groupob: {},
+        groupinfo: {},
         form: {
-          name: '默认名字',
-          e_name: 'fenzu',
-          type: 'http',
-          dir: this.dir
+          persistence:'0',
+          port:80,
+          domain:'a.com'
+
         },
         validation: {
-          name: {
-            required: true,
-            min: 2,
-            max: 20
-          },
-          ename: {
-            required: true,
-            alpha_num: true,
-            min: 5,
-            max: 20,
-            e_name: true
-          },
-          type: {
-            required: true
-          }
+
         },
         attributes: {
           name: '名字1',   //设置表单属性对应的中文名
@@ -80,14 +61,9 @@
       }
     },
     props:[
-      'dir'
+      'dir',
+      'e_name'
     ],
-    watch:{
-      dir(ddd){
-        this.form.dir=ddd;
-        this.init();
-      }
-    },
     components: {},
     methods: {
       save () {
@@ -103,15 +79,18 @@
       },
       save_file () {
 
-        this.listo.add_group(this.form, () => {
-
-        })
+        this.groupob.save('info',this.form,(data)=>{
+            console.log("save_ok",data);
+            this.$Message.success("保存成功!");
+        });
 
       },
       init () {
-        this.listo = new lists(this.form.dir)
-        this.listo.read((data) => {
-          this.lists = data
+        console.log("init",this.dir,this.e_name);
+        this.groupob = new group(this.dir+'/'+this.e_name)
+        this.groupob.read('info',this.form,(data) => {
+          this.form = this.$lodash.clone(data)
+          console.log('106',this.form,this.e_name)
         })
       }
     },

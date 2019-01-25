@@ -1,6 +1,6 @@
 <template>
     <div>
-        GET信息编辑{{edit}}
+        headert头信息编辑{{edit}}
         <div v-if="edit">
             编辑
             <form action="">
@@ -65,15 +65,15 @@
       //方法列表
       init () {
         this.apiobj = new api(this.dd)
-        this.apiobj.read('get', this.form, (data) => {
-          console.log('ragetd', data)
+        this.apiobj.read('header', this.$lodash.cloneDeep(this.form), (data) => {
+          console.log('header', data)
           this.form = data
           this.form2 = this.$lodash.cloneDeep(this.form)
 
         })
       },
       save () {
-        console.log('save4get')
+        console.log('save4header')
         let newdata = []
         for (let val of this.form) {
           if (val.name != '') {
@@ -82,7 +82,7 @@
         }
         this.form = newdata
         this.form2 = this.$lodash.cloneDeep(this.form)
-        this.apiobj.save('get', [], () => {
+        this.apiobj.save('header', [], () => {
           console.log('保存成功')
         })
       },
