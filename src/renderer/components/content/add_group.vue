@@ -12,14 +12,15 @@
 
             <div>
                 标识：
-                <Input v-model="form.e_name" placeholder="请输入分组标识(不可修改)" style="width: 300px"/>
+                <Input name="e_name" placeholder="请输入分组标识(不可修改)" style="width: 300px"
+                       v-model="form.e_name" v-validate="validation.e_name"/>
                 <span>{{ errors.first('e_name') }}</span>
             </div>
             <br>
 
             <div>
                 接口类型：
-                <RadioGroup v-model="form.type">
+                <RadioGroup v-model="form.type" v-validate="validation.e_name">
                     <Radio label="http"></Radio>
                     <Radio label="ws"></Radio>
                 </RadioGroup>
@@ -33,23 +34,19 @@
 </template>
 
 <script>
-  import {Validator} from 'vee-validate'
-  import lists from '@/logic/lists'
 
-  Validator.localize('zh_CN', {
-    attributes: {
-      name: '名字',   //设置表单属性对应的中文名
-      e_name: '标识',
-      type: '类型'
-    }
-  })
+  import lists from '@/logic/lists'
+  import lodash from 'lodash'
+
   export default {
     name: 'add_group',
     data () {
       return {
+        listo: {},
+        lists: {},
         form: {
           name: '默认名字',
-          e_name: 'biaoshi',
+          e_name: 'fenzu',
           type: 'http',
           dir: '.'
         },
@@ -64,10 +61,16 @@
             alpha_num: true,
             min: 5,
             max: 20,
+            e_name: true
           },
           type: {
             required: true
           }
+        },
+        attributes: {
+          name: '名字1',   //设置表单属性对应的中文名
+          e_name: '标识',
+          type: '类型'
         }
       }
     },
@@ -75,8 +78,9 @@
     methods: {
       save () {
         // 先进行验证
+
         this.$validator.validate().then((result) => {
-          console.log(result)
+          console.log('验证结果:', result)
           if (result) {
             // 验证通过
             this.save_file()
@@ -84,18 +88,43 @@
         })
       },
       save_file () {
-        let listo = new lists(this.form.dir)
-        listo.read(() => {
 
-          listo.add_group(this.form, () => {
+        this.listo.add_group(this.form, () => {
 
-          })
         })
 
+      },
+      init () {
+        this.listo = new lists(this.form.dir)
+        this.listo.read((data) => {
+          this.lists = data
+        })
       }
     },
     created () {
+      this.init()
+      this.$validator.localize('zh_CN', {
+        attributes: this.attributes
+      })
+      this.$validator.extend('e_name', {
+        getMessage (field) {
+          return field + '字段不能为这个值(保留字/重复的标识)!'
+        },
+        validate: (value) => {
 
+          let no = [
+            'list',
+            'api',
+            'lists',
+            'group'
+          ]
+          no = lodash.concat(no, this.lists.biaoshi)
+          if (lodash.indexOf(no, value)) {
+            return false
+          }
+          return true
+        }
+      })
     }
   }
 </script>

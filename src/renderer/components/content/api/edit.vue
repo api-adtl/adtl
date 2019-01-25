@@ -1,7 +1,7 @@
 <template>
     <div>
         <h3>
-            增加API
+            编辑 {{dir}}{{e_name}} {{form}}
         </h3>
 
         <br>
@@ -16,18 +16,17 @@
 
         <div>
             标识：
-            <Input placeholder="请输API标识(不可修改)" style="width: 300px"
-                   v-model="form.e_name" v-validate="validation.ename"/>
-
-            <span>{{ errors.first('ename') }}</span>
+            <Input :disabled="true" placeholder="请输API标识(不可修改)" style="width: 300px" v-model="form.e_name"/>
+            <span>{{ errors.first('e_name') }}</span>
+            <span style="color: red">
+                请不要试图修改它,会出事情的!
+            </span>
         </div>
         <br>
 
         <div>
             地址：
-            <Input placeholder="请输入API地址" style="width: 300px"
-                   v-model="form.url"
-                   v-validate="validation.url"/>
+            <Input placeholder="请输入API地址" style="width: 300px" v-model="form.url"/>
             <span>{{ errors.first('url') }}</span>
         </div>
         <br>
@@ -45,26 +44,37 @@
             </RadioGroup>
         </div>
         <br>
-        <Button @click="save" type="primary">保存</Button>
 
+        <Button @click="save" type="primary">保存</Button>
+        <Button @click="go_api" type="primary">返回API页面</Button>
     </div>
 </template>
 
 <script>
 
+  import {Validator} from 'vee-validate'
   import lists from '@/logic/lists'
-  import lodash from 'lodash'
+  import e_name from '@/validation/e_name'
 
+  Validator.localize('zh_CN', {
+    attributes: {
+      name: '名字',   //设置表单属性对应的中文名
+      e_name: '标识',
+      type: '类型',
+      url: '地址'
+    }
+  })
+  Validator.extend('e_name', e_name)
   export default {
     name: 'kong',
     data () {
       return {
         listo: {},
-        lists: {},
+        listdata: {},
         form: {
           request_type: 'post',
           name: '默认名字',
-          e_name: 'api',
+          e_name: 'biaoshi',
           dir: '.',
           url: '/'
         },
@@ -74,7 +84,7 @@
             min: 2,
             max: 20
           },
-          ename: {
+          e_name: {
             required: true,
             alpha_num: true,
             min: 5,
@@ -85,66 +95,56 @@
             required: true
           },
 
-        },
-        attributes: {
-          name: '名字1',   //设置表单属性对应的中文名
-          ename: '标识',
-          type: '类型',
-          url: '地址'
         }
       }
     },
+    props: [
+      'dir',
+      'e_name'
+    ],
     components: {},
     methods: {
+      go_api () {
+        this.$router.push({name: 'api', query: {number: this.form.number}})
+      },
       save () {
         // 先进行验证
         this.$validator.validate().then((result) => {
           console.log(result)
           if (result) {
             // 验证通过
-            console.log('验证通过!')
-            //this.save_file()
+            this.save_file()
           }
         })
       },
       save_file () {
+        console.log('save_file')
+        this.listo.savefile(this.listdata, () => {
+          console.log('保存成功')
+          this.$Modal.confirm({
+            title: 'Title',
+            content: '<p>保存成功,是否跳转到首页?</p>',
+            onOk: () => {
+              this.$router.push('/open')
 
-        this.listo.add_api(this.form, () => {
+            },
+            onCancel: () => {
 
+            }
+          })
         })
-
       },
       init () {
-        this.listo = new lists(this.form.dir)
+        this.listo = new lists(this.dir)
         this.listo.read((data) => {
-          this.lists = data
+          console.log('data', data)
+          this.listdata = data
+          this.form = this.listdata.api[this.e_name]
         })
       }
     },
     created () {
       this.init()
-      this.$validator.localize('zh_CN', {
-        attributes: this.attributes
-      })
-      this.$validator.extend('e_name', {
-        getMessage (field) {
-          return field + '字段不能为这个值(保留字)!'
-        },
-        validate: (value) => {
-          let no = [
-            'list',
-            'api',
-            'lists',
-            'group'
-          ]
-          no = lodash.concat(no, this.lists.biaoshi)
-          console.log('验证', no, value, lodash.indexOf(no, value))
-          if (lodash.indexOf(no, value)) {
-            return false
-          }
-          return true
-        }
-      })
     }
   }
 </script>

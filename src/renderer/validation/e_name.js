@@ -1,10 +1,11 @@
 import _ from 'lodash'
 
-export default {
+const validator = {
   getMessage (field) {
     return field + '字段不能为这个值(保留字)!'
   },
   validate (value) {
+    console.log('验证', arguments)
     let no = [
       'list',
       'api',
@@ -14,5 +15,8 @@ export default {
     if (_.indexOf(no, value)) {
       return false
     }
+    return true
   }
 }
+
+export default validator

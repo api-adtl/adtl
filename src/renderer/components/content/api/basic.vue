@@ -1,27 +1,34 @@
 <template>
     <div>
-        基本信息编辑{{edit}}
-        <div v-if="edit">
-            编辑
-            <form action="">
-                <div>
-                    网址 :
-                    <Input v-model="form.url"/>
-                </div>
+        基本信息编辑 {{dd}}
 
-            </form>
-        </div>
 
         <div v-if="!edit">
             <div>
-                网址 : <span> {{ form.url }}</span>
+                请求类型: <span> {{ dd.request_type }}</span>
+            </div>
+
+            <div>
+                名字 : <span> {{ dd.name }}</span>
+            </div>
+
+            <div>
+                标识 : <span> {{ dd.e_name }}</span>
+            </div>
+
+
+            <div>
+                所处分组 : <span> {{ dd.dir }}</span>
+            </div>
+
+            <div>
+                网址 : <span> {{ dd.url }}</span>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-  import api from '@/logic/api'
 
   export default {
     name: 'basic',
@@ -42,17 +49,9 @@
       //方法列表
       //方法列表
       init () {
-        this.apiobj = new api(this.dd)
-        this.apiobj.read('basic', this.form, (data) => {
-          console.log('rad', data)
-          this.form = data
-        })
+
       },
       save () {
-        console.log('save4basic')
-        this.apiobj.save('basic', this.form, () => {
-          console.log('保存成功')
-        })
 
       }
     },
@@ -60,7 +59,16 @@
       //监听列表
       edit (new1) {
         if (new1 === false) {
-          this.save()
+          console.log('没有机会了!')
+        } else {
+          this.$router.push({
+            name: 'edit_api',
+            query: {
+              dir: this.dd.dir,
+              e_name: this.dd.e_name
+            }
+          })
+
         }
       }
     },

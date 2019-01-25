@@ -16,6 +16,9 @@ const getters = {
   now_open (state) {
     return state.now_open
   },
+  apinum: (state) => {
+    return state.api_num
+  }
 
 }
 

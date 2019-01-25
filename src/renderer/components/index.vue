@@ -39,7 +39,6 @@
       open_obj (now) {
         console.log('open', now)
         this.$store.commit('set_now', now)
-
         this.$router.push({name: 'open'})
       },
 

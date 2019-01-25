@@ -33,8 +33,10 @@
                 <Content :style="{padding: '24px 0', minHeight: '280px', background: '#fff'}">
                     <Layout>
                         <Sider hide-trigger :style="{background: '#fff'}">
+                            <div id="lists" style="height: 650px;overflow-y: auto;">
+                                <list v-model="content_list"></list>
+                            </div>
 
-                            <list @add_content="add_content" v-model="content_list"></list>
 
                         </Sider>
                         <Content :style="{padding: '2px', minHeight: '380px', background: '#fff'}">
@@ -70,6 +72,10 @@
     },
     name: 'open',
     components: {list, content_index},
+    beforeRouteUpdate (to, from, next) {
+      this.init()
+      next()
+    },
     methods: {
       dir_call () {
         this.index = path.join(this.now, 'index.json')
@@ -84,13 +90,6 @@
           }
 
         })
-      },
-      add_content (content) {
-        this.content_index++
-        this.$set(this.content_list, this.content_index, content)
-        console.log('add_content', '/open/' + content)
-        this.$router.push('/open/' + content)
-
       },
       read () {
         // 读取数据
@@ -130,6 +129,26 @@
         if (old) {
           this.$router.push(old)
         }
+      },
+      init () {
+        this.$store.dispatch('api_num')
+        console.log('now', this.now)
+        fs.stat(this.now, (err, stats) => {
+          console.log(err, stats)
+          if (err) {
+            throw err
+          } else {
+            if (stats.isDirectory()) {
+              //文件夹
+              console.log('文件夹的处理逻辑!')
+              this.isdir = true
+              this.dir_call()
+            } else {
+              this.$Message.warning('This is a success tip')
+            }
+          }
+
+        })
       }
 
     },
@@ -137,24 +156,8 @@
 
     },
     created () {
-      this.$store.dispatch('api_num')
-      console.log('now', this.now)
-      fs.stat(this.now, (err, stats) => {
-        console.log(err, stats)
-        if (err) {
-          throw err
-        } else {
-          if (stats.isDirectory()) {
-            //文件夹
-            console.log('文件夹的处理逻辑!')
-            this.isdir = true
-            this.dir_call()
-          } else {
-            this.$Message.warning('This is a success tip')
-          }
-        }
+      this.init()
 
-      })
     }
   }
 </script>

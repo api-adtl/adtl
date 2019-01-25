@@ -1,9 +1,9 @@
 <template>
     <div>
         这是列表
-        <Button @click="view_button" type="primary">现实按钮</Button>
+        <Button @click="view_button" type="primary">按钮可见</Button>
         <br>
-        <list_index :add="add" dir=".">
+        <list_index :add="add" @add_content="add_content" dir=".">
         </list_index>
 
     </div>
@@ -23,14 +23,20 @@
     },
     components: {list_index},
     methods: {
-      add_group () {
+
+      add_content (content) {
         console.log('增加分组')
-        this.$emit('add_content', 'add_group')
+        if (this.$lodash.isString(content)) {
+          this.$router.push('/open/' + content)
+        } else {
+          this.$router.push({
+            name: content.name,
+            query: content.query
+          })
+        }
+
       },
-      add_api () {
-        console.log('增加API')
-        this.$emit('add_content', 'add_api')
-      },
+
       view_button () {
         this.add = !this.add
       }

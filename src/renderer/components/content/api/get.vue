@@ -74,7 +74,7 @@
       init () {
         this.apiobj = new api(this.dd)
         this.apiobj.read('get', this.form, (data) => {
-          console.log('rad', data)
+          console.log('ragetd', data)
           this.form = data
           this.form2 = this.$lodash.cloneDeep(this.form)
 

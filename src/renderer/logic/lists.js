@@ -10,7 +10,8 @@ class lists {
     this.obj_data = {
       group: {},
       api: {},
-      biaoshi: []
+      biaoshi: [],
+      dir: this.dir
     }
     this.all = {}
 
@@ -34,13 +35,20 @@ class lists {
       encoding: 'utf8',
       flag: 'w+'
     }, (err) => {
-
+      console.log('create', err)
       if (err) {
         //不存在的文件夹
         // 创建文件夹
         fs.mkdir(path.join(store.getters.now_open.toString(), this.dir), {recursive: true}, this.read2(callback))
+      } else {
+        callback()
       }
     })
+  }
+
+  savefile (data, callback) {
+    this.obj_data = data
+    this.create(callback)
   }
 
   read2 (callback) {
@@ -58,13 +66,13 @@ class lists {
       _.forIn(this.obj_data.api, (b, key) => {
         biaoshi.push(b.e_name)
         store.commit('add_api', b)
-        this.obj_data.api[key].number = store.state.api_num
+        this.obj_data.api[key].number = store.getters.apinum
 
       })
       _.forIn(this.obj_data.group, (b, key) => {
         biaoshi.push(b.e_name)
         store.commit('add_group', b)
-        this.obj_data.group[key].number = store.state.api_num
+        this.obj_data.group[key].number = store.getters.apinum
 
       })
 
