@@ -18,7 +18,7 @@
                     readme
                 </MenuItem>
                 <MenuItem name="jiben">
-                    <Icon type="ios-people"/>
+                    <Icon type="ios-settings"/>
                     基本信息
                 </MenuItem>
                 <MenuItem name="get">
@@ -27,13 +27,20 @@
                 </MenuItem>
 
                 <MenuItem name="form">
-                    <Icon type="ios-construct"/>
+
+                    <Icon type="ios-apps"/>
                     form
                 </MenuItem>
 
                 <MenuItem name="header">
-                    <Icon type="ios-construct"/>
+                    <Icon type="md-attach"/>
                     header
+                </MenuItem>
+
+                <MenuItem name="test">
+
+                    <Icon type="ios-alarm"/>
+                    test
                 </MenuItem>
             </Menu>
 
@@ -64,7 +71,7 @@
                         shape="circle"
                         type="primary">编辑
                 </Button>
-                <api_get :dd="dd" :edit="edit.get"></api_get>
+                <api_get :dd="dd" :edit="edit.get" v-model="send.get"></api_get>
 
             </div>
             <div v-if="select.form">
@@ -84,6 +91,10 @@
                 </api_header>
             </div>
 
+            <div v-show="select.test">
+                <api_test :api="dd" :group="group"></api_test>
+            </div>
+
 
         </div>
 
@@ -97,6 +108,7 @@
   import api_get from './api/get'
   import api_form from './api/form'
   import api_header from './api/header'
+  import api_test from './api/test'
   import lists from '../../logic/lists'
   import group from '@/logic/group'
 
@@ -111,12 +123,18 @@
       return {
         group: {},
         dd: this.$store.state.api_list[this.number],
+        send: {
+          get: {},
+          from: {},
+          header: {}
+        },
         select: {
           readme: true,
           jiben: false,
           get: false,
           form: false,
-          header: false
+          header: false,
+          test: false
         },
         edit: {
           readme: false,
@@ -143,7 +161,9 @@
       readme,
       basic,
       api_get,
-      api_form, api_header
+      api_form,
+      api_header,
+      api_test
     },
     watch: {
       number (new1) {
@@ -171,6 +191,7 @@
         this.select.get = false
         this.select.form = false
         this.select.header = false
+        this.select.test = false
         this.select[name] = true
       },
       //初始化

@@ -27,7 +27,7 @@
         </div>
 
         <div v-if="!edit">
-            <div v-for="input,key in form2">
+            <div v-for="input in form2">
                 {{ input.name }} :
                 <Input style="width: 300px" v-model="input.value"/>
                 <span>
@@ -47,18 +47,16 @@
 
     data () {
       return {
-        form: [
-
-        ],
-        form2: [
-
-        ],
+        form: [],
+        form2: [],
+        ddata1: {}
       }
     },
     props: [
       //数据传参
       'dd',
-      'edit'
+      'edit',
+      'value'
     ],
     methods: {
       //方法列表
@@ -68,9 +66,22 @@
         this.apiobj.read('get', this.form, (data) => {
           console.log('ragetd', data)
           this.form = data
-          this.form2 = this.$lodash.cloneDeep(this.form)
+          this.init_data()
+
 
         })
+      },
+      init_data () {
+        let send = this.value
+        let form2 = this.$lodash.cloneDeep(this.form)
+        if (!this.$lodash.isEmpty(send)) {
+          this.$lodash.forIn(form2, (d) => {
+            if (!this.$lodash.isUndefined(send[d.name])) {
+              d.value = send[d.name]
+            }
+          })
+        }
+        this.form2 = form2
       },
       save () {
         console.log('save4get')
@@ -82,7 +93,7 @@
         }
         this.form = newdata
         this.form2 = this.$lodash.cloneDeep(this.form)
-        this.apiobj.save('get', [], () => {
+        this.apiobj.save('get', newdata, () => {
           console.log('保存成功')
         })
       },
@@ -92,6 +103,14 @@
           value: '',
           description: ''
         })
+      },
+      input2 () {
+        this.ddata1 = {}
+        this.$lodash.forIn(this.form2, (d) => {
+          this.ddata1[d.name] = d.value
+        })
+        this.$emit('input', this.ddata1)
+        console.log('ddata', this.ddata1)
       }
     },
     watch: {
@@ -103,6 +122,12 @@
       },
       dd () {
         this.init()
+      },
+      form2: {
+        handler () {
+          this.input2()
+        },
+        deep: true
       }
     },
     created () {
