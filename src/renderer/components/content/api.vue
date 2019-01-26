@@ -91,8 +91,8 @@
                 </api_header>
             </div>
 
-            <div v-show="select.test">
-                <api_test :api="dd" :group="group"></api_test>
+            <div v-if="select.test">
+                <api_test :api="dd" :group="group" :send="send"></api_test>
             </div>
 
 
@@ -122,7 +122,8 @@
     data () {
       return {
         group: {},
-        dd: this.$store.state.api_list[this.number],
+        dd1: this.$store.state.api_list[this.number],
+        dd: {},
         send: {
           get: {},
           from: {},
@@ -167,7 +168,8 @@
     },
     watch: {
       number (new1) {
-        this.dd = this.$store.state.api_list[new1]
+        this.dd1 = this.$store.state.api_list[new1]
+        this.read_api()
       }
     },
     methods: {
@@ -196,14 +198,24 @@
       },
       //初始化
       init () {
+        this.read_api()
         let groupb = new group(this.dd.dir)
         groupb.read('info', {}, (data) => {
           if (this.$lodash.isEmpty(data)) {
             groupb.readp('info', {}, (data) => {
+              console.log('read group', data)
               this.group = data
             })
 
           }
+        })
+      },
+      read_api () {
+        console.log('read_api', this.dd1.dir)
+        let listo = new lists(this.dd1.dir)
+        listo.read((data) => {
+          console.log('read_api ok:', data)
+          this.dd = data.api[this.dd1.e_name]
         })
       }
     },

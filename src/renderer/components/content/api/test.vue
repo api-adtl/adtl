@@ -2,36 +2,29 @@
     <div>
         测试组件
         {{api}}<br>
-        {{group}}
+        {{group}}<br>
+        {{send}}
+        <Button @click="test" size="small" type="primary">进行测试</Button>
+
     </div>
 </template>
-
 <script>
-
+  import test from '@/logic/test'
 
   export default {
     name: 'test',
-    //混合
-    mixins: [],
-    delimiters: [
-      //改变纯文本插入分隔符
-    ],
     data () {
-      return {}
+      return {
+        testob: {}
+      }
     },
-    //无状态组件
-    functional: false,
 
-    extends: {
-      // 扩展
-    },
-    model: {
-      //定制v-model,双向绑定
-    },
+
     props: [
       //数据传参
       'api',
-      'group'
+      'group',
+      'send'
     ],
     computed: {
       //计算属性
@@ -41,48 +34,23 @@
     },
     methods: {
       //方法列表
+      test () {
+        //进行测试
+        console.log('send', this.send)
+        this.testob.send(this.send)
+      },
+      init () {
+        this.testob = new test(this.api, this.group)
+
+      }
     },
     watch: {
       //监听列表
     },
-    beforeCreate () {
-      //初始化之后
-    },
+
     created () {
       //创建完成后
-    },
-    beforeMount () {
-      //挂载开始之前
-    },
-    mounted () {
-      //挂载之后
-    },
-    beforeUpdate () {
-      //更新开始之前
-    },
-    updated () {
-      //更新之后
-    },
-    activated () {
-      //组件 激活
-    },
-    deactivated () {
-      //组件停用
-    },
-    beforeDestroy () {
-      //销毁之前
-    },
-    destroyed () {
-      //销毁之后
-    },
-    errorCaptured () {
-      //子孙组件的错误
-    },
-    directives: {
-      //自定义指令
-    },
-    filters: {
-      //过滤器
+      this.init()
     }
   }
 </script>
