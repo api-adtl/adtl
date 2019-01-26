@@ -1,6 +1,17 @@
 <template>
     <div>
-        分组信息{{dir}}  || {{e_name}}
+        分组信息
+        <br>
+        文件夹: &nbsp;&nbsp;<span style="font-size: 1.2em;font-weight: 900;">{{dir}}</span>
+        &nbsp;&nbsp;&nbsp;&nbsp;标识:&nbsp; <span style="font-size: 1.2em;font-weight: 900;"> {{e_name}}</span>
+        <br>
+
+        <div v-if="dataempty">
+            当前分组信息为空,继承父级信息为:
+            {{pdata}}
+
+        </div>
+
         <form name="addgroup">
             <div>
                 名字：
@@ -20,6 +31,18 @@
 
             <div>
                 接口类型：
+                <RadioGroup v-model="form.type" v-validate="validation.persistence">
+                    <Radio label="http"></Radio>
+                    <Radio label="https"></Radio>
+                    <Radio label="ws"></Radio>
+                    <Radio label="wss"></Radio>
+                </RadioGroup>
+
+            </div>
+            <br>
+
+            <div>
+                接口持久化：
                 <RadioGroup v-model="form.persistence" v-validate="validation.persistence">
                     <Radio label="1"></Radio>
                     <Radio label="0"></Radio>
@@ -27,6 +50,7 @@
 
             </div>
             <br>
+
             <Button type="primary" @click="save">保存</Button>
 
         </form>
@@ -45,14 +69,14 @@
         groupob: {},
         groupinfo: {},
         form: {
-          persistence:'0',
-          port:80,
-          domain:'a.com'
+          persistence: '',
+          port: '',
+          domain: ''
 
         },
-        validation: {
-
-        },
+        pdata: {},
+        dataempty: true,
+        validation: {},
         attributes: {
           name: '名字1',   //设置表单属性对应的中文名
           ename: '标识',
@@ -60,10 +84,18 @@
         }
       }
     },
-    props:[
+    props: [
       'dir',
       'e_name'
     ],
+    watch: {
+      dir () {
+        this.init()
+      },
+      e_name () {
+        this.init()
+      }
+    },
     components: {},
     methods: {
       save () {
@@ -79,18 +111,26 @@
       },
       save_file () {
 
-        this.groupob.save('info',this.form,(data)=>{
-            console.log("save_ok",data);
-            this.$Message.success("保存成功!");
-        });
+        this.groupob.save('info', this.form, (data) => {
+          console.log('save_ok', data)
+          this.$Message.success('保存成功!')
+        })
 
       },
       init () {
-        console.log("init",this.dir,this.e_name);
-        this.groupob = new group(this.dir+'/'+this.e_name)
-        this.groupob.read('info',this.form,(data) => {
+        console.log('init', this.dir, this.e_name)
+        this.groupob = new group(this.dir + '/' + this.e_name)
+        this.groupob.read('info', {}, (data) => {
           this.form = this.$lodash.clone(data)
-          console.log('106',this.form,this.e_name)
+          this.dataempty = this.$lodash.isEmpty(this.form)
+          if (this.dataempty) {
+            //读取父级分组的信息
+            this.groupob.readp('info', {}, (data) => {
+              console.log('readp', data)
+              this.pdata = data
+            })
+          }
+
         })
       }
     },

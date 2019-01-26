@@ -1,34 +1,38 @@
 <template>
     <div style="overflow-y: auto">
-        <div >
-            <Collapse>
-                <Panel :name="groupobj.e_name" v-for="groupobj in listdata.group">
-                    {{groupobj.name}} <span class="type">{{groupobj.type}}</span>
-                    <p slot="content">
-                        <list_index @add_content="add_content" :add="add" :dd="groupobj" :dir="groupobj.e_name|dirr(dir)"></list_index>
-                    </p>
-                </Panel>
+        <div :style="style2" style="margin-left: 10px;">
+            <div>
+                <Collapse>
+                    <Panel :name="groupobj.e_name" v-for="groupobj in listdata.group">
+                        {{groupobj.name}}
+                        <p slot="content">
+                            <list_index :add="add" :dd="groupobj" :dir="groupobj.e_name|dirr(dir)"
+                                        @add_content="add_content"
+                                        f5="f5"></list_index>
+                        </p>
+                    </Panel>
 
-            </Collapse>
-            <CellGroup>
-                <Cell :extra="apiobj.request_type" :title="apiobj.name"
-                      :to="apiobj.number|apito" style="border: #ccc solid 1px;margin-top: 2px"
-                      v-for="apiobj in listdata.api"/>
-            </CellGroup>
+                </Collapse>
+                <CellGroup>
+                    <Cell :extra="apiobj.request_type" :title="apiobj.name" :to="apiobj.number|apito"
+                          selected style="border: #ccc solid 1px;margin-top: 2px"
+                          v-for="apiobj in listdata.api"/>
+                </CellGroup>
 
+            </div>
+            <div style="margin-bottom: 1px" v-if="add">
+                <Button @click="add_group" size="small" type="primary">+分组</Button>
+                <Button @click="add_api" size="small" type="primary">+API</Button>
+                <Button @click="open_in_folder" size="small" type="primary">OIF</Button>
+            </div>
+
+            <div v-if="dir!='.' && add">
+                <Button @click="group_info" size="small" type="primary">当前分组信息</Button>
+                <Button @click="edit_group" size="small" type="primary">编辑分组</Button>
+                <Button @click="del_group" size="small" type="primary">删除分组</Button>
+            </div>
         </div>
 
-        <div style="margin-bottom: 1px" v-if="add">
-            <Button @click="add_group" size="small" type="primary">+分组</Button>
-
-            <Button @click="add_api" size="small" type="primary">+API</Button>
-        </div>
-
-        <div v-if="dir!='.' && add" >
-            <Button @click="group_info" size="small" type="primary">当前分组信息</Button>
-            <Button @click="edit_group" size="small" type="primary">编辑分组</Button>
-            <Button @click="del_group" size="small" type="primary">删除分组</Button>
-        </div>
 
     </div>
 
@@ -36,9 +40,10 @@
 
 <script>
   import lists from '@/logic/lists'
+  //import tool from '@/libs/tool'
   import list_index from './index'
   import path from 'path'
-
+  import {shell} from 'electron'
   export default {
     name: 'list_index',
     data () {
@@ -57,7 +62,7 @@
     ],
     watch: {
       f5 () {
-        console.log('f5');
+        console.log('f5')
         this.init()
       }
     },
@@ -70,24 +75,42 @@
         return {name: 'api', query: {number: value}}
       }
     },
+    computed: {
+      style2 () {
+        return {
+          //'border-color':tool.getRandomColor()
+        }
+      }
+    },
     components: {list_index},
     methods: {
-      empty(valuee){
-        console.log('ll',valuee);
-        return this.$lodash.isEmpty(valuee);
+      open_in_folder () {
+        this.$Message.loading('正在使用文件管理器打开...')
+        setTimeout(() => {
+          shell.showItemInFolder(path.join(this.$store.state.now_open, this.dir))
+        }, 1000)
+
       },
-      group_info(){
-        this.$router.push({name: 'group_info', query: {
+      empty (valuee) {
+        console.log('ll', valuee)
+        return this.$lodash.isEmpty(valuee)
+      },
+      group_info () {
+        this.$router.push({
+          name: 'group_info', query: {
             dir: this.dd.dir,
-            e_name:this.dd.e_name
-          }})
+            e_name: this.dd.e_name
+          }
+        })
       },
       edit_group () {
         if (this.dir != '.' && this.listdata.dir != '.') {
-          this.$router.push({name: 'edit_group', query: {
-            dir: this.dd.dir,
-              e_name:this.dd.e_name
-          }})
+          this.$router.push({
+            name: 'edit_group', query: {
+              dir: this.dd.dir,
+              e_name: this.dd.e_name
+            }
+          })
         }
 
       },
@@ -99,7 +122,7 @@
           onOk: () => {
             let listo = new lists(this.dd.dir)
             listo.read(() => {
-              listo.remove(this.dd.e_name,()=>{
+              listo.remove(this.dd.e_name, () => {
                 this.$Message.info('删除完成!')
                 this.$router.push('/open')
               })
@@ -121,7 +144,7 @@
           }
         })
       },
-      add_content(content){
+      add_content (content) {
         this.$emit('add_content', content)
       },
       add_api () {

@@ -1,7 +1,12 @@
 <template>
     <div style="overflow: auto;height: 600px;">
         <div>
+            API信息:
             {{dd}}
+            <Button @click="deletee" size="small" type="primary">删除API</Button>
+            <br>
+            分组信息{{group}}
+
         </div>
 
         <br>
@@ -92,6 +97,8 @@
   import api_get from './api/get'
   import api_form from './api/form'
   import api_header from './api/header'
+  import lists from '../../logic/lists'
+  import group from '@/logic/group'
 
   export default {
     name: 'api',
@@ -102,6 +109,7 @@
     ],
     data () {
       return {
+        group: {},
         dd: this.$store.state.api_list[this.number],
         select: {
           readme: true,
@@ -135,7 +143,7 @@
       readme,
       basic,
       api_get,
-      api_form,api_header
+      api_form, api_header
     },
     watch: {
       number (new1) {
@@ -143,6 +151,18 @@
       }
     },
     methods: {
+      deletee () {
+        console.log('删除')
+        let listb = new lists(this.dd.dir)
+        listb.read((data) => {
+          console.log('data', data)
+          listb.remove_api(this.dd.e_name, () => {
+            this.$Message.success('删除成功!')
+            this.$router.push('/open/')
+          })
+        })
+
+      },
       //方法列表
       select1 (name) {
         console.log('select1')
@@ -152,11 +172,24 @@
         this.select.form = false
         this.select.header = false
         this.select[name] = true
+      },
+      //初始化
+      init () {
+        let groupb = new group(this.dd.dir)
+        groupb.read('info', {}, (data) => {
+          if (this.$lodash.isEmpty(data)) {
+            groupb.readp('info', {}, (data) => {
+              this.group = data
+            })
+
+          }
+        })
       }
     },
 
     created () {
       //创建完成后
+      this.init()
     }
   }
 </script>

@@ -19,7 +19,7 @@ const router = new Router({
 
     },
     {
-      path: '/open',
+      path: '/open/',
       name: 'open',
       component: () => import('@/components/open'),
       children: [
@@ -41,7 +41,10 @@ const router = new Router({
         },
         {
           path: '/',
-
+          component: () => import('@/components/content/index')
+        },
+        {
+          path: '',
           component: () => import('@/components/content/index')
         },
 

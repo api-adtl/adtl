@@ -19,14 +19,6 @@
             <br>
 
             <div>
-                接口类型：
-                <RadioGroup v-model="form.type" v-validate="validation.e_name">
-                    <Radio label="http"></Radio>
-                    <Radio label="ws"></Radio>
-                </RadioGroup>
-
-            </div>
-            <div>
                 文件夹：
                 <span style="font-size: 15px;font-weight: 900;">{{form.dir}}</span>
                 <span>{{ errors.first('url') }}</span>
@@ -52,7 +44,6 @@
         form: {
           name: '默认名字',
           e_name: 'fenzu',
-          type: 'http',
           dir: this.dir
         },
         validation: {
@@ -68,14 +59,10 @@
             max: 20,
             e_name: true
           },
-          type: {
-            required: true
-          }
         },
         attributes: {
           name: '名字1',   //设置表单属性对应的中文名
           ename: '标识',
-          type: '类型'
         }
       }
     },

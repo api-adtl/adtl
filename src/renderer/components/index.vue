@@ -40,7 +40,7 @@
       open_obj (now) {
         console.log('open', now)
         this.$store.commit('set_now', now)
-        this.$router.push({name: 'open'})
+        this.$router.push('/open/')
       },
 
       dropopen (e) {
@@ -49,7 +49,7 @@
         for (let f of e.dataTransfer.files) {
           //跳转
           this.$store.commit('set_now', f.path)
-          this.$router.push({name: 'open', params: {now: f.path}})
+          this.$router.push('/open/')
         }
       },
       dragover (e) {

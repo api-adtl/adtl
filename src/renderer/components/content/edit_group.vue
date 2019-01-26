@@ -82,7 +82,6 @@
     methods: {
       save () {
         // 先进行验证
-
         this.$validator.validate().then((result) => {
           console.log('验证结果:', result, this.$validator.errors.all())
           if (result) {

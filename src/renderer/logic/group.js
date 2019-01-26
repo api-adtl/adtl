@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import jsonFormat from 'json-format'
 import store from '@/store'
+import lodash from 'lodash'
 
 class group {
   constructor (dir) {
@@ -15,7 +16,6 @@ class group {
       return false
     }
     let pathjson = path.join(this.path, type + '.json')
-    console.log('pathjson',pathjson);
     fs.access(pathjson, fs.constants.F_OK, (err) => {
       if (err) {
         this.create(pathjson, jsonFormat(default_data), callback)
@@ -24,6 +24,36 @@ class group {
       }
 
     })
+  }
+
+  readp (type, ddata, callback) {
+    this.readp2(type, ddata, '..', callback)
+  }
+
+  readp2 (type, ddata, pathp, callback) {
+    let path2 = path.join(store.getters.now_open.toString(), this.dir, pathp)
+    let pathjson = path.join(path2, type + '.json')
+    console.log('pathjson', pathjson)
+    if (path2 == store.getters.now_open.toString()) {
+      // 根目录了
+      callback(ddata)
+    }
+    fs.access(pathjson, fs.constants.F_OK, (err) => {
+      if (err) {
+        this.readp2(type, ddata, pathp + '/../', callback)
+
+      } else {
+        this.read2(pathjson, (data) => {
+          if (lodash.isEmpty(data)) {
+            this.readp2(type, ddata, pathp + '/../', callback)
+          } else {
+            callback(data)
+          }
+        })
+      }
+
+    })
+
   }
 
   save (type, data, callback) {
