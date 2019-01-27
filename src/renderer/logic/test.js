@@ -12,7 +12,7 @@ class test {
   }
 
   send (senddata, callbak) {
-    this.connect.send(this.api.type, this.api.url, senddata, callbak)
+    this.connect.send(this.api.request_type, this.api.url, senddata, callbak)
   }
 }
 

@@ -1,6 +1,6 @@
 <template>
     <div>
-        这是一个kong的Vue组件
+        generated数据生成器{{dd}}
     </div>
 </template>
 
@@ -8,7 +8,7 @@
 
 
   export default {
-    name: 'kong',
+    name: 'generated',
     //混合
     mixins: [],
     delimiters: [
@@ -17,17 +17,10 @@
     data () {
       return {}
     },
-    //无状态组件
-    functional: false,
 
-    extends: {
-      // 扩展
-    },
-    model: {
-      //定制v-model,双向绑定
-    },
     props: [
       //数据传参
+      'dd'
     ],
     computed: {
       //计算属性

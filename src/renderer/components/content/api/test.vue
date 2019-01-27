@@ -5,17 +5,21 @@
         {{group}}<br>
         {{send}}
         <Button @click="test" size="small" type="primary">进行测试</Button>
+        结果 :{{response}}
+
+        <response :response="response"></response>
 
     </div>
 </template>
 <script>
   import test from '@/logic/test'
-
+  import response from './response'
   export default {
     name: 'test',
     data () {
       return {
-        testob: {}
+        testob: {},
+        response: {}
       }
     },
 
@@ -31,13 +35,17 @@
     },
     components: {
       //注册组件
+      response
     },
     methods: {
       //方法列表
       test () {
         //进行测试
         console.log('send', this.send)
-        this.testob.send(this.send)
+        this.testob.send(this.send, (data) => {
+          console.log('返回数据!', data)
+          this.response = this.$lodash.cloneDeep(data)
+        })
       },
       init () {
         this.testob = new test(this.api, this.group)

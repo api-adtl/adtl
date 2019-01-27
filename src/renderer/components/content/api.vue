@@ -5,7 +5,9 @@
             {{dd}}
             <Button @click="deletee" size="small" type="primary">删除API</Button>
             <br>
-            分组信息{{group}}
+            分组信息 : {{group}} <br>
+            API : {{send}}
+
 
         </div>
 
@@ -199,7 +201,7 @@
       //初始化
       init () {
         this.read_api()
-        let groupb = new group(this.dd.dir)
+        let groupb = new group(this.dd1.dir)
         groupb.read('info', {}, (data) => {
           if (this.$lodash.isEmpty(data)) {
             groupb.readp('info', {}, (data) => {
