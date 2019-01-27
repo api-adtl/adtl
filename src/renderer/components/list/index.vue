@@ -6,7 +6,7 @@
                     <Panel :name="groupobj.e_name" v-for="groupobj in listdata.group">
                         {{groupobj.name}}
                         <p slot="content">
-                            <list_index :add="add" :dd="groupobj" :dir="groupobj.e_name|dirr(dir)"
+                            <list_index :add="add" :dd="groupobj" :dir="groupobj.e_name|dirr(dir)" :f5="f5"
                                         @add_content="add_content"
                                         f5="f5"></list_index>
                         </p>
@@ -22,11 +22,12 @@
             </div>
             <div style="margin-bottom: 1px" v-if="add">
                 <Button @click="add_group" size="small" type="primary">+分组</Button>
-                <Button @click="add_api" size="small" type="primary">+API</Button>
+
                 <Button @click="open_in_folder" size="small" type="primary">OIF</Button>
             </div>
 
             <div v-if="dir!='.' && add">
+                <Button @click="add_api" size="small" type="primary">+API</Button>
                 <Button @click="group_info" size="small" type="primary">当前分组信息</Button>
                 <Button @click="edit_group" size="small" type="primary">编辑分组</Button>
                 <Button @click="del_group" size="small" type="primary">删除分组</Button>
@@ -159,7 +160,21 @@
       init () {
         let listo = new lists(this.dir)
         listo.read((data) => {
-          this.listdata = data
+          this.listdata = this.$lodash.cloneDeep(data)
+          this.$lodash.forIn(this.listdata.api, (b, key) => {
+
+            this.$store.commit('add_api', b)
+            console.log('167')
+            this.listdata.api[key].number = this.$store.getters.apinum
+
+          })
+
+          this.$lodash.forIn(this.listdata.group, (b, key) => {
+
+            this.$store.commit('add_group', this.$lodash.clone(b))
+            this.listdata.group[key].number = this.$store.getters.apinum
+
+          })
         })
       }
     },

@@ -63,16 +63,14 @@ class lists {
       let biaoshi = []
       console.log('path', this.obj_data.api)
 
-      _.forIn(this.obj_data.api, (b, key) => {
+      _.forIn(this.obj_data.api, (b) => {
         biaoshi.push(b.e_name)
-        store.commit('add_api', _.clone(b))
-        this.obj_data.api[key].number = store.getters.apinum
+
 
       })
-      _.forIn(this.obj_data.group, (b, key) => {
+
+      _.forIn(this.obj_data.group, (b) => {
         biaoshi.push(b.e_name)
-        store.commit('add_group', _.clone(b))
-        this.obj_data.group[key].number = store.getters.apinum
 
       })
 

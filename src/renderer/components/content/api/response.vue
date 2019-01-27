@@ -1,27 +1,30 @@
 <template>
     <div>
         测试结果组件
-
         <br>
-
         <ButtonGroup>
             <Button :style="bus" @click="open('data')" ghost type="primary">data</Button>
             <Button :style="bus" @click="open('config')" ghost type="primary">config</Button>
             <Button :style="bus" @click="open('status')" ghost type="primary">status</Button>
             <Button :style="bus" @click="open('headers')" ghost type="primary">headers</Button>
+            <Button :style="bus" @click="open('all')" ghost type="primary">ALL</Button>
         </ButtonGroup>
         <div>
             <div v-if="status.data">
-                {{response.data}}
+                <pre>{{response.data|format}}</pre>
+
             </div>
             <div v-if="status.config">
-                {{response.config}}
+                <pre>{{response.config|format}}</pre>
             </div>
             <div v-if="status.status">
-                {{response.status}}
+                <pre>{{response.status|format}}</pre>
             </div>
             <div v-if="status.headers">
-                {{response.headers}}
+                <pre>{{response.headers|format}}</pre>
+            </div>
+            <div v-if="status.all">
+                <pre>{{response|format}}</pre>
             </div>
         </div>
     </div>
@@ -29,6 +32,7 @@
 
 <script>
 
+  import jsonFormat from 'json-format'
 
   export default {
     name: 'response',
@@ -46,7 +50,8 @@
           data: false,
           config: false,
           status: false,
-          headers: false
+          headers: false,
+          all: true
         }
       }
     },
@@ -72,10 +77,11 @@
     methods: {
       //方法列表
       open (name) {
-        this.status.data = true
+        this.status.data = false
         this.status.config = false
         this.status.headers = false
         this.status.status = false
+        this.status.all = false
         this.status[name] = true
       }
     },
@@ -120,6 +126,14 @@
     },
     filters: {
       //过滤器
+      format (value1) {
+        let aa = jsonFormat(value1, {
+          type: 'space',
+          size: 2
+        })
+        console.log(aa)
+        return aa
+      }
     }
   }
 </script>

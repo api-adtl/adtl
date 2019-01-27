@@ -1,5 +1,6 @@
 <template>
     <div>
+        dd:{{dd}}
         <mavon-editor
                 :defaultOpen="defaultOpen"
                 :subfield="false"
@@ -31,7 +32,8 @@
     props: [
       //数据传参
       'dd',
-      'edit'
+      'edit',
+      'value'
     ],
     computed: {
       //计算属性
@@ -42,12 +44,16 @@
     methods: {
       //方法列表
       init () {
-        console.log('init')
-        this.apiobj = new api(this.dd)
-        this.apiobj.readme((data) => {
-          console.log('readme', data)
-          this.readme = data
-        })
+        console.log('init', this.dd)
+        if (typeof this.dd.dir == 'string') {
+
+          this.apiobj = new api(this.dd)
+          this.apiobj.readme((data) => {
+            console.log('readme', data)
+            this.readme = data
+            this.$emit('input', true)
+          })
+        }
       },
       save () {
         this.apiobj.readme_save(this.readme, () => {
@@ -71,9 +77,8 @@
       },
       dd: {
         immediate: true,
-        handler (value) {
-
-          console.log('readme changge', value)
+        handler (value, old) {
+          console.log('readme changge', value, old)
           this.init()
         }
 

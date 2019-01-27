@@ -20,9 +20,7 @@
                             </div>
                         </th>
                     </tr>
-
                 </table>
-
             </form>
         </div>
 
@@ -62,14 +60,16 @@
       //方法列表
       //方法列表
       init () {
-        this.apiobj = new api(this.dd)
-        this.apiobj.read('get', this.form, (data) => {
-          console.log('ragetd', data)
-          this.form = data
-          this.init_data()
+        if (typeof this.dd.dir == 'string') {
+          this.apiobj = new api(this.dd)
+          this.apiobj.read('get', this.form, (data) => {
+            console.log('ragetd', data)
+            this.form = data
+            this.init_data()
 
+          })
+        }
 
-        })
       },
       init_data () {
         let send = this.value

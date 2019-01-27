@@ -47,6 +47,7 @@ const mutations = {
     state.content_list = {}
   },
   add_api (state, api) {
+    console.log(51)
     state.api_num++
     api.number = state.api_num
     state.api_list[state.api_num] = api
@@ -57,6 +58,9 @@ const mutations = {
   },
   api_num (state) {
     state.api_num = 0
+  },
+  api_numadd (state) {
+    state.api_num++
   }
 
 }

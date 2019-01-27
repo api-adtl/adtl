@@ -6,7 +6,8 @@
             <Button @click="deletee" size="small" type="primary">删除API</Button>
             <br>
             分组信息 : {{group}} <br>
-            API : {{send}}
+            SEND : {{send}} <br>
+            grnerated: {{grnerated}}
 
 
         </div>
@@ -15,49 +16,55 @@
 
         <div>
             <Menu @on-select="select1" active-name="readme" mode="horizontal" theme="light">
-                <MenuItem name="readme">
+                <MenuItem name="readme" style="padding: 0 10px;">
                     <Icon type="ios-paper"/>
                     readme
                 </MenuItem>
-                <MenuItem name="jiben">
+                <MenuItem name="jiben" style="padding: 0 10px;">
                     <Icon type="ios-settings"/>
                     基本信息
                 </MenuItem>
-                <MenuItem name="get">
+                <MenuItem name="get" style="padding: 0 10px;">
                     <Icon type="ios-construct"/>
                     get
                 </MenuItem>
 
-                <MenuItem name="form">
+                <MenuItem name="form" style="padding: 0 10px;">
 
                     <Icon type="ios-apps"/>
                     form
                 </MenuItem>
 
-                <MenuItem name="header">
+                <MenuItem name="header" style="padding: 0 10px;">
                     <Icon type="md-attach"/>
                     header
                 </MenuItem>
 
-                <MenuItem name="test">
-
+                <MenuItem name="test" style="padding: 0 10px;">
                     <Icon type="ios-alarm"/>
                     test
                 </MenuItem>
+
+                <MenuItem name="generated" style="padding: 0 10px;">
+                    <Icon type="ios-alarm"/>
+                    generated
+                </MenuItem>
+
+
             </Menu>
 
-            <div v-if="select.readme">
+            <div v-show="select.readme">
                 <div>
                     <Button @click="()=>{this.edit.readme=!this.edit.readme}" icon="ios-search"
                             shape="circle"
                             type="primary">编辑
                     </Button>
-                    <readme :dd="dd" :edit="edit.readme"></readme>
+                    <readme :dd="dd" :edit="edit.readme" v-model="is_init"></readme>
 
                 </div>
 
             </div>
-            <div v-if="select.jiben">
+            <div v-if="is_init" v-show="select.jiben">
                 基本信息
                 <Button @click="()=>{this.edit.jiben=!this.edit.jiben}" icon="ios-search"
                         shape="circle"
@@ -68,7 +75,7 @@
 
             </div>
 
-            <div v-if="select.get">
+            <div v-if="is_init" v-show="select.get">
                 <Button @click="()=>{this.edit.get=!this.edit.get}" icon="ios-search"
                         shape="circle"
                         type="primary">编辑
@@ -76,15 +83,15 @@
                 <api_get :dd="dd" :edit="edit.get" v-model="send.get"></api_get>
 
             </div>
-            <div v-if="select.form">
+            <div v-if="is_init" v-show="select.form">
                 <Button @click="()=>{this.edit.form=!this.edit.form}" icon="ios-search"
                         shape="circle"
                         type="primary">编辑
                 </Button>
-                <api_form :dd="dd" :edit="edit.form">
+                <api_form :dd="dd" :edit="edit.form" v-model="send.form">
                 </api_form>
             </div>
-            <div v-if="select.header">
+            <div v-if="is_init" v-show="select.header">
                 <Button @click="()=>{this.edit.header=!this.edit.header}" icon="ios-search"
                         shape="circle"
                         type="primary">编辑
@@ -93,8 +100,23 @@
                 </api_header>
             </div>
 
-            <div v-if="select.test">
-                <api_test :api="dd" :group="group" :send="send"></api_test>
+            <div v-if="is_init" v-show="select.test">
+                <api_test :api="dd" :grnerated="grnerated"
+                          :group="group"
+                          :send="send"></api_test>
+            </div>
+
+            <div v-if="is_init" v-show="select.generated">
+                <Button @click="()=>{this.edit.generated=!this.edit.generated}" icon="ios-search"
+                        shape="circle"
+                        type="primary">编辑
+                </Button>
+                <generated :api="dd"
+                           :edit="edit.generated"
+                           :group="group"
+                           :send="send"
+
+                           v-model="grnerated"></generated>
             </div>
 
 
@@ -113,6 +135,7 @@
   import api_test from './api/test'
   import lists from '../../logic/lists'
   import group from '@/logic/group'
+  import generated from './api/generated'
 
   export default {
     name: 'api',
@@ -124,11 +147,12 @@
     data () {
       return {
         group: {},
+        is_init: false,
         dd1: this.$store.state.api_list[this.number],
         dd: {},
         send: {
           get: {},
-          from: {},
+          form: {},
           header: {}
         },
         select: {
@@ -137,14 +161,18 @@
           get: false,
           form: false,
           header: false,
-          test: false
+          test: false,
+          generated: false
         },
+        grnerated: {},
         edit: {
           readme: false,
           jiben: false,
           get: false,
           form: false,
-          header: false
+          header: false,
+          test: false,
+          generated: false
         }
       }
     },
@@ -166,7 +194,8 @@
       api_get,
       api_form,
       api_header,
-      api_test
+      api_test,
+      generated
     },
     watch: {
       number (new1) {
@@ -177,7 +206,7 @@
     methods: {
       deletee () {
         console.log('删除')
-        let listb = new lists(this.dd.dir)
+        let listb = new lists(this.dd1.dir)
         listb.read((data) => {
           console.log('data', data)
           listb.remove_api(this.dd.e_name, () => {
@@ -196,6 +225,7 @@
         this.select.form = false
         this.select.header = false
         this.select.test = false
+        this.select.generated = false
         this.select[name] = true
       },
       //初始化
@@ -209,6 +239,8 @@
               this.group = data
             })
 
+          } else {
+            this.group = data
           }
         })
       },

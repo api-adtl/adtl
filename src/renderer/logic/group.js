@@ -31,10 +31,11 @@ class group {
   }
 
   readp2 (type, ddata, pathp, callback) {
+
     let path2 = path.join(store.getters.now_open.toString(), this.dir, pathp)
     let pathjson = path.join(path2, type + '.json')
-    console.log('pathjson', pathjson)
-    if (path2 == store.getters.now_open.toString()) {
+
+    if (path2 == store.getters.now_open.toString() || path.join(this.dir, pathp) == '.' || path.join(this.dir, pathp) == '..') {
       // 根目录了
       callback(ddata)
     }

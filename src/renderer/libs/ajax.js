@@ -11,17 +11,18 @@ class ajax {
   send (type, url, senddata, callbak) {
     console.log('send12', arguments)
     if (type == 'get') {
-      this.get_send(url, senddata, callbak)
+      this.axios.request({
+        method: type,
+        url: url,
+        data: senddata.form,
+        params: senddata.get,
+        headers: senddata.header
+      }).then(callbak).catch(() => {
+
+      })
     }
   }
 
-  get_send (url, senddata, callbak) {
-    this.axios.get(url, {
-      params: senddata.get
-    }).then(callbak).catch((error) => {
-      console.log('error', error)
-    })
-  }
 
 }
 

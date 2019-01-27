@@ -81,7 +81,7 @@
   import form_input from './form_input'
 
   export default {
-    name: 'form',
+    name: 'api_form',
     components: {form_input},
     data () {
       return {
@@ -110,7 +110,8 @@
     props: [
       //数据传参
       'dd',
-      'edit'
+      'edit',
+      'value'
     ],
     methods: {
       //方法列表
@@ -205,7 +206,17 @@
       },
       dd () {
         this.init()
+      },
+      form2 (now2) {
+        console.log('from2', now2)
+        let va = {}
+        for (let vv of now2) {
+          va[vv.name] = vv.value
+        }
+        this.value = va
+        this.$emit('input', this.value)
       }
+
     },
     created () {
       //创建完成后

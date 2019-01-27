@@ -1,78 +1,171 @@
 <template>
     <div>
-        generated数据生成器{{dd}}
+        数据生成 编辑{{edit}}
+        <br>
+        send :{{value}}
+        生成规则 :{{value}}
+        <div v-if="edit">
+            编辑
+            <form action="">
+                <table border="1" style="    width: 100%;">
+                    <tr v-for="input,key in form">
+                        <th>
+                            <span>位置</span>:
+                            <Select size="small" style="width:100px"
+                                    v-model="form[key].name">
+                                <Option :key="key"
+                                        :value="key"
+                                        v-for="item,key in send">{{ key }}
+                                </Option>
+                            </Select>
+                            <Select size="small" style="width:100px"
+                                    v-model="form[key].name2">
+                                <Option :key="key"
+                                        :value="key"
+                                        v-for="item,key in send[form[key].name]">{{ key }}
+                                </Option>
+                            </Select>
+
+
+                        </th>
+                        <th>
+                            unit生成器
+                            <Select size="small" style="width:100px"
+                                    v-model="form[key].unit">
+                                <Option :key="key"
+                                        :value="key"
+                                        v-for="item,key in format">{{ key }}
+                                </Option>
+                            </Select>
+
+                        </th>
+                        <th>
+                            <div>
+                                <input :rows="4"
+                                       placeholder="format格式,JSON格式化字符串,数组将作为多参数传递" type="textarea"
+                                       v-model="form[key].format">
+                                <span>
+                                {{format[form[key].unit]}}
+                            </span>
+                            </div>
+
+                        </th>
+                    </tr>
+                    <tr>
+                        <th colspan="3">
+
+                            <div @click="add_one">
+                                增加一个
+                            </div>
+                        </th>
+                    </tr>
+
+                </table>
+
+            </form>
+        </div>
+
+        <div v-if="!edit">
+            <div v-for="input in value">
+                {{ input.name }} :{{input.name2}}
+
+
+                <span>
+                    {{ input.unit }} -> {{ input.format }}
+                </span>
+
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
-
-
+  import api from '@/logic/api'
+  import formatdata from './formatdata'
   export default {
-    name: 'generated',
-    //混合
-    mixins: [],
-    delimiters: [
-      //改变纯文本插入分隔符
-    ],
+    name: 'get',
     data () {
-      return {}
+      return {
+        form: [],
+        ddata1: {},
+        format: formatdata,
+      }
     },
-
     props: [
       //数据传参
-      'dd'
+      'api',
+      'group',
+      'edit',
+      'send',
+      'value'
     ],
-    computed: {
-      //计算属性
-    },
-    components: {
-      //注册组件
-    },
     methods: {
       //方法列表
+      //方法列表
+      init () {
+        console.log('generated init')
+        this.apiobj = new api(this.api)
+        this.apiobj.read('generated', this.form, (data) => {
+          console.log('generated', data)
+          this.form = data
+          this.init_data()
+
+        })
+      },
+      init_data () {
+        let send = this.value
+        let form2 = this.$lodash.cloneDeep(this.form)
+        if (!this.$lodash.isEmpty(send)) {
+          this.$lodash.forIn(form2, (d) => {
+            if (!this.$lodash.isUndefined(send[d.name])) {
+              d.value = send[d.name]
+            }
+          })
+        }
+        this.value = form2
+      },
+      save () {
+
+        let newdata = []
+        for (let val of this.form) {
+          if (val.name != '') {
+            newdata.push(val)
+          }
+        }
+        this.form = newdata
+        console.log('save4generated')
+        this.value = this.$lodash.cloneDeep(this.form)
+        this.apiobj.save('generated', newdata, () => {
+          console.log('保存成功')
+        })
+      },
+      add_one () {
+        this.form.push({
+          name: 'get',
+          name2: '',
+          unit: 'natural',
+          format: null
+        })
+      },
     },
     watch: {
       //监听列表
-    },
-    beforeCreate () {
-      //初始化之前
+      edit (new1) {
+        if (new1 === false) {
+          this.save()
+        }
+      },
+      api () {
+        this.init()
+      },
+      value (new1) {
+        this.$emit('input', new1)
+      }
     },
     created () {
       //创建完成后
+      this.init()
     },
-    beforeMount () {
-      //挂载开始之前
-    },
-    mounted () {
-      //挂载之后
-    },
-    beforeUpdate () {
-      //更新开始之前
-    },
-    updated () {
-      //更新之后
-    },
-    activated () {
-      //组件 激活
-    },
-    deactivated () {
-      //组件停用
-    },
-    beforeDestroy () {
-      //销毁之前
-    },
-    destroyed () {
-      //销毁之后
-    },
-    errorCaptured () {
-      //子孙组件的错误
-    },
-    directives: {
-      //自定义指令
-    },
-    filters: {
-      //过滤器
-    }
   }
 </script>
 
