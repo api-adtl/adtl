@@ -133,7 +133,7 @@
   import api_get from './api/get'
   import api_form from './api/form'
   import api_header from './api/header'
-  import api_test from './api/test'
+  import api_test from './api/test_ws'
   import lists from '../../logic/lists'
   import group from '@/logic/group'
   import generated from './api/generated'

@@ -4,9 +4,14 @@
         <div v-if="edit">
             编辑
             <form action="">
-                <table border="1" style="    width: 100%;">
-                    <th><input type="text" v-model="form"></th>
-                </table>
+                <Input v-model="form" type="textarea"
+                       :autosize="{minRows: 2,maxRows: 5}" placeholder="数据格式"/>
+
+                <span>
+                    可用变量$url:地址
+                    $get :get参数(数组格式)
+                    $post:post表单(数组格式)
+                </span>
             </form>
         </div>
 
@@ -24,8 +29,8 @@
 
     data () {
       return {
-        form: [],
-        form2: [],
+        form: '',
+        form2: '',
         ddata1: {}
       }
     },
@@ -52,44 +57,25 @@
       },
       init_data () {
         let send = this.value
-        let form2 = this.$lodash.cloneDeep(this.form)
         if (!this.$lodash.isEmpty(send)) {
-          this.$lodash.forIn(form2, (d) => {
-            if (!this.$lodash.isUndefined(send[d.name])) {
-              d.value = send[d.name]
-            }
-          })
+          this.form = '{}'
         }
+        let form2 = this.$lodash.cloneDeep(this.form)
+
         this.form2 = form2
       },
       save () {
-        console.log('save4get')
-        let newdata = []
-        for (let val of this.form) {
-          if (val.name != '') {
-            newdata.push(val)
-          }
-        }
-        this.form = newdata
+        console.log('save4strcuture')
         this.form2 = this.$lodash.cloneDeep(this.form)
-        this.apiobj.save('get', newdata, () => {
+        this.apiobj.save('structure', this.form, () => {
           console.log('保存成功')
         })
       },
-      add_one () {
-        this.form.push({
-          name: '',
-          value: '',
-          description: ''
-        })
-      },
+
       input2 () {
-        this.ddata1 = {}
-        this.$lodash.forIn(this.form2, (d) => {
-          this.ddata1[d.name] = d.value
-        })
-        this.$emit('input', this.ddata1)
-        console.log('ddata', this.ddata1)
+        console.log('form2', this.form2)
+        this.$emit('input', this.form2)
+
       }
     },
     watch: {
