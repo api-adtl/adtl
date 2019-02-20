@@ -47,7 +47,7 @@
         if (typeof this.dd.dir == 'string') {
           this.apiobj = new api(this.dd)
           this.apiobj.read('structure', this.form, (data) => {
-            console.log('ragetd', data)
+            console.log('ragetd_structure', data)
             this.form = data
             this.init_data()
 
@@ -56,13 +56,7 @@
 
       },
       init_data () {
-        let send = this.value
-        if (!this.$lodash.isEmpty(send)) {
-          this.form = '{}'
-        }
-        let form2 = this.$lodash.cloneDeep(this.form)
-
-        this.form2 = form2
+        this.form2 = this.$lodash.cloneDeep(this.form)
       },
       save () {
         console.log('save4strcuture')

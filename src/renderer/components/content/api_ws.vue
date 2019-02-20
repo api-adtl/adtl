@@ -59,7 +59,7 @@
                             shape="circle"
                             type="primary">编辑
                     </Button>
-                    <readme :dd="dd" :edit="edit.readme" v-model="is_init"></readme>
+                    <readme :dd="dd" :edit="edit.readme"></readme>
 
                 </div>
 
@@ -235,6 +235,7 @@
       },
       //初始化
       init () {
+        this.init_data()
         this.read_api()
         let groupb = new group(this.dd1.dir)
         groupb.read('info', {}, (data) => {
@@ -249,10 +250,44 @@
           }
         })
       },
+      init_data () {
+
+        this.group = {}
+        this.is_init = false
+        this.dd1 = this.$store.state.api_list[this.number]
+        this.dd = {}
+        this.send = {
+          get: {},
+          form: {},
+          header: {},
+          structure: '',
+          data: {}
+        }
+        this.select = {
+          readme: true,
+          jiben: false,
+          get: false,
+          form: false,
+          structure: false,
+          test: false,
+          generated: false
+        }
+        this.grnerated = {}
+        this.edit = {
+          readme: false,
+          jiben: false,
+          get: false,
+          form: false,
+          structure: false,
+          test: false,
+          generated: false
+        }
+      },
       read_api () {
         console.log('read_api', this.dd1.dir)
         let listo = new lists(this.dd1.dir)
         listo.read((data) => {
+          this.is_init = true
           console.log('read_api ok:', data)
           this.dd = data.api[this.dd1.e_name]
         })

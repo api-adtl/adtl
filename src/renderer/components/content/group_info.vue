@@ -7,10 +7,18 @@
         <br>
 
         <div v-if="dataempty">
-            当前分组信息为空,继承父级信息为:
-            {{pdata}}
+            <span style="color: red;">当前分组信息为空,继承父级信息为(
+                <span style="color: #3737a5;font-weight: bold;">
+                     表单信息保存后不再继承府级信息
+                </span>
+
+                ):</span>
+            <br>
+            <pre>{{ pdata }}</pre>
+
 
         </div>
+
 
         <form name="addgroup">
             <div>
@@ -75,7 +83,7 @@
 
         },
         pdata: {},
-        dataempty: true,
+        dataempty: false,
         validation: {},
         attributes: {
           name: '名字1',   //设置表单属性对应的中文名
@@ -114,6 +122,7 @@
         this.groupob.save('info', this.form, (data) => {
           console.log('save_ok', data)
           this.$Message.success('保存成功!')
+          this.init()
         })
 
       },
@@ -128,6 +137,7 @@
             this.groupob.readp('info', {}, (data) => {
               console.log('readp', data)
               this.pdata = data
+              this.form = this.pdata
             })
           }
 
