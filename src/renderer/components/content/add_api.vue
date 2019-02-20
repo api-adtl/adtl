@@ -48,7 +48,7 @@
         <div>
             文件夹：
             <span style="font-size: 15px;font-weight: 900;">{{form.dir}}</span>
-            <span>{{ errors.first('url') }}</span>
+
         </div>
 
 

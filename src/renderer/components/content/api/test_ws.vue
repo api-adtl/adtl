@@ -16,7 +16,7 @@
     </div>
 </template>
 <script>
-  import test from '@/logic/test'
+  import test from '../../../logic/test'
   import response from './response'
   import Mock from 'mockjs'
 

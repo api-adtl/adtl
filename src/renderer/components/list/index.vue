@@ -15,7 +15,8 @@
 
                 </Collapse>
                 <CellGroup>
-                    <Cell :extra="apiobj.request_type" :title="apiobj.name" :to="apiobj.number|apito"
+                    <Cell :extra="apiobj.request_type" :title="apiobj.name"
+                          :to="apiobj|apito"
                           selected style="border: #ccc solid 1px;margin-top: 2px"
                           v-for="apiobj in listdata.api"/>
                 </CellGroup>
@@ -26,6 +27,7 @@
 
                 <Button @click="open_in_folder" size="small" type="primary">OIF</Button>
             </div>
+
 
             <div v-if="dir!='.' && add">
                 <Button @click="add_api" size="small" type="primary">+API</Button>
@@ -71,10 +73,16 @@
     //dir
     filters: {
       dirr (value, dir) {
-        return path.join(dir, value)
+        return path.posix.join(dir, value)
       },
       apito (value) {
-        return {name: 'api', query: {number: value}}
+        console.log('79', value)
+        if (value.request_type == 'ws') {
+          return {name: 'api_ws', query: {number: value.number}}
+        } else {
+          return {name: 'api', query: {number: value.number}}
+        }
+
       }
     },
     computed: {
@@ -124,7 +132,7 @@
           onOk: () => {
             let listo = new lists(this.dd.dir)
             listo.read(() => {
-              listo.remove(this.dd.e_name, () => {
+              listo.remove_group(this.dd.e_name, () => {
                 this.$Message.info('删除完成!')
                 this.$router.push('/open')
               })
