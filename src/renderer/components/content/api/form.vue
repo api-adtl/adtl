@@ -213,8 +213,8 @@
         for (let vv of now2) {
           va[vv.name] = vv.value
         }
-        this.value = va
-        this.$emit('input', this.value)
+        //this.value = va
+        this.$emit('input', va)
       }
 
     },

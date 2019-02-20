@@ -96,7 +96,7 @@
                         shape="circle"
                         type="primary">编辑
                 </Button>
-                <api_header :dd="dd" :edit="edit.header">
+                <api_header :dd="dd" :edit="edit.header" v-model="send.headers">
                 </api_header>
             </div>
 
@@ -153,7 +153,7 @@
         send: {
           get: {},
           form: {},
-          header: {}
+          headers: {}
         },
         select: {
           readme: true,
@@ -200,7 +200,7 @@
     watch: {
       number (new1) {
         this.dd1 = this.$store.state.api_list[new1]
-        this.read_api()
+        this.init()
       }
     },
     methods: {

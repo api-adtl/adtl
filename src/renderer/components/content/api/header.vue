@@ -81,8 +81,9 @@
           }
         }
         this.form = newdata
+        this.$emit('input', newdata)
         this.form2 = this.$lodash.cloneDeep(this.form)
-        this.apiobj.save('header', [], () => {
+        this.apiobj.save('header', newdata, () => {
           console.log('保存成功')
         })
       },
@@ -103,7 +104,17 @@
       },
       dd () {
         this.init()
+      },
+      form2 (now2) {
+        console.log('from2', now2)
+        let va = {}
+        for (let vv of now2) {
+          va[vv.name] = vv.value
+        }
+        //this.value = va
+        this.$emit('input', va)
       }
+
     },
     created () {
       //创建完成后
