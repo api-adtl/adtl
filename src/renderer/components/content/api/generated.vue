@@ -134,7 +134,7 @@
         }
         this.form = newdata
         console.log('save4generated')
-        this.value = this.$lodash.cloneDeep(this.form)
+        this.$emit('input', this.$lodash.cloneDeep(this.form))
         this.apiobj.save('generated', newdata, () => {
           console.log('保存成功')
         })
@@ -157,9 +157,6 @@
       },
       api () {
         this.init()
-      },
-      value (new1) {
-        this.$emit('input', new1)
       }
     },
     created () {

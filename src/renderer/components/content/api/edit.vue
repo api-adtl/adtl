@@ -34,6 +34,7 @@
         <div>
             请求类型：
             <RadioGroup v-model="form.request_type">
+                <Radio label="ws"></Radio>
                 <Radio label="get"></Radio>
                 <Radio label="post"></Radio>
                 <Radio label="put"></Radio>

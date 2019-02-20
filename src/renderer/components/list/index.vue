@@ -6,10 +6,10 @@
                     <Panel :name="groupobj.e_name" v-for="groupobj in listdata.group">
                         {{groupobj.name}}
                         <p slot="content">
-                            <list_index :add="add" :dd="groupobj" :dir="groupobj.e_name|dirr(dir)"
-                                        :f5="f5"
-                                        @add_content="add_content"
-                            ></list_index>
+                            <list_index :add="add" :dd="groupobj"
+                                        :dir="groupobj.e_name|dirr(dir)" :f5="f5"
+                                        @add_content="add_content">
+                            </list_index>
                         </p>
                     </Panel>
 
