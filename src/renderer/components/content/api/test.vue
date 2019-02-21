@@ -14,7 +14,7 @@
     </div>
 </template>
 <script>
-  import test from '@/logic/test'
+  import test from '../../../logic/test'
   import response from './response'
   import Mock from 'mockjs'
 
@@ -74,10 +74,16 @@
         this.test1(this.send2)
       },
       test1 (send) {
-        console.log('send', send)
+        console.log('send77', this.testob, send)
         this.testob.send(send, (data) => {
-          console.log('返回数据!', data)
-          this.response = this.$lodash.cloneDeep(data)
+
+          if (typeof data == 'string') {
+
+            console.log('返回数据!', data)
+          } else {
+            this.response = this.$lodash.cloneDeep(data)
+
+          }
         })
       },
       init () {

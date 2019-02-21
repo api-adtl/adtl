@@ -8,7 +8,7 @@ class ws {
 
   }
 
-  send (url, senddata, callbak) {
+  send (type, url, senddata, callbak) {
     console.log(this.conn)
     if (this.conn.readyState != '1') {
       this.conn = this.get_new(true)

@@ -7,6 +7,17 @@
                 <table border="1" style="    width: 100%;">
                     <tr v-for="input,key in form">
                         <th>
+                            名字
+                        </th>
+                        <th>
+                            内容
+                        </th>
+                        <th>
+                            备注
+                        </th>
+                    </tr>
+                    <tr v-for="input,key in form">
+                        <th>
                             <input type="text" v-model="form[key].name">
                         </th>
                         <th><input type="text" v-model="form[key].value"></th>

@@ -30,7 +30,7 @@
             <br>
 
             <div>
-                标识：
+                端口：
                 <Input name="port" placeholder="端口" style="width: 300px"
                        v-model="form.port" v-validate="validation.port"/>
                 <span>{{ errors.first('port') }}</span>
@@ -84,7 +84,11 @@
         },
         pdata: {},
         dataempty: false,
-        validation: {},
+        validation: {
+          port: {
+            numeric: true
+          }
+        },
         attributes: {
           name: '名字1',   //设置表单属性对应的中文名
           ename: '标识',

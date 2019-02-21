@@ -157,7 +157,11 @@
             'lists',
             'group'
           ]
-          no = lodash.concat(no, this.lists.biaoshi)
+          if (typeof this.lists.biaoshi == 'object') {
+            no = lodash.concat(no, this.lists.biaoshi)
+          }
+
+
           console.log('验证', no, value, lodash.indexOf(no, value))
           if (lodash.indexOf(no, value)>-1) {
             return false
