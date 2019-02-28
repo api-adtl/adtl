@@ -13,7 +13,7 @@ class ws {
     if (this.conn.readyState != '1') {
       this.conn = this.get_new(true)
       this.conn.onopen = () => {
-        this.send(url, senddata, callbak)
+        this.send(type, url, senddata, callbak)
       }
       return 1
     }

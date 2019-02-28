@@ -205,7 +205,7 @@
     watch: {
       number (new1) {
         this.dd1 = this.$store.state.api_list[new1]
-        this.read_api()
+        this.init()
       }
     },
     methods: {
@@ -220,6 +220,20 @@
           })
         })
 
+      },
+      read_group () {
+        let groupb = new group(this.dd1.dir)
+        groupb.read('info', {}, (data) => {
+          if (this.$lodash.isEmpty(data)) {
+            groupb.readp('info', {}, (data) => {
+              console.log('read group', data)
+              this.group = data
+            })
+
+          } else {
+            this.group = data
+          }
+        })
       },
       //方法列表
       select1 (name) {
@@ -237,18 +251,8 @@
       init () {
         this.init_data()
         this.read_api()
-        let groupb = new group(this.dd1.dir)
-        groupb.read('info', {}, (data) => {
-          if (this.$lodash.isEmpty(data)) {
-            groupb.readp('info', {}, (data) => {
-              console.log('read group', data)
-              this.group = data
-            })
+        this.read_group()
 
-          } else {
-            this.group = data
-          }
-        })
       },
       init_data () {
 

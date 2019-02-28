@@ -2,7 +2,7 @@
     <div style="overflow: auto;height: 600px;">
         <div>
             API信息:
-            {{dd}}
+            {{dd1}}
             <Button @click="deletee" size="small" type="primary">删除API</Button>
             <br>
             分组信息 : {{group}} <br>
@@ -59,7 +59,7 @@
                             shape="circle"
                             type="primary">编辑
                     </Button>
-                    <readme :dd="dd" :edit="edit.readme" v-model="is_init"></readme>
+                    <readme :dd="dd1" :edit="edit.readme" v-model="is_init"></readme>
 
                 </div>
 
@@ -70,7 +70,7 @@
                         shape="circle"
                         type="primary">编辑
                 </Button>
-                <basic :dd="dd" :edit="edit.jiben"></basic>
+                <basic :dd="dd1" :edit="edit.jiben"></basic>
 
 
             </div>
@@ -80,7 +80,7 @@
                         shape="circle"
                         type="primary">编辑
                 </Button>
-                <api_get :dd="dd" :edit="edit.get" v-model="send.get"></api_get>
+                <api_get :dd="dd1" :edit="edit.get" v-model="send.get"></api_get>
 
             </div>
             <div v-if="is_init" v-show="select.form">
@@ -88,7 +88,7 @@
                         shape="circle"
                         type="primary">编辑
                 </Button>
-                <api_form :dd="dd" :edit="edit.form" v-model="send.form">
+                <api_form :dd="dd1" :edit="edit.form" v-model="send.form">
                 </api_form>
             </div>
             <div v-if="is_init" v-show="select.header">
@@ -96,12 +96,12 @@
                         shape="circle"
                         type="primary">编辑
                 </Button>
-                <api_header :dd="dd" :edit="edit.header" v-model="send.headers">
+                <api_header :dd="dd1" :edit="edit.header" v-model="send.headers">
                 </api_header>
             </div>
 
             <div v-if="is_init" v-show="select.test">
-                <api_test :api="dd" :grnerated="grnerated"
+                <api_test :api="dd1" :grnerated="grnerated"
                           :group="group"
                           :send="send"></api_test>
             </div>
@@ -111,7 +111,7 @@
                         shape="circle"
                         type="primary">编辑
                 </Button>
-                <generated :api="dd"
+                <generated :api="dd1"
                            :edit="edit.generated"
                            :group="group"
                            :send="send"
@@ -149,7 +149,6 @@
         group: {},
         is_init: false,
         dd1: this.$store.state.api_list[this.number],
-        dd: {},
         send: {
           get: {},
           form: {},
@@ -198,8 +197,7 @@
       generated
     },
     watch: {
-      number (new1) {
-        this.dd1 = this.$store.state.api_list[new1]
+      number () {
         this.init()
       }
     },
@@ -209,7 +207,7 @@
         let listb = new lists(this.dd1.dir)
         listb.read((data) => {
           console.log('data', data)
-          listb.remove_api(this.dd.e_name, () => {
+          listb.remove_api(this.dd1.e_name, () => {
             this.$Message.success('删除成功!')
             this.$router.push('/open/')
           })
@@ -230,6 +228,7 @@
       },
       //初始化
       init () {
+        this.dd1 = this.$store.state.api_list[this.number]
         this.read_api()
         let groupb = new group(this.dd1.dir)
         groupb.read('info', {}, (data) => {
@@ -249,7 +248,7 @@
         let listo = new lists(this.dd1.dir)
         listo.read((data) => {
           console.log('read_api ok:', data)
-          this.dd = data.api[this.dd1.e_name]
+          this.dd1 = data.api[this.dd1.e_name]
         })
       }
     },
