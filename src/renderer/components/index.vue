@@ -27,6 +27,8 @@
 
 <script>
   import cache from '@/logic/cache'
+  import fs from 'fs'
+  import path from 'path'
 
   export default {
     name: 'landing-page',
@@ -48,9 +50,31 @@
         e.stopPropagation()
         for (let f of e.dataTransfer.files) {
           //跳转
-          this.$store.commit('set_now', f.path)
-          this.$router.push('/open/')
+          this.now = f.path
+          this.is_dir()
         }
+      },
+      is_dir () {
+        console.log('now', this.now)
+        fs.stat(this.now, (err, stats) => {
+          console.log(err, stats)
+          if (err) {
+            throw err
+          } else {
+            this.$Message.success('正在打开!')
+            if (stats.isDirectory()) {
+              //文件夹
+              this.$store.commit('set_now', this.now)
+            } else {
+              let pp = path.dirname(this.now)
+              this.$store.commit('set_now', pp)
+
+            }
+            this.$router.push('/open/')
+          }
+
+        })
+
       },
       dragover (e) {
         e.preventDefault()
@@ -67,7 +91,7 @@
     created () {
       let hist = this.$ls.get('history')
       this.hist = hist
-      this.open_old();
+      this.open_old()
 
     }
   }

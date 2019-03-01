@@ -136,7 +136,11 @@
                 this.isdir = true
                 this.dir_call()
               } else {
-                this.$Message.warning('This is a success tip')
+                let pp = path.dirname(this.now)
+                this.$store.commit('set_now', pp)
+                this.$Message.success('正在打开!')
+
+                this.$router.push('/open/')
               }
             }
 

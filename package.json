@@ -1,9 +1,9 @@
 {
   "name": "api_demo",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "author": "dongasai <1514582970@qq.com>",
   "description": "一个开源的/无服务器的api测试工具",
-  "license": null,
+  "license": "BSD 2-Clause",
   "main": "./dist/electron/main.js",
   "scripts": {
     "build": "node electron-vue/build.js && electron-builder",
