@@ -16,6 +16,7 @@ class lists {
     }
     this.all = {}
     this.path = path.join(store.getters.now_open.toString(), this.dir, 'list.json')
+
   }
 
   read (callback) {
@@ -52,7 +53,7 @@ class lists {
   }
 
   read2 (callback) {
-
+    console.log('read2', this.path)
     fs.readFile(this.path, {
       encoding: 'utf8'
     }, (err, data1) => {

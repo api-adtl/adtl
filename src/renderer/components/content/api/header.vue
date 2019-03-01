@@ -7,6 +7,17 @@
                 <table border="1" style="    width: 100%;">
                     <tr v-for="input,key in form">
                         <th>
+                            名字
+                        </th>
+                        <th>
+                            内容
+                        </th>
+                        <th>
+                            备注
+                        </th>
+                    </tr>
+                    <tr v-for="input,key in form">
+                        <th>
                             <input type="text" v-model="form[key].name">
                         </th>
                         <th><input type="text" v-model="form[key].value"></th>
@@ -81,8 +92,9 @@
           }
         }
         this.form = newdata
+        this.$emit('input', newdata)
         this.form2 = this.$lodash.cloneDeep(this.form)
-        this.apiobj.save('header', [], () => {
+        this.apiobj.save('header', newdata, () => {
           console.log('保存成功')
         })
       },
@@ -103,7 +115,17 @@
       },
       dd () {
         this.init()
+      },
+      form2 (now2) {
+        console.log('from2', now2)
+        let va = {}
+        for (let vv of now2) {
+          va[vv.name] = vv.value
+        }
+        //this.value = va
+        this.$emit('input', va)
       }
+
     },
     created () {
       //创建完成后

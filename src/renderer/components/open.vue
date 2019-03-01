@@ -36,8 +36,6 @@
                             <div id="lists" style="height: 650px;overflow-y: auto;">
                                 <list v-model="content_list"></list>
                             </div>
-
-
                         </Sider>
                         <Content :style="{padding: '2px', minHeight: '380px', background: '#fff'}">
                             <router-view v-if="now"></router-view>

@@ -73,7 +73,7 @@
     //dir
     filters: {
       dirr (value, dir) {
-        return path.join(dir, value)
+        return path.posix.join(dir, value)
       },
       apito (value) {
         console.log('79', value)

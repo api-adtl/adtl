@@ -11,13 +11,13 @@
         <br>
 
         <Button @click="test" size="small" type="primary">进行测试</Button>
-        <response :response="response"></response>
+        <response_ws :response="response"></response_ws>
 
     </div>
 </template>
 <script>
-  import test from '@/logic/test'
-  import response from './response'
+  import test from '../../../logic/test'
+  import response_ws from './response_ws'
   import Mock from 'mockjs'
 
   export default {
@@ -43,7 +43,7 @@
     },
     components: {
       //注册组件
-      response
+      response_ws
     },
     methods: {
       //方法列表
@@ -82,19 +82,23 @@
       },
       test () {
         //进行测试
-        this.test1(JSON.parse(this.sendstr))
+        this.test1(this.sendstr)
       },
       test1 (send) {
         console.log('send', send)
         this.testob.send(send, (data) => {
           console.log('返回数据!', data)
-          this.response = this.$lodash.cloneDeep(data)
+          this.response = JSON.parse(data)
         })
       },
       init () {
         this.send2 = this.$lodash.cloneDeep(this.send)
-        console.log('log,init')
-        this.testob = new test(this.api, this.group)
+        console.log('log,init', this.api, this.group)
+        this.jiegou()
+        if (!this.$lodash.isEmpty(this.api) && !this.$lodash.isEmpty(this.group)) {
+          this.testob = new test(this.api, this.group)
+        }
+
       }
     },
     watch: {
@@ -105,13 +109,28 @@
           console.log(noww1)
           this.init()
         }
-
+      },
+      group (value) {
+        if (!this.$lodash.isEmpty(value)) {
+          this.init()
+        }
       }
     },
 
     created () {
       //创建完成后
       this.init()
+    },
+    beforeDestroy () {
+      console.log('beforeDestroy', this.group)
+      if (this.group.persistence == '1') {
+        console.log('持久化不销毁')
+      } else {
+        this.testob.close()
+      }
+    },
+    beforeRouteLeave () {
+      this.beforeDestroy()
     }
   }
 </script>

@@ -42,7 +42,9 @@ Vue.http = Vue.prototype.$http = axios
 Vue.config.productionTip = false
 // Vue.store=store;
 /* eslint-disable no-new */
+var bus = new Vue()
 new Vue({
+  bus: bus,
   components: {App},
   router,
   store,

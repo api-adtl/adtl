@@ -72,7 +72,7 @@
 
       },
       init_data () {
-        let send = this.value
+        let send = this.$lodash.cloneDeep(this.value)
         let form2 = this.$lodash.cloneDeep(this.form)
         if (!this.$lodash.isEmpty(send)) {
           this.$lodash.forIn(form2, (d) => {

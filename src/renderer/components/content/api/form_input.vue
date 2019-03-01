@@ -106,6 +106,9 @@
     directives: {
       //自定义指令
     },
+    mounted () {
+      //挂载之后
+    },
     filters: {
       //过滤器
       dateformat (valuu) {

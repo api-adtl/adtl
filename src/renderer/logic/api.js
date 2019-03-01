@@ -72,6 +72,7 @@ class api {
       if (err) {
         throw err
       }
+      console.log(data1)
       if( pathjson.substr(-4)=='json'){
         callback(JSON.parse(data1))
       }else{
