@@ -106,7 +106,7 @@
     components: {},
     methods: {
       go_api () {
-        this.$router.push({name: 'api', query: {number: this.form.number}})
+        this.$router.go(-1);
       },
       save () {
         // 先进行验证
