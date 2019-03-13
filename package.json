@@ -1,6 +1,6 @@
 {
   "name": "api_demo",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "dongasai <1514582970@qq.com>",
   "description": "一个开源的/无服务器的api测试工具",
   "license": "BSD 2-Clause",

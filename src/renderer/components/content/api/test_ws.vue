@@ -11,6 +11,7 @@
         <br>
 
         <Button @click="test" size="small" type="primary">进行测试</Button>
+        <Button @click="test100" size="small" type="primary">进行测试*100</Button>
         <response_ws :response="response"></response_ws>
 
     </div>
@@ -83,6 +84,13 @@
       test () {
         //进行测试
         this.test1(this.sendstr)
+      },
+      test100 () {
+        //进行测试
+        for (let i = 0; i < 100; i++) {
+          this.test1(this.sendstr)
+        }
+
       },
       test1 (send) {
         console.log('send', send)

@@ -10,7 +10,7 @@
                 <span>
                     可用变量$url:地址
                     $get :get参数(数组格式)
-                    $post:post表单(数组格式)
+                    $form:post表单(数组格式)
                 </span>
             </form>
         </div>
