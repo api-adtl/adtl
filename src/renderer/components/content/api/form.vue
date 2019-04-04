@@ -5,17 +5,31 @@
             编辑
             <form action="">
                 <table border="1" style="    width: 100%;">
+                  <tr >
+                    <th>表单name</th>
+                    <th>表单value</th>
+                    <th>表单类型</th>
+                    <th>注释</th>
+                    <th>选项</th>
+                  </tr>
                     <tr v-for="input,key in form">
-                        <th>
-                            <input placeholder="名字" style="width: 50px"
+                        <th style="width:90px">
+                            <input placeholder="名字" style="width: 80px"
                                    type="text"
                                    v-model="input.name">
                         </th>
                         <th>
-                            <input placeholder="默认值" type="text" v-model="input.value">
+                            
+                            <input v-if="input.type != 'json'" style="width: 95%" placeholder="默认值" 
+                            type="text" v-model="input.value">
+                            <div v-if="input.type == 'json'" >
+                              {{ input.value }}
+                              
+                            </div>
+
                         </th>
                         <th>
-                            <div style="    width: 150px;">
+                            <div style="min-width: 150px;max-width:300px">
                                 <RadioGroup @on-change="type_change(input)" v-model="input.type">
                                     <Radio label="text"></Radio>
                                     <Radio label="number"></Radio>
@@ -26,6 +40,7 @@
                                     <Radio label="date"></Radio>
                                     <Radio label="time"></Radio>
                                     <Radio label="file_pro"></Radio>
+                                    <Radio label="json"></Radio>
                                 </RadioGroup>
                             </div>
                         </th>
@@ -79,10 +94,13 @@
 <script>
   import api from '@/logic/api'
   import form_input from './form_input'
-
+  import JsonEditor from 'vue-json-ui-editor';
   export default {
     name: 'api_form',
-    components: {form_input},
+    components: {
+      form_input,
+      JsonEditor
+      },
     data () {
       return {
         option: {
@@ -98,7 +116,8 @@
           checkbox: '',
           select: '',
           file_pro: '独立的文件上传,参考:https://www.iviewui.com/components/upload ' +
-            '能接受: action,multiple,accept,max-size'
+            '能接受: action,multiple,accept,max-size',
+          json: '符合json规范的字符串,会自动转换为json对象提交'
         },
         form: [
 
@@ -207,14 +226,17 @@
       dd () {
         this.init()
       },
-      form2 (now2) {
-        console.log('from2', now2)
-        let va = {}
-        for (let vv of now2) {
-          va[vv.name] = vv.value
-        }
-        //this.value = va
-        this.$emit('input', va)
+      form2: {
+        handler:function(now2) {
+          console.log('from2', now2)
+          let va = {}
+          for (let vv of now2) {
+            va[vv.name] = vv.value
+          }
+          //this.value = va
+          this.$emit('input', va)
+        },
+        deep: true
       }
 
     },

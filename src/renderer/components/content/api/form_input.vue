@@ -7,9 +7,15 @@
                 <div v-if="input.type=='text'">
                     <Input style="width: 300px" v-model="input.value"/>
                 </div>
+
                 <div v-if="input.type=='textarea'">
                     <Input :rows="4" style="width: 400px" type="textarea" v-model="input.value"/>
                 </div>
+
+                <div v-if="input.type=='json'">
+                    <Input :rows="4" style="width: 400px" type="textarea" v-model="input.value"/>
+                </div>
+
                 <div v-if="input.type=='number'">
                     <Input style="width: 400px" type="number" v-model="input.value"/>
                 </div>
@@ -59,12 +65,12 @@
                 </div>
 
 
-                <p>当前值:<span>{{input.value}}</span></p>
+                <p>当前值:<span>{{ input.value }}</span></p>
 
-                <span>{{ input.description }}</span>
-                {{ input.type }}
+                描述: <span>{{ input.description }}</span><br>
+                类型: {{ input.type }}
                 <br>
-                {{ input.optional }}
+                配置项: {{ input.optional }}
             </div>
         </div>
 
@@ -73,7 +79,6 @@
 
 <script>
   import lodash from 'lodash'
-
   export default {
     name: 'form_input',
     //混合
@@ -92,6 +97,7 @@
       //计算属性
     },
     components: {
+      
       //注册组件
     },
     methods: {
