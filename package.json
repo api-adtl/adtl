@@ -1,5 +1,5 @@
 {
-  "name": "api_demo",
+  "name": "adtl",
   "version": "1.0.4",
   "author": "dongasai <1514582970@qq.com>",
   "description": "一个开源的/无服务器的api测试工具",
@@ -22,8 +22,8 @@
     "postinstall": "npm run lint:fix"
   },
   "build": {
-    "productName": "api_demo",
-    "appId": "xs.apidemo",
+    "productName": "adtl",
+    "appId": "xs.adtl",
     "directories": {
       "output": "build"
     },
