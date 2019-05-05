@@ -7,18 +7,22 @@
                 </span>
 
                 <div @dragover="dragover" @drop="dropopen" id="holder">
-                    拖动项目文件夹/项目描述文件到这里
+                    
+                    <div style="    font-size: 3em;    color: green;    font-weight: 900;">
+                      拖动项目文件夹/项目描述文件到这里
+                    </div>
+                    <div class="hist-list" v-if="hist">
+                      项目列表:
+                      <br><br>
+                      <ul>
+                          <li v-for="hi in hist" @click="open_obj(hi)">
+                              {{hi}}
+                          </li>
+                      </ul>
+                  </div>
                 </div>
 
-                <div v-if="hist">
-                    项目列表:
-
-                    <ul>
-                        <li v-for="hi in hist" @click="open_obj(hi)">
-                            {{hi}}
-                        </li>
-                    </ul>
-                </div>
+                
 
             </div>
         </main>
@@ -34,7 +38,9 @@
     name: 'landing-page',
     data () {
       return {
-        hist: null
+        hist: null,
+        w:100,
+        h:100
       }
     },
     components: {},
@@ -91,16 +97,28 @@
     created () {
       let hist = this.$ls.get('history')
       this.hist = hist
-      this.open_old()
-
+      this.open_old();
+    },
+    mounted(){
+      this.h = document.body.clientHeight;
+      this.w = document.body.clientWidth;
     }
+    //document.body.clientHeight
   }
 </script>
 
 <style>
+    .hist-list{
+      font-size: 2em;
+
+    }
+    .hist-list li{
+      display:inline;line-height:24px;height:auto;word-break:break-all;word-wrap : break-word ;
+    }
     #holder {
-        width: 200px;
-        height: 200px;
+        padding: 30px;
+        width: 100%;
+        height: 100%;
         background-color: blanchedalmond;
     }
 
@@ -134,15 +152,16 @@
     }
 
     main {
+       width: 100%;
+        height: 100%;
         display: flex;
         justify-content: space-between;
     }
 
-    main > div {
-        flex-basis: 50%;
-    }
-
+    
     .left-side {
+      width: 100%;
+        height: 100%;
         display: flex;
         flex-direction: column;
     }

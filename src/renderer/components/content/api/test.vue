@@ -4,10 +4,8 @@
         group:{{group}}<br>
         send: {{send2}}{{send}}
         <br>
-        <Button @click="random" size="small" type="primary">应用生成器</Button>
-
+        <Button @click="random" size="small" type="primary">数据生成</Button>
         <br>
-
         <Button @click="test" size="small" type="primary">进行测试</Button>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <Button @click="test13" size="small" type="primary">生成 & 测试</Button>
@@ -26,7 +24,8 @@
       return {
         testob: {},
         response: {},
-        send2: {}
+        send2: {},
+        loading:true
       }
     },
 
@@ -76,7 +75,11 @@
       },
       test () {
         //进行测试
-        this.test1(this.send2)
+        if(this.loading==false){
+          this.loading = true;
+          this.test1(this.send2)
+        }
+        
       },
       test13(){
         this.random();
@@ -84,7 +87,8 @@
       },
       test1 (send) {
           this.testob.send(send, (data) => {
-             console.log('返回!', data)
+             this.loading = false;
+            console.log('返回!', data)
           if (typeof data == 'string') {
             console.log('返回数据!', data)
           } else {
@@ -93,6 +97,7 @@
         })
       },
       init () {
+        this.loading = false;
         this.send2 = this.$lodash.cloneDeep(this.send)
         console.log('log,init')
         this.testob = new test(this.api, this.group)
@@ -107,6 +112,13 @@
           this.init()
         }
 
+      },
+      loading(new1){
+        if(new1 == true){
+          this.$Spin.show();
+        }else{
+          this.$Spin.hide();
+        }
       }
     },
 
