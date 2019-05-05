@@ -85,7 +85,7 @@
           ename: {
             required: true,
             alpha_num: true,
-            min: 5,
+            min: 3,
             max: 20,
             e_name: true
           },

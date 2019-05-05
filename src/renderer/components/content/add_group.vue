@@ -91,7 +91,8 @@
       save_file () {
 
         this.listo.add_group(this.form, () => {
-
+          this.$Message.success("分组处理成功");
+          this.$router.push('/open')
         })
 
       },

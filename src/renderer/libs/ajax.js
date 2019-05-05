@@ -17,6 +17,9 @@ class ajax {
     if (type == 'post') {
       return this.post_send(url, senddata, callbak)
     }
+    if (type == 'view') {
+      return this.get_send(url, senddata, callbak)
+    }
 
   }
 

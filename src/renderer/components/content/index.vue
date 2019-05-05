@@ -1,10 +1,9 @@
 <template>
   <div>
-    内容列表/index
+    内容列表/index 1-
+
     <span>
-      list_string:{{tab0}}
-
-
+      list_string: {{tab0}}
     </span>
   </div>
 </template>
@@ -25,8 +24,15 @@
 
     components: {  },
     methods: {},
-    created(){
-
+    mounted(){
+      //组件激活
+      let f5 = document.getElementById("f5");
+      if(typeof f5 == 'object'){
+        
+        f5.click();
+      }
+      this.$Message.success("刷新列表完成!");
+    
     }
   }
 </script>

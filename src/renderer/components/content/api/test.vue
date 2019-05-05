@@ -9,7 +9,7 @@
         <br>
 
         <Button @click="test" size="small" type="primary">进行测试</Button>
-        <response :response="response"></response>
+        <response :response="response" :api="api"></response>
 
     </div>
 </template>
@@ -74,15 +74,12 @@
         this.test1(this.send2)
       },
       test1 (send) {
-        console.log('send77', this.testob, send)
-        this.testob.send(send, (data) => {
-
+          this.testob.send(send, (data) => {
+             console.log('返回!', data)
           if (typeof data == 'string') {
-
             console.log('返回数据!', data)
           } else {
             this.response = this.$lodash.cloneDeep(data)
-
           }
         })
       },

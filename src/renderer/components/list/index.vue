@@ -173,7 +173,6 @@
           this.$lodash.forIn(this.listdata.api, (b, key) => {
 
             this.$store.commit('add_api', b)
-            console.log('167')
             this.listdata.api[key].number = this.$store.getters.apinum
 
           })

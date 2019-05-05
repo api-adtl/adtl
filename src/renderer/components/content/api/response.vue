@@ -1,19 +1,33 @@
 <template>
     <div>
         测试结果组件
+        {{ api }}
         <br>
-        <ButtonGroup>
-            <Button :style="bus" @click="open('data')" ghost type="primary">data</Button>
-            <Button :style="bus" @click="open('config')" ghost type="primary">config</Button>
-            <Button :style="bus" @click="open('status')" ghost type="primary">status</Button>
-            <Button :style="bus" @click="open('headers')" ghost type="primary">headers</Button>
-            <Button :style="bus" @click="open('all')" ghost type="primary">ALL</Button>
-        </ButtonGroup>
         <div>
-            <div v-if="status.data">
+         
+          <dir>
+            <ButtonGroup>
+              <Button :style="bus" @click="open('data')" ghost type="primary">data</Button>
+              <Button :style="bus" @click="open('config')" ghost type="primary">config</Button>
+              <Button :style="bus" @click="open('status')" ghost type="primary">status</Button>
+              <Button :style="bus" @click="open('headers')" ghost type="primary">headers</Button>
+              <Button :style="bus" @click="open('all')" ghost type="primary">ALL</Button>
+            </ButtonGroup>
+            </dir>
+            <div>
+            <div v-if="status.data" >
+              <div v-if="api.request_type != 'view'">
                 <pre>{{response.data|format}}</pre>
+              </div>
+              <div v-if="api.request_type== 'view'">
+              视图显示(红框不是内容)
+              <br>
+              <iframe width="100%" height="500px" style="border: 1px red solid;" frameborder="0" :src="response.config.url">
 
+              </iframe>
             </div>
+            </div>
+            
             <div v-if="status.config">
                 <pre>{{response.config|format}}</pre>
             </div>
@@ -26,6 +40,8 @@
             <div v-if="status.all">
                 <pre>{{response|format}}</pre>
             </div>
+          </div>
+            
         </div>
     </div>
 </template>
@@ -66,7 +82,8 @@
     },
     props: [
       //数据传参
-      'response'
+      'response',
+      'api'
     ],
     computed: {
       //计算属性
@@ -87,6 +104,7 @@
     },
     watch: {
       //监听列表
+     
     },
     beforeCreate () {
       //初始化之后
@@ -99,6 +117,7 @@
     },
     mounted () {
       //挂载之后
+      
     },
     beforeUpdate () {
       //更新开始之前

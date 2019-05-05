@@ -33,7 +33,7 @@ function createWindow () {
     mainWindow = null
   })
   if (process.env.NODE_ENV === 'development') {
-    BrowserWindow.addDevToolsExtension("/mnt/d/www/front_end/vue-devtools-4.1.5/shells/chrome");
+    BrowserWindow.addDevToolsExtension("/mnt/e/wwwroot/front_end/vue-devtools-5.1.0/shells/chrome");
   }
   //"/mnt/d/www/front_end/vue-devtools-4.1.5/shells/chrome"
 }
