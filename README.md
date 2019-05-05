@@ -11,13 +11,13 @@
 # 
 npm install
 
-# serve with hot reload
+# 测试运行,热更新的
 npm run dev
 
-# build electron application for production
+# 打包,当前平台
 npm run build
 
-# run unit & end-to-end tests
+# 运行unit和端到端测试
 npm test
 
 
@@ -52,4 +52,9 @@ https://gitee.com/adtl/storage_demonstration
 7. 配置API参数
 8. 点击测试
 
+> Snap仓库
+
+[ Snap 仓库](https://snapcraft.io/adtl)
+
 项目采用 [electron-vue](https://github.com/SimulatedGREG/electron-vue) 构建.
+
