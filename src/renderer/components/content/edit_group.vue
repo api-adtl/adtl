@@ -12,9 +12,10 @@
 
             <div>
                 标识：
-                <Input name="ename" placeholder="请输入分组标识(不可修改)" style="width: 300px"
+                <Input name="ename" disabled="disabled" placeholder="请输入分组标识(不可修改)" style="width: 300px"
                        v-model="form.e_name" v-validate="validation.e_name"/>
                 <span>{{ errors.first('ename') }}</span>
+                <span>不要试图修改它</span>
             </div>
             <br>
 
@@ -93,7 +94,8 @@
       save_file () {
 
         this.listo.add_group(this.$lodash.clone(this.form), () => {
-
+          this.$Message.success("保存成功");
+          this.$router.push('/open')
         })
 
       },

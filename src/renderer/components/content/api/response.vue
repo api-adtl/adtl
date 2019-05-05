@@ -16,16 +16,26 @@
             </dir>
             <div>
             <div v-if="status.data" >
-              <div v-if="api.request_type != 'view'">
+              <div v-if="api.request_type != 'view' & api.request_type != 'image'" >
                 <pre>{{response.data|format}}</pre>
               </div>
               <div v-if="api.request_type== 'view'">
-              视图显示(红框不是内容)
-              <br>
-              <iframe width="100%" height="500px" style="border: 1px red solid;" frameborder="0" :src="response.config.url">
+                视图显示(红框不是内容)
+                <br>
+                <iframe width="100%" height="500px" style="border: 1px red solid;" frameborder="0" 
+                :src="response.config.url">
+                </iframe>
+              </div>
 
-              </iframe>
-            </div>
+              <div v-if="api.request_type== 'image'">
+                图片显示 (红框不是内容,1px宽)
+                <br>
+                <div style="border: 1px red solid;">
+                  <img :src="response.config.url" >
+                </div>
+                
+                
+              </div>
             </div>
             
             <div v-if="status.config">
@@ -63,11 +73,11 @@
           width: '100px'
         },
         status: {
-          data: false,
+          data: true,
           config: false,
           status: false,
           headers: false,
-          all: true
+          all: false
         }
       }
     },

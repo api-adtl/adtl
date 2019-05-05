@@ -31,7 +31,7 @@
 
             <div v-if="dir!='.' && add">
                 <Button @click="add_api" size="small" type="primary">+API</Button>
-                <Button @click="group_info" size="small" type="primary">当前分组信息</Button>
+                <Button @click="group_info" size="small" type="primary">当前分组参数</Button>
                 <Button @click="edit_group" size="small" type="primary">编辑分组</Button>
                 <Button @click="del_group" size="small" type="primary">删除分组</Button>
             </div>

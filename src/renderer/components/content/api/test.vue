@@ -9,6 +9,8 @@
         <br>
 
         <Button @click="test" size="small" type="primary">进行测试</Button>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <Button @click="test13" size="small" type="primary">生成 & 测试</Button>
         <response :response="response" :api="api"></response>
 
     </div>
@@ -50,9 +52,12 @@
         let send = this.send2
         var Random = Mock.Random
         for (let valu of this.grnerated) {
-          mmrule[valu.name] = {}
+          if(typeof mmrule[valu.name] == 'undefined'){
+            mmrule[valu.name]={};
+          }
           if (this.$lodash.isEmpty(valu.format)) {
             //没有参数
+            console.log('56!',valu)
             mmrule[valu.name][valu.name2] = Random[valu.unit]()
           } else {
             if (this.$lodash.isArray(valu.format)) {
@@ -64,7 +69,7 @@
             }
           }
         }
-
+        
         this.send2 = this.$lodash.merge(send, mmrule)
         console.log('se4nd', this.send2)
 
@@ -72,6 +77,10 @@
       test () {
         //进行测试
         this.test1(this.send2)
+      },
+      test13(){
+        this.random();
+        this.test();
       },
       test1 (send) {
           this.testob.send(send, (data) => {

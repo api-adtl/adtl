@@ -7,10 +7,10 @@
                 <table border="1" style="    width: 100%;">
                     <tr v-for="input,key in form">
                         <th>
-                            <input type="text" v-model="form[key].name">
+                            <input type="text" v-model="form[key].name" placeholder="参数名字" >
                         </th>
-                        <th><input type="text" v-model="form[key].value"></th>
-                        <th><input type="text" v-model="form[key].description"></th>
+                        <th><input type="text" v-model="form[key].value" placeholder="默认值"></th>
+                        <th><input type="text" v-model="form[key].description" placeholder="提示信息"></th>
                     </tr>
                     <tr>
                         <th colspan="3">

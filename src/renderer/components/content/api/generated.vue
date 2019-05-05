@@ -43,7 +43,7 @@
                             <div>
                                 <input :rows="4"
                                        placeholder="format格式,JSON格式化字符串,数组将作为多参数传递" type="textarea"
-                                       v-model="form[key].format">
+                                       v-model="form[key].format2">
                                 <span>
                                 {{format[form[key].unit]}}
                             </span>
@@ -68,8 +68,6 @@
         <div v-if="!edit">
             <div v-for="input in value">
                 {{ input.name }} :{{input.name2}}
-
-
                 <span>
                     {{ input.unit }} -> {{ input.format }}
                 </span>
@@ -107,6 +105,11 @@
         this.apiobj = new api(this.api)
         this.apiobj.read('generated', this.form, (data) => {
           console.log('generated', data)
+          for(let d of data){
+            d.format2 = JSON.stringify(d.format);
+          }
+        
+          console.log(data);
           this.form = data
           this.init_data()
 
@@ -128,6 +131,8 @@
 
         let newdata = []
         for (let val of this.form) {
+          console.log(val.format2);
+          val.format=JSON.parse(val.format2);
           if (val.name != '') {
             newdata.push(val)
           }
@@ -144,7 +149,8 @@
           name: 'get',
           name2: '',
           unit: 'natural',
-          format: null
+          format: null,
+          format2:''
         })
       },
     },

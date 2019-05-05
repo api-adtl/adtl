@@ -5,10 +5,10 @@
 目前属于开发阶段,在1.0.0版本之前不打包可执行文件,有想折腾的请自行clone,有想日后使用的请star
 
 
-#### Build Setup
+> 构建步骤
 
 ``` bash
-# install dependencies
+# 
 npm install
 
 # serve with hot reload
@@ -29,14 +29,27 @@ npm run lint
 ---
 
 
-### 特色：
+> 特色：
 
 * 开源,免费,可修改
 * 无服务器依赖
 * 结构化数据
 * 版本控制
 
-#### 储存内容格式如下
-https://gitee.com/Dongasai/demonstration
+> 储存内容格式如下:
 
-This project was generated with [electron-vue](https://github.com/SimulatedGREG/electron-vue)@[8fae476](https://github.com/SimulatedGREG/electron-vue/tree/8fae4763e9d225d3691b627e83b9e09b56f6c935) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about the original structure can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).
+https://gitee.com/adtl/storage_demonstration
+
+
+> 使用说明:
+
+1. 创建一个目录用于储存数据
+2. 打开工具
+3. 将这个目录拖入工具
+4. 增加分组
+5. 增加API
+6. 配置分组参数
+7. 配置API参数
+8. 点击测试
+
+项目采用 [electron-vue](https://github.com/SimulatedGREG/electron-vue) 构建.

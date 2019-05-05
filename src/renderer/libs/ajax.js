@@ -20,7 +20,21 @@ class ajax {
     if (type == 'view') {
       return this.get_send(url, senddata, callbak)
     }
+    if (type == 'image') {
+      return this.get_send(url, senddata, callbak)
+    }
 
+    if (type == 'put') {
+      return this.put_send(url, senddata, callbak)
+    }
+
+    if (type == 'delete') {
+      return this.delete_send(url, senddata, callbak)
+    }
+
+    if(type == 'patch'){
+      return this.patch_send(url, senddata, callbak);
+    }
   }
 
   get_send (url, senddata, callbak) {
@@ -32,9 +46,34 @@ class ajax {
   }
 
   post_send (url, senddata, callbak) {
-    console.log('postqingqiu', arguments)
+    console.log('post_send', arguments)
 
     this.axios.post(url, qs.stringify(senddata.form), {
+      params: senddata.get,
+      headers: senddata.headers
+    }).then(callbak).catch(callbak)
+  }
+
+  put_send (url, senddata, callbak) {
+    console.log('put_send', arguments)
+    this.axios.put(url, qs.stringify(senddata.form), {
+      params: senddata.get,
+      headers: senddata.headers
+    }).then(callbak).catch(callbak)
+  }
+
+  patch_send (url, senddata, callbak) {
+    console.log('patch_send', arguments)
+    this.axios.patch(url, qs.stringify(senddata.form), {
+      params: senddata.get,
+      headers: senddata.headers
+    }).then(callbak).catch(callbak)
+  }
+
+  delete_send (url, senddata, callbak) {
+    console.log('delete_send', arguments)
+    this.axios.delete(url, 
+      {
       params: senddata.get,
       headers: senddata.headers
     }).then(callbak).catch(callbak)

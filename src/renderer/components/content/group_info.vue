@@ -7,7 +7,7 @@
         <br>
 
         <div v-if="dataempty">
-            <span style="color: red;">当前分组信息为空,继承父级信息为(
+            <span style="color: red;">当前分组参数为空,继承父级信息为(
                 <span style="color: #3737a5;font-weight: bold;">
                      表单信息保存后不再继承府级信息
                 </span>
