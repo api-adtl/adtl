@@ -86,6 +86,9 @@
         this.test();
       },
       test1 (send) {
+          if(this.$lodash.isEmpty(this.testob)){
+            this.init();
+          }
           this.testob.send(send, (data) => {
              this.loading = false;
             console.log('返回!', data)
@@ -99,8 +102,10 @@
       init () {
         this.loading = false;
         this.send2 = this.$lodash.cloneDeep(this.send)
-        console.log('log,init')
-        this.testob = new test(this.api, this.group)
+        
+        if (!this.$lodash.isEmpty(this.api) && !this.$lodash.isEmpty(this.group)) {
+          this.testob = new test(this.api, this.group)
+        }
       }
     },
     watch: {

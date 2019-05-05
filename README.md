@@ -2,8 +2,7 @@
 
 > 一个开源的/无服务器的api测试工具(类POSTMAN)
 
-目前属于开发阶段,在1.0.0版本之前不打包可执行文件,有想折腾的请自行clone,有想日后使用的请star
-
+相关介绍和教程请移步[**官网**](https://adtl.gitee.io/pages/)
 
 > 构建步骤
 
@@ -11,13 +10,13 @@
 # 
 npm install
 
-# serve with hot reload
+# 测试运行,热更新的
 npm run dev
 
-# build electron application for production
+# 打包,当前平台
 npm run build
 
-# run unit & end-to-end tests
+# 运行unit和端到端测试
 npm test
 
 
@@ -35,21 +34,12 @@ npm run lint
 * 无服务器依赖
 * 结构化数据
 * 版本控制
+* Mock数据生成
 
 > 储存内容格式如下:
 
 https://gitee.com/adtl/storage_demonstration
 
 
-> 使用说明:
-
-1. 创建一个目录用于储存数据
-2. 打开工具
-3. 将这个目录拖入工具
-4. 增加分组
-5. 增加API
-6. 配置分组参数
-7. 配置API参数
-8. 点击测试
-
 项目采用 [electron-vue](https://github.com/SimulatedGREG/electron-vue) 构建.
+

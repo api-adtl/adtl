@@ -14,12 +14,15 @@
                     <div class="hist-list" v-if="hist">
                       项目列表:
                       <br><br>
-                      <ul>
-                          <li v-for="hi in hist" @click="open_obj(hi)">
+                      <div> 
+                        <div class="hist-li" v-for="hi in hist" @click="open_obj(hi)">
                               {{hi}}
-                          </li>
-                      </ul>
-                  </div>
+                        </div>
+                        <br><br>
+                      </div>
+                          
+                      
+                      </div>
                 </div>
 
                 
@@ -112,8 +115,8 @@
       font-size: 2em;
 
     }
-    .hist-list li{
-      display:inline;line-height:24px;height:auto;word-break:break-all;word-wrap : break-word ;
+    .hist-li{
+      line-height:30px;height:auto;word-wrap : break-word ;
     }
     #holder {
         padding: 30px;

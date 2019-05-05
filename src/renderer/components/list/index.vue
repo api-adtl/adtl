@@ -1,6 +1,6 @@
 <template>
     <div style="overflow-y: auto">
-        <div :style="style2" style="margin-left: 10px;">
+        <div :style="style2" style="margin-left: 3px;">
             <div>
                 <Collapse>
                     <Panel :name="groupobj.e_name" v-for="groupobj in listdata.group">

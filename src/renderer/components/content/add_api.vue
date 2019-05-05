@@ -29,11 +29,12 @@
                    v-model="form.url"
                    v-validate="validation.url"/>
             <span>{{ errors.first('url') }}</span>
+            <span> 不包含域名 </span>
         </div>
         <br>
 
         <div>
-            请求类型：
+            请求类型/展示方式：
             <RadioGroup v-model="form.request_type">
                 <Radio label="ws"></Radio>
                 <Radio label="get"></Radio>
@@ -45,10 +46,19 @@
                 <Radio label="image"></Radio>
             </RadioGroup>
         </div>
+
+        <div>
+            请求类型/展示方式：
+            <RadioGroup v-model="form.data_type">
+                <Radio label="json"></Radio>
+                <Radio label="xml"></Radio>
+                <Radio label="string"></Radio>
+            </RadioGroup>
+        </div>
+
         <div>
             文件夹：
             <span style="font-size: 15px;font-weight: 900;">{{form.dir}}</span>
-
         </div>
 
 
@@ -71,6 +81,7 @@
         lists: {},
         form: {
           request_type: 'post',
+          data_type: 'json',
           name: '默认名字',
           e_name: 'api',
           dir: this.dir,
@@ -80,13 +91,13 @@
           name: {
             required: true,
             min: 2,
-            max: 20
+            max: 30
           },
           ename: {
             required: true,
             alpha_num: true,
             min: 3,
-            max: 20,
+            max: 50,
             e_name: true
           },
           type: {
