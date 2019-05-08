@@ -7,7 +7,7 @@
         <br>
         <br>
         <div>
-            名字：
+            域名/IP：
             <Input name="name" placeholder="请输入分组名字" style="width: 300px"
                    v-model="form.name"  v-validate="validation.name"/>
             <span>{{ errors.first('name') }}</span>
@@ -29,11 +29,12 @@
                    v-model="form.url"
                    v-validate="validation.url"/>
             <span>{{ errors.first('url') }}</span>
+            <span> 不包含域名 </span>
         </div>
         <br>
 
         <div>
-            请求类型：
+            请求类型/展示方式：
             <RadioGroup v-model="form.request_type">
                 <Radio label="ws"></Radio>
                 <Radio label="get"></Radio>
