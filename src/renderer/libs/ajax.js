@@ -9,74 +9,74 @@ class ajax {
     })
   }
 
-  send (type, url, senddata, callbak) {
+  send (type, url, senddata, callbak,callbak2) {
     console.log('12', arguments)
     if (type == 'get') {
-      return this.get_send(url, senddata, callbak)
+      return this.get_send(url, senddata, callbak,callbak2)
     }
     if (type == 'post') {
-      return this.post_send(url, senddata, callbak)
+      return this.post_send(url, senddata, callbak,callbak2)
     }
     if (type == 'view') {
-      return this.get_send(url, senddata, callbak)
+      return this.get_send(url, senddata, callbak,callbak2)
     }
     if (type == 'image') {
-      return this.get_send(url, senddata, callbak)
+      return this.get_send(url, senddata, callbak,callbak2)
     }
 
     if (type == 'put') {
-      return this.put_send(url, senddata, callbak)
+      return this.put_send(url, senddata, callbak,callbak2)
     }
 
     if (type == 'delete') {
-      return this.delete_send(url, senddata, callbak)
+      return this.delete_send(url, senddata, callbak,callbak2)
     }
 
     if(type == 'patch'){
-      return this.patch_send(url, senddata, callbak);
+      return this.patch_send(url, senddata, callbak,callbak2);
     }
   }
 
-  get_send (url, senddata, callbak) {
+  get_send (url, senddata, callbak,callbak2) {
     this.axios.request({
       url: url,
       params: senddata.get,
       headers: senddata.headers
-    }).then(callbak).catch(callbak)
+    }).then(callbak).catch(callbak2)
   }
 
-  post_send (url, senddata, callbak) {
+  post_send (url, senddata, callbak,callbak2) {
     console.log('post_send', arguments)
 
     this.axios.post(url, qs.stringify(senddata.form), {
       params: senddata.get,
       headers: senddata.headers
-    }).then(callbak).catch(callbak)
+    }).then(callbak).catch(callbak2)
   }
 
-  put_send (url, senddata, callbak) {
+  put_send (url, senddata, callbak,callbak2) {
     console.log('put_send', arguments)
     this.axios.put(url, qs.stringify(senddata.form), {
       params: senddata.get,
       headers: senddata.headers
-    }).then(callbak).catch(callbak)
+    }).then(callbak).catch(callbak2)
   }
 
-  patch_send (url, senddata, callbak) {
+  patch_send (url, senddata, callbak,callbak2) {
     console.log('patch_send', arguments)
     this.axios.patch(url, qs.stringify(senddata.form), {
       params: senddata.get,
       headers: senddata.headers
-    }).then(callbak).catch(callbak)
+    }).then(callbak).catch(callbak2)
   }
 
-  delete_send (url, senddata, callbak) {
+  delete_send (url, senddata, callbak,callbak2) {
     console.log('delete_send', arguments)
     this.axios.delete(url, 
       {
       params: senddata.get,
       headers: senddata.headers
-    }).then(callbak).catch(callbak)
+    }).then(callbak).catch(callbak2,callbak2)
   }
 
 }

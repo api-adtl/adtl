@@ -1,15 +1,19 @@
 <template>
     <div>
-        API : {{api}}<br>
-        group:{{group}}<br>
-        send: {{send2}}{{send}}
+        <div v-if="info_xy">
+        请求地址 : {{group.type}}://{{group.domain}}:{{group.port}}{{api.url}} <br>
+        
+        待发送数据: <pre>{{ send2|format }}</pre> 
+        </div>
         <br>
+        <Button @click="info" size="small" type="primary">接口信息</Button>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <Button @click="random" size="small" type="primary">数据生成</Button>
-        <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <Button @click="test" size="small" type="primary">进行测试</Button>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <Button @click="test13" size="small" type="primary">生成 & 测试</Button>
-        <response :response="response" :api="api"></response>
+        <response :response="response" :api="api" :errormsg="errormsg"></response>
 
     </div>
 </template>
@@ -17,6 +21,7 @@
   import test from '../../../logic/test'
   import response from './response'
   import Mock from 'mockjs'
+  import jsonFormat from 'json-format'
 
   export default {
     name: 'test',
@@ -25,7 +30,9 @@
         testob: {},
         response: {},
         send2: {},
-        loading:true
+        loading:true,
+        errormsg:'',
+        info_xy:false
       }
     },
 
@@ -45,6 +52,9 @@
     },
     methods: {
       //方法列表
+      info(){
+        this.info_xy = !this.info_xy;
+      },
       random () {
         console.log('应用生成器!')
         let mmrule = {}
@@ -86,17 +96,32 @@
         this.test();
       },
       test1 (send) {
-          if(this.$lodash.isEmpty(this.testob)){
+         this.errormsg='';
+        if(this.$lodash.isEmpty(this.testob)){
             this.init();
           }
           this.testob.send(send, (data) => {
-             this.loading = false;
-            console.log('返回!', data)
-          if (typeof data == 'string') {
-            console.log('返回数据!', data)
-          } else {
+            // 成功处理
+            this.loading = false;
             this.response = this.$lodash.cloneDeep(data)
+        },(error)=>{
+           this.errormsg=error;
+          // 错误处理
+          this.loading = false;
+          if(error.response){
+            //请求已发出,但服务器使用状态代码进行响应
+            //落在2xx的范围之外
+            console.log(1,error.response.data)
+            console.log(error.response.status)
+            console.log(error.response.headers)
+            this.response = this.$lodash.cloneDeep(error.response)
+          } else {
+            //在设置触发错误的请求时发生了错误
+            this.errormsg=error;
+            console.log('Error',error.message)
           }
+          console.log(error.config)
+          this.response = this.$lodash.cloneDeep(error.config)
         })
       },
       init () {
@@ -130,6 +155,17 @@
     created () {
       //创建完成后
       this.init()
+    },
+    filters: {
+      //过滤器
+      format (value1) {
+        let aa = jsonFormat(value1, {
+          type: 'space',
+          size: 2
+        })
+        console.log(aa)
+        return aa
+      }
     }
   }
 </script>

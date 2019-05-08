@@ -1,10 +1,18 @@
 <template>
     <div>
         测试结果组件
-        {{ api }}
         <br>
         <div>
-         
+          <div　class="error" v-if="errormsg">
+          
+             <Alert type="error" show-icon>
+                出错了
+                <span slot="desc">
+                    {{errormsg}}
+                </span>
+            </Alert>
+          </div>
+
           <dir>
             <ButtonGroup>
               <Button :style="bus" @click="open('data')" ghost type="primary">data</Button>
@@ -15,7 +23,7 @@
             </ButtonGroup>
             </dir>
             <div>
-            <div v-if="status.data && api" >
+            <div v-if="status.data && api && response.data" >
               <div v-if="api.request_type != 'view' & api.request_type != 'image'" >
                 <pre>{{response.data|format_data(api.data_type)}}</pre>
               </div>
@@ -93,7 +101,8 @@
     props: [
       //数据传参
       'response',
-      'api'
+      'api',
+      'errormsg'
     ],
     computed: {
       //计算属性
