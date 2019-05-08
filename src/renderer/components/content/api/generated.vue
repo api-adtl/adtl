@@ -150,7 +150,7 @@
           name2: '',
           unit: 'natural',
           format: null,
-          format2:''
+          format2:"null"
         })
       },
     },

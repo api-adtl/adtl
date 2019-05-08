@@ -15,13 +15,14 @@
                       项目列表:
                       <br><br>
                       <div> 
-
-                      </div>
-                          <div class="hist-li" v-for="hi in hist" @click="open_obj(hi)">
+                        <div class="hist-li" v-for="hi in hist" @click="open_obj(hi)">
                               {{hi}}
-                          </div>
+                        </div>
+                        <br><br>
+                      </div>
+                          
                       
-                  </div>
+                      </div>
                 </div>
 
                 
@@ -115,7 +116,7 @@
 
     }
     .hist-li{
-      display:inline;line-height:24px;height:auto;word-wrap : break-word ;
+      line-height:30px;height:auto;word-wrap : break-word ;
     }
     #holder {
         padding: 30px;

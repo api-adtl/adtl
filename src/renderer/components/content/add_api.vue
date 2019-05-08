@@ -7,7 +7,7 @@
         <br>
         <br>
         <div>
-            域名/IP：
+            名字：
             <Input name="name" placeholder="请输入分组名字" style="width: 300px"
                    v-model="form.name"  v-validate="validation.name"/>
             <span>{{ errors.first('name') }}</span>
@@ -46,10 +46,19 @@
                 <Radio label="image"></Radio>
             </RadioGroup>
         </div>
+
+        <div>
+            请求类型/展示方式：
+            <RadioGroup v-model="form.data_type">
+                <Radio label="json"></Radio>
+                <Radio label="xml"></Radio>
+                <Radio label="string"></Radio>
+            </RadioGroup>
+        </div>
+
         <div>
             文件夹：
             <span style="font-size: 15px;font-weight: 900;">{{form.dir}}</span>
-
         </div>
 
 
@@ -72,6 +81,7 @@
         lists: {},
         form: {
           request_type: 'post',
+          data_type: 'json',
           name: '默认名字',
           e_name: 'api',
           dir: this.dir,
@@ -81,13 +91,13 @@
           name: {
             required: true,
             min: 2,
-            max: 20
+            max: 30
           },
           ename: {
             required: true,
             alpha_num: true,
             min: 3,
-            max: 20,
+            max: 50,
             e_name: true
           },
           type: {

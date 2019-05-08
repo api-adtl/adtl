@@ -15,9 +15,9 @@
             </ButtonGroup>
             </dir>
             <div>
-            <div v-if="status.data" >
+            <div v-if="status.data && api" >
               <div v-if="api.request_type != 'view' & api.request_type != 'image'" >
-                <pre>{{response.data|format}}</pre>
+                <pre>{{response.data|format_data(api.data_type)}}</pre>
               </div>
               <div v-if="api.request_type== 'view'">
                 视图显示(红框不是内容)
@@ -162,6 +162,24 @@
         })
         console.log(aa)
         return aa
+      },
+      format_data(value1,dt){
+        let aa = '';
+       
+        
+        if( dt == 'json'){
+            aa = jsonFormat(value1, {
+                              type: 'space',
+                              size: 2
+            })
+          
+          
+        }else{
+          aa = value1;
+        }
+        
+        console.log(aa);
+        return aa;
       }
     }
   }

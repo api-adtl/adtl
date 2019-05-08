@@ -22,7 +22,7 @@
 
         <form name="addgroup">
             <div>
-                名字：
+                域名/IP：
                 <Input v-model="form.domain" name="domain" v-validate="validation.domain"
                        placeholder="域名" style="width: 300px"/>
                 <span>{{ errors.first('domain') }}</span>
@@ -30,7 +30,7 @@
             <br>
 
             <div>
-                端口：
+                 端 &nbsp;&nbsp;&nbsp;&nbsp;口 ：
                 <Input name="port" placeholder="端口" style="width: 300px"
                        v-model="form.port" v-validate="validation.port"/>
                 <span>{{ errors.first('port') }}</span>
