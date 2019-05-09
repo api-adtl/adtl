@@ -15,8 +15,8 @@ class test {
     }
   }
 
-  send (senddata, callbak) {
-    this.connect.send(this.api.request_type, this.api.url, senddata, callbak)
+  send (senddata, callbak,callbak2) {
+    this.connect.send(this.api.request_type, this.api.url, senddata, callbak,callbak2)
   }
 
   close () {
