@@ -131,6 +131,7 @@
         })
       },
       init () {
+        this.response={};
         this.loading = false;
         this.send2 = this.$lodash.cloneDeep(this.send)
         
