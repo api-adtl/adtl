@@ -96,12 +96,8 @@
         this.test();
       },
       test1 (send) {
-<<<<<<< HEAD
-          if(this.$lodash.isEmpty(this.testob)){
-=======
          this.errormsg='';
         if(this.$lodash.isEmpty(this.testob)){
->>>>>>> origin/master
             this.init();
           }
           this.testob.send(send, (data) => {

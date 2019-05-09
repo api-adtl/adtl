@@ -23,11 +23,7 @@
             </ButtonGroup>
             </dir>
             <div>
-<<<<<<< HEAD
-            <div v-if="status.data && api" >
-=======
             <div v-if="status.data && api && response.data" >
->>>>>>> origin/master
               <div v-if="api.request_type != 'view' & api.request_type != 'image'" >
                 <pre>{{response.data|format_data(api.data_type)}}</pre>
               </div>
