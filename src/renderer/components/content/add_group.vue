@@ -3,7 +3,7 @@
         增加分组
         <form name="addgroup">
             <div>
-                域名/IP：
+                名字：
                 <Input v-model="form.name" name="name" v-validate="validation.name"
                        placeholder="请输入分组名字" style="width: 300px"/>
                 <span>{{ errors.first('name') }}</span>
