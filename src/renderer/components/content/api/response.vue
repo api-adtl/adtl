@@ -27,8 +27,11 @@
               <div v-if="api.request_type != 'view' & api.request_type != 'image'" >
                 <pre>{{response.data|format_data(api.data_type)}}</pre>
               </div>
-              <Button @click="view=!view" ghost type="primary">视图显示Iframe</Button>
-              <div v-if="api.request_type== 'view' || view">
+              <Button @click="view=!view" ghost type="primary">渲染展示</Button>
+              <div v-if="view" v-html="response.data">
+                
+              </div>
+              <div v-if="api.request_type== 'view'">
                 视图显示(红框不是内容)
                 <br>
                 <iframe width="100%" height="500px" style="border: 1px red solid;" frameborder="0" 
