@@ -32,6 +32,14 @@ const router = new Router({
           })
         },
         {
+          path: 'fuzhi_api',
+          name:'fuzhi_api',
+          component: () => import('@/components/content/fuzhi_api'),
+          props: (route) => ({
+            dir: route.query.dir
+          })
+        },
+        {
           path: 'add_group',
           name:'add_group',
           component: () => import('@/components/content/add_group'),
@@ -94,11 +102,6 @@ const router = new Router({
       name: 'create',
       component: () => import('@/components/create'),
       props:true
-    },
-    {
-      path: '/add_api/',
-      name: 'add_api',
-      component: () => import('@/components/content/add_api'),
     },
 
     {
