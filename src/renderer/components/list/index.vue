@@ -26,11 +26,13 @@
                           <Poptip trigger="hover"  content="点击打开，右击复制">
                             <div>
                              
-                              <div>
+                              <div class="fl">
                                  {{apiobj.name}}
                               </div> 
-                              <div>
-                                 {{apiobj.request_type}}
+                              <div class="fl" >
+                                <span class="request_type">
+                                  {{apiobj.request_type}}
+                                </span>
                               </div>
 
                             </div>
@@ -248,18 +250,20 @@
 </script>
 
 <style>
-    .api-li{
-      font-size: 20px;
-    }
-    .type {
-        font-size: 1.1em;
-        font-weight: bold;
-        color: brown;
-    }
+  .api-li{
+    border: #515a6e 1px solid;
+    font-size: 20px;
+    margin-bottom: 3px;
+  }
+  .type {
+      font-size: 1.1em;
+      font-weight: bold;
+      color: brown;
+  }
 
-    .ivu-cell-extra {
-        font-size: 1.1em;
-        font-weight: bold;
-        color: brown;
-    }
+  .ivu-cell-extra {
+      font-size: 1.1em;
+      font-weight: bold;
+      color: brown;
+  }
 </style>

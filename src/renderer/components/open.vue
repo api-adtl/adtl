@@ -1,6 +1,5 @@
 <template>
     <div class="layout">
-
         <Layout>
             <Header>
                 <Menu mode="horizontal" theme="dark" active-name="1">
@@ -25,11 +24,10 @@
             </Header>
             <Layout :style="{padding: '0 10px'}">
                 <Breadcrumb :style="{margin: '16px 0'}">
-                    <BreadcrumbItem>Home</BreadcrumbItem>
-                    <BreadcrumbItem>Components</BreadcrumbItem>
-                    <BreadcrumbItem>Layout</BreadcrumbItem>
+                    <BreadcrumbItem>{{now}}</BreadcrumbItem>
+                    <BreadcrumbItem> 神马API（我还没想好这个怎么弄） </BreadcrumbItem>
                 </Breadcrumb>
-                当前位于: {{now}}
+              
                 <Content :style="{padding: '24px 0', minHeight: '280px', background: '#fff'}">
                     <Layout>
                         <Sider hide-trigger :style="{background: '#fff'}">
@@ -149,6 +147,7 @@
 
     },
     created () {
+      
       if (this.now) {
         this.init()
       } else {

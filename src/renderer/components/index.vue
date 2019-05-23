@@ -20,9 +20,7 @@
                            <div class="hist-li" >
                              
                              
-                             <span  style="
-    margin-right: 25px;
-" @click="open_obj(hi)" > 
+                             <span  style="margin-right: 25px;" @click="open_obj(hi)" > 
                                {{hi}}
                              </span> 
 
@@ -117,6 +115,7 @@
      
     },
     mounted(){
+      console.log(process.env);
       this.h = document.body.clientHeight;
       this.w = document.body.clientWidth;
     }

@@ -57,6 +57,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "dotenv-webpack": "^1.7.0",
     "iview": "^3.2.2",
     "jshashes": "^1.0.7",
     "json-format": "^1.0.1",

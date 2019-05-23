@@ -1,6 +1,6 @@
 <template>
     <div>
-        这是列表
+        <!-- 这是列表 -->
         <Button @click="view_button" size="small" type="primary">按钮可见</Button>
         <Button @click="f5=!f5" size="small" type="primary" id="f5">刷新</Button>
         <br>
