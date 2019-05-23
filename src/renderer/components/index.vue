@@ -14,11 +14,22 @@
                     <div class="hist-list" v-if="hist">
                       项目列表:
                       <br><br>
-                      <div> 
-                        <div class="hist-li" v-for="hi in hist" @click="open_obj(hi)">
-                              {{hi}}
-                        </div>
-                        <br><br>
+                      <div>
+                        
+                        <div  v-for="(hi,index) in hist">
+                           <div class="hist-li" >
+                             
+                             
+                             <span  style="margin-right: 25px;" @click="open_obj(hi)" > 
+                               {{hi}}
+                             </span> 
+
+                             <Icon color="#ff005a" size="30" type="md-trash" @click="shanchu(index)" /> 
+                          </div>
+                        
+                        </div> 
+                       
+                        
                       </div>
                           
                       
@@ -33,9 +44,9 @@
 </template>
 
 <script>
-  import cache from '@/logic/cache'
   import fs from 'fs'
   import path from 'path'
+  import lodash from 'lodash'
 
   export default {
     name: 'landing-page',
@@ -48,6 +59,14 @@
     },
     components: {},
     methods: {
+      shanchu(index){
+        let hist = this.$ls.get('history')
+        let hist2 = lodash.pullAt(hist,[index-1]);
+        this.$ls.set('history',hist2);
+        console.log('shanchu', hist2)
+        this.hist = hist2
+        
+      },
       open_obj (now) {
         console.log('open', now)
         this.$store.commit('set_now', now)
@@ -88,21 +107,15 @@
       dragover (e) {
         e.preventDefault()
         e.stopPropagation()
-      },
-      open_old () {
-        let old = cache.get([this.now, 'now'])
-        console.log(130, old)
-        if (old) {
-          this.$router.push(old)
-        }
       }
     },
     created () {
       let hist = this.$ls.get('history')
       this.hist = hist
-      this.open_old();
+     
     },
     mounted(){
+      console.log(process.env);
       this.h = document.body.clientHeight;
       this.w = document.body.clientWidth;
     }
@@ -116,7 +129,9 @@
 
     }
     .hist-li{
-      line-height:30px;height:auto;word-wrap : break-word ;
+      line-height:65px;
+      height:auto;
+      word-wrap : break-word ;
     }
     #holder {
         padding: 30px;

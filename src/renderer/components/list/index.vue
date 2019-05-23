@@ -7,19 +7,43 @@
                         {{groupobj.name}}
                         <p slot="content">
                             <list_index :add="add" :dd="groupobj"
-                                        :dir="groupobj.e_name|dirr(dir)" :f5="f5"
+                                        :dir="groupobj.e_name|dirr(dir)" 
+                                        :zhantie="zhantie"
+                                        v-on:fuzhi="fuzhi" 
+                                        :f5="f5"
                                         @add_content="add_content">
                             </list_index>
                         </p>
                     </Panel>
 
                 </Collapse>
-                <CellGroup>
-                    <Cell :extra="apiobj.request_type" :title="apiobj.name"
-                          :to="apiobj|apito"
-                          selected style="border: #ccc solid 1px;margin-top: 2px"
-                          v-for="apiobj in listdata.api"/>
-                </CellGroup>
+                <div>
+                  <div  v-for="apiobj in listdata.api" >
+                    <div class="api-li">
+                      
+  
+                        <div @click.left="goto(apiobj)" @click.right="youjian(apiobj)"  >
+                          <Poptip trigger="hover"  content="点击打开，右击复制">
+                            <div>
+                             
+                              <div class="fl">
+                                 {{apiobj.name}}
+                              </div> 
+                              <div class="fl" >
+                                <span class="request_type">
+                                  {{apiobj.request_type}}
+                                </span>
+                              </div>
+
+                            </div>
+                          </Poptip>
+                          
+                        </div>
+                      
+                    </div>
+                  </div>
+                </div>
+                
 
             </div>
             <div style="margin-bottom: 1px" v-if="add">
@@ -34,6 +58,7 @@
                 <Button @click="group_info" size="small" type="primary">当前分组参数</Button>
                 <Button @click="edit_group" size="small" type="primary">编辑分组</Button>
                 <Button @click="del_group" size="small" type="primary">删除分组</Button>
+                <Button v-if="zhantie" @click="zhantie2" size="small" type="primary">粘贴</Button>
             </div>
         </div>
 
@@ -62,7 +87,8 @@
       'dir',
       'add',
       'dd',
-      'f5'
+      'f5',
+      'zhantie'
     ],
     watch: {
       f5 () {
@@ -94,6 +120,37 @@
     },
     components: {list_index},
     methods: {
+      apito(value)
+      {
+        console.log('79', value)
+        if (value.request_type == 'ws') {
+          return {name: 'api_ws', query: {number: value.number}}
+        } else {
+          return {name: 'api', query: {number: value.number}}
+        }
+      },
+      goto(api){
+        this.$router.push(this.apito(api));
+        console.log(api);
+      },
+      youjian(api){
+        this.$ls.set('fuzhi',api);
+        this.fuzhi();
+      },
+      fuzhi(){
+        this.$emit('fuzhi');
+      },
+      zhantie2(){
+        console.log("粘贴1");
+
+        this.$emit('add_content', {
+          name: 'fuzhi_api',
+          query: {
+            dir: this.dir
+          }
+        })
+        this.$emit('fuzhi');
+      },
       open_in_folder () {
         this.$Message.loading('正在使用文件管理器打开...')
         setTimeout(() => {
@@ -193,15 +250,20 @@
 </script>
 
 <style>
-    .type {
-        font-size: 1.1em;
-        font-weight: bold;
-        color: brown;
-    }
+  .api-li{
+    border: #515a6e 1px solid;
+    font-size: 20px;
+    margin-bottom: 3px;
+  }
+  .type {
+      font-size: 1.1em;
+      font-weight: bold;
+      color: brown;
+  }
 
-    .ivu-cell-extra {
-        font-size: 1.1em;
-        font-weight: bold;
-        color: brown;
-    }
+  .ivu-cell-extra {
+      font-size: 1.1em;
+      font-weight: bold;
+      color: brown;
+  }
 </style>

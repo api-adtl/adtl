@@ -105,26 +105,33 @@
             this.loading = false;
             this.response = this.$lodash.cloneDeep(data)
         },(error)=>{
-           this.errormsg=error;
+          this.errormsg=error;
           // 错误处理
           this.loading = false;
+          
           if(error.response){
             //请求已发出,但服务器使用状态代码进行响应
             //落在2xx的范围之外
             console.log(1,error.response.data)
             console.log(error.response.status)
-            console.log(error.response.headers)
-            this.response = this.$lodash.cloneDeep(error.response)
+            this.response = {
+              'data':error.response.data,
+              'headers':error.response.headers,
+              'status':error.response.status,
+              'config':error.response.config,
+            }
+            console.log(this.response)
           } else {
             //在设置触发错误的请求时发生了错误
             this.errormsg=error;
             console.log('Error',error.message)
           }
-          console.log(error.config)
-          this.response = this.$lodash.cloneDeep(error.config)
+          //console.log(error.config)
+          //this.response = this.$lodash.cloneDeep(error.config)
         })
       },
       init () {
+        this.response={};
         this.loading = false;
         this.send2 = this.$lodash.cloneDeep(this.send)
         
