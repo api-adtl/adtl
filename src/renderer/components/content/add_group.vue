@@ -28,7 +28,6 @@
                 <div style="color:red;font-size:1.5em">
                   文件夹类型直接影响下级接口的类型,选择流水测试类型下级将只能添加自动化测试流水线,而不能添加API接口
                 </div>
-
             </div>
 
             <div>

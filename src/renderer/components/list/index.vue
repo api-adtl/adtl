@@ -54,10 +54,14 @@
 
 
             <div v-if="dir!='.' && add">
-                {{dd}}
-                <Button @click="add_api" size="small" type="primary">+API</Button>
 
-                <Button @click="group_info" size="small" type="primary">当前分组参数</Button>
+                <Button v-if="dd.type  != 'test'" 
+                @click="add_api" size="small" type="primary">+API</Button>
+                <Button v-if="dd.type  == 'test'" 
+                @click="add_test" size="small" type="info">+TEST</Button>
+
+                <Button v-if="dd.type  != 'test'" 
+                 @click="group_info"  size="small" type="primary">当前分组参数</Button>
                 <Button @click="edit_group" size="small" type="primary">编辑分组</Button>
                 <Button @click="del_group" size="small" type="primary">删除分组</Button>
                 <Button v-if="zhantie" @click="zhantie2" size="small" type="primary">粘贴</Button>
@@ -71,7 +75,7 @@
 
 <script>
   import lists from '@/logic/lists'
-  //import tool from '@/libs/tool'
+  // import tool from '@/libs/tool'
   import list_index from './index'
   import path from 'path'
   import {shell} from 'electron'
@@ -116,7 +120,7 @@
     computed: {
       style2 () {
         return {
-          //'border-color':tool.getRandomColor()
+          // 'border-color':tool.getRandomColor()
         }
       },
       apicalss(){
@@ -230,6 +234,14 @@
         console.log('增加API')
         this.$emit('add_content', {
           name: 'add_api',
+          query: {
+            dir: this.dir
+          }
+        })
+      },
+      add_test(){
+        this.$emit('add_content', {
+          name: 'add_test',
           query: {
             dir: this.dir
           }
