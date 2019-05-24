@@ -71,6 +71,12 @@ const router = new Router({
           props: (route) => ({number: route.query.number})
         },
         {
+          path: 'test',
+          name: 'test',
+          component: () => import('@/components/content/test'),
+          props: (route) => ({number: route.query.number})
+        },
+        {
           path: 'api_ws',
           name: 'api_ws',
           component: () => import('@/components/content/api_ws'),

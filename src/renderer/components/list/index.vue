@@ -23,7 +23,7 @@
                   <div  v-for="apiobj in listdata.api" >
                     <div  :class="apicalss" >
                         <div @click.left="goto(apiobj)" @click.right="youjian(apiobj)"  >
-                          <Poptip trigger="click"  content="点击打开，右击复制,再点取消复制">
+                          <Poptip trigger="focus"  content="点击打开，右击复制,再点取消复制">
                             <div>
                              
                               <div class="fl">
@@ -138,11 +138,14 @@
     methods: {
       apito(value)
       {
-        console.log('79', value)
-        if (value.request_type == 'ws') {
-          return {name: 'api_ws', query: {number: value.number}}
-        } else {
-          return {name: 'api', query: {number: value.number}}
+        if(this.dd.type=='test'){
+          return {name: 'test', query: {number: value.number}}
+        }else{
+          if (value.request_type == 'ws') {
+            return {name: 'api_ws', query: {number: value.number}}
+          } else {
+            return {name: 'api', query: {number: value.number}}
+          }
         }
       },
       goto(api){
