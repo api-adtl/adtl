@@ -10,5 +10,26 @@
     float: left;
 }
 .request_type{
-    color: blueviolet
+    color: blueviolet;
+    font-weight: bold;
+}
+.group_type{
+    color: blue;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+.api-li{
+    border: #515a6e 2px solid;
+    font-size: 20px;
+    margin-bottom: 3px;
+}
+.api-li-ws{
+    border: #5bbe21 2px solid;
+    font-size: 20px;
+    margin-bottom: 3px;
+}
+.api-li-test{
+    border: #e42b92 2px solid;
+    font-size: 20px;
+    margin-bottom: 3px;
 }

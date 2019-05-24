@@ -4,7 +4,9 @@
             <div>
                 <Collapse>
                     <Panel :name="groupobj.e_name" v-for="groupobj in listdata.group">
-                        {{groupobj.name}}
+                        {{groupobj.name}} <span class="group_type">{{groupobj.type}}</span>   
+                        
+                        
                         <p slot="content">
                             <list_index :add="add" :dd="groupobj"
                                         :dir="groupobj.e_name|dirr(dir)" 
@@ -19,11 +21,9 @@
                 </Collapse>
                 <div>
                   <div  v-for="apiobj in listdata.api" >
-                    <div class="api-li">
-                      
-  
+                    <div  :class="apicalss" >
                         <div @click.left="goto(apiobj)" @click.right="youjian(apiobj)"  >
-                          <Poptip trigger="hover"  content="点击打开，右击复制">
+                          <Poptip trigger="click"  content="点击打开，右击复制,再点取消复制">
                             <div>
                              
                               <div class="fl">
@@ -54,7 +54,9 @@
 
 
             <div v-if="dir!='.' && add">
+                {{dd}}
                 <Button @click="add_api" size="small" type="primary">+API</Button>
+
                 <Button @click="group_info" size="small" type="primary">当前分组参数</Button>
                 <Button @click="edit_group" size="small" type="primary">编辑分组</Button>
                 <Button @click="del_group" size="small" type="primary">删除分组</Button>
@@ -116,6 +118,16 @@
         return {
           //'border-color':tool.getRandomColor()
         }
+      },
+      apicalss(){
+        if(this.dd.type == 'test'){
+          return 'api-li-test';
+        }
+        if(this.dd.type == 'ws'){
+          return 'api-li-ws';
+        }
+
+        return 'api-li';
       }
     },
     components: {list_index},
@@ -245,16 +257,13 @@
     },
     created () {
       this.init()
+      
     }
   }
 </script>
 
 <style>
-  .api-li{
-    border: #515a6e 1px solid;
-    font-size: 20px;
-    margin-bottom: 3px;
-  }
+  
   .type {
       font-size: 1.1em;
       font-weight: bold;
