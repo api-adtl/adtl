@@ -88,4 +88,4 @@ class liushui {
 
 }
 
-export default api
+export default liushui

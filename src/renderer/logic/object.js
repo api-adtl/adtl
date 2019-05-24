@@ -89,4 +89,4 @@ class object {
 
 }
 
-export default api
+export default object
