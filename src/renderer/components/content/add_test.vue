@@ -1,14 +1,14 @@
 <template>
     <div>
         <h3>
-            增加API
+            增加TEST(自动化测试,流水测试)
         </h3>
 
         <br>
         <br>
         <div>
             名字：
-            <Input name="name" placeholder="请输入分组名字" style="width: 300px"
+            <Input name="name" placeholder="请输入分组1名字" style="width: 300px"
                    v-model="form.name"  v-validate="validation.name"/>
             <span>{{ errors.first('name') }}</span>
         </div>
@@ -18,49 +18,20 @@
             标识：
             <Input placeholder="请输API标识(不可修改)" style="width: 300px"
                    v-model="form.e_name" v-validate="validation.ename"/>
+
             <span>{{ errors.first('e_name') }}</span>
         </div>
         <br>
-
         <div>
-            地址：
-            <Input placeholder="请输入API地址" style="width: 300px"
-                   v-model="form.url"
-                   v-validate="validation.url"/>
-            <span>{{ errors.first('url') }}</span>
-            <span> 不包含域名 </span>
-        </div>
-        <br>
-
-        <div>
-            请求类型/展示方式：
-            <RadioGroup v-model="form.request_type">
-                <Radio label="ws"></Radio>
-                <Radio label="get"></Radio>
-                <Radio label="post"></Radio>
-                <Radio label="put"></Radio>
-                <Radio label="patch"></Radio>
-                <Radio label="delete"></Radio>
-                <Radio label="view"></Radio>
-                <Radio label="image"></Radio>
-            </RadioGroup>
-        </div>
-
-        <div>
-            请求类型/展示方式：
-            <RadioGroup v-model="form.data_type">
-                <Radio label="json"></Radio>
-                <Radio label="xml"></Radio>
-                <Radio label="string"></Radio>
-            </RadioGroup>
-        </div>
-
-        <div>
-            文件夹：
-            <span style="font-size: 15px;font-weight: 900;">{{form.dir}}</span>
-        </div>
-
-
+                接口类型：
+                <RadioGroup v-model="form.type" v-validate="validation.e_name">
+                    <Radio label="http">Http请求</Radio>
+                    <Radio label="ws">WebSocket请求</Radio>
+                </RadioGroup>
+                <div style="color:red;font-size:1.5em">
+                  接口的类型是单选,一个流水线只能添加一种类型的接口,如果添加了不同类型的接口会出错的!
+                </div>
+            </div>
         <br>
         <Button @click="save" type="primary">保存</Button>
 
@@ -79,9 +50,7 @@
         listo: {},
         lists: {},
         form: {
-          request_type: 'post',
-          data_type: 'json',
-          name: '默认名字',
+          name: '默认1名字',
           e_name: 'api',
           dir: this.dir,
           url: '/'

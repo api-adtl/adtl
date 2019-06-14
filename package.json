@@ -1,6 +1,6 @@
 {
   "name": "adtl",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "author": "dongasai <1514582970@qq.com>",
   "description": "一个开源的/无服务器的api测试工具",
   "license": "BSD 2-Clause",
@@ -64,6 +64,7 @@
     "lodash": "^4.17.11",
     "mavon-editor": "^2.6.17",
     "mockjs": "^1.0.1-beta3",
+    "nedb": "^1.8.0",
     "vee-validate": "^2.1.5",
     "vue": "^2.5.16",
     "vue-electron": "^1.0.6",

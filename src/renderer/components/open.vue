@@ -17,8 +17,6 @@
             {{obj_data.description}}
         </span>
                         </span>
-
-
                     </div>
                 </Menu>
             </Header>

@@ -4,7 +4,9 @@
             <div>
                 <Collapse>
                     <Panel :name="groupobj.e_name" v-for="groupobj in listdata.group">
-                        {{groupobj.name}}
+                        {{groupobj.name}} <span class="group_type">{{groupobj.type}}</span>   
+                        
+                        
                         <p slot="content">
                             <list_index :add="add" :dd="groupobj"
                                         :dir="groupobj.e_name|dirr(dir)" 
@@ -19,11 +21,9 @@
                 </Collapse>
                 <div>
                   <div  v-for="apiobj in listdata.api" >
-                    <div class="api-li">
-                      
-  
+                    <div  :class="apicalss" >
                         <div @click.left="goto(apiobj)" @click.right="youjian(apiobj)"  >
-                          <Poptip trigger="hover"  content="点击打开，右击复制">
+                          <Poptip trigger="focus"  content="点击打开，右击复制,再点取消复制">
                             <div>
                              
                               <div class="fl">
@@ -54,8 +54,14 @@
 
 
             <div v-if="dir!='.' && add">
-                <Button @click="add_api" size="small" type="primary">+API</Button>
-                <Button @click="group_info" size="small" type="primary">当前分组参数</Button>
+
+                <Button v-if="dd.type  != 'test'" 
+                @click="add_api" size="small" type="primary">+API</Button>
+                <Button v-if="dd.type  == 'test'" 
+                @click="add_test" size="small" type="info">+TEST</Button>
+
+                <Button v-if="dd.type  != 'test'" 
+                 @click="group_info"  size="small" type="primary">当前分组参数</Button>
                 <Button @click="edit_group" size="small" type="primary">编辑分组</Button>
                 <Button @click="del_group" size="small" type="primary">删除分组</Button>
                 <Button v-if="zhantie" @click="zhantie2" size="small" type="primary">粘贴</Button>
@@ -69,7 +75,7 @@
 
 <script>
   import lists from '@/logic/lists'
-  //import tool from '@/libs/tool'
+  // import tool from '@/libs/tool'
   import list_index from './index'
   import path from 'path'
   import {shell} from 'electron'
@@ -114,19 +120,32 @@
     computed: {
       style2 () {
         return {
-          //'border-color':tool.getRandomColor()
+          // 'border-color':tool.getRandomColor()
         }
+      },
+      apicalss(){
+        if(this.dd.type == 'test'){
+          return 'api-li-test';
+        }
+        if(this.dd.type == 'ws'){
+          return 'api-li-ws';
+        }
+
+        return 'api-li';
       }
     },
     components: {list_index},
     methods: {
       apito(value)
       {
-        console.log('79', value)
-        if (value.request_type == 'ws') {
-          return {name: 'api_ws', query: {number: value.number}}
-        } else {
-          return {name: 'api', query: {number: value.number}}
+        if(this.dd.type=='test'){
+          return {name: 'test', query: {number: value.number}}
+        }else{
+          if (value.request_type == 'ws') {
+            return {name: 'api_ws', query: {number: value.number}}
+          } else {
+            return {name: 'api', query: {number: value.number}}
+          }
         }
       },
       goto(api){
@@ -223,6 +242,14 @@
           }
         })
       },
+      add_test(){
+        this.$emit('add_content', {
+          name: 'add_test',
+          query: {
+            dir: this.dir
+          }
+        })
+      },
       init () {
         let listo = new lists(this.dir)
         listo.read((data) => {
@@ -245,16 +272,13 @@
     },
     created () {
       this.init()
+      
     }
   }
 </script>
 
 <style>
-  .api-li{
-    border: #515a6e 1px solid;
-    font-size: 20px;
-    margin-bottom: 3px;
-  }
+  
   .type {
       font-size: 1.1em;
       font-weight: bold;

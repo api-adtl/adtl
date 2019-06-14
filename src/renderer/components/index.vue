@@ -7,7 +7,6 @@
                 </span>
 
                 <div @dragover="dragover" @drop="dropopen" id="holder">
-                    
                     <div style="    font-size: 3em;    color: green;    font-weight: 900;">
                       拖动项目文件夹/项目描述文件到这里
                     </div>
@@ -15,24 +14,15 @@
                       项目列表:
                       <br><br>
                       <div>
-                        
-                        <div  v-for="(hi,index) in hist">
+                        <div v-for="(hi,index) in hist">
                            <div class="hist-li" >
-                             
-                             
-                             <span  style="margin-right: 25px;" @click="open_obj(hi)" > 
-                               {{hi}}
-                             </span> 
-
-                             <Icon color="#ff005a" size="30" type="md-trash" @click="shanchu(index)" /> 
+                              <span style="margin-right: 25px;" @click="open_obj(hi)" > 
+                                {{hi}}
+                              </span> 
+                              <Icon color="#ff005a" size="30" type="md-trash" @click="shanchu(index)" /> 
                           </div>
-                        
                         </div> 
-                       
-                        
                       </div>
-                          
-                      
                       </div>
                 </div>
 

@@ -11,6 +11,7 @@ class lists {
     this.obj_data = {
       group: {},
       api: {},
+      test:{},
       biaoshi: [],
       dir: this.dir
     }
@@ -91,7 +92,11 @@ class lists {
   add_api (data, callback) {
     this.obj_data.api[data.e_name] = _.clone(data)
     this.create(callback)
+  }
 
+  add_test (data, callback) {
+    this.obj_data.test[data.e_name] = _.clone(data)
+    this.create(callback)
   }
 
   /**
@@ -113,6 +118,16 @@ class lists {
   remove_api (e_name, callback) {
     //修改列表文件
     this.remove1(e_name, 'api', callback)
+  }
+
+  /**
+   * 删除Test
+   * @param e_name
+   * @param callback
+   */
+  remove_test (e_name, callback) {
+    //修改列表文件
+    this.remove1(e_name, 'test', callback)
   }
 
   /**

@@ -19,6 +19,18 @@
             <br>
 
             <div>
+                接口类型：
+                <RadioGroup v-model="form.type" v-validate="validation.e_name">
+                    <Radio label="http">Http请求</Radio>
+                    <Radio label="ws">WebSocket请求</Radio>
+                    <Radio label="test">流水测试(自动化测试)</Radio>
+                </RadioGroup>
+                <div style="color:red;font-size:1.5em">
+                  文件夹类型直接影响下级接口的类型,选择流水测试类型下级将只能添加自动化测试流水线,而不能添加API接口
+                </div>
+            </div>
+
+            <div>
                 文件夹：
                 <span style="font-size: 15px;font-weight: 900;">{{form.dir}}</span>
                 <span>{{ errors.first('url') }}</span>
@@ -44,7 +56,8 @@
         form: {
           name: '默认名字',
           e_name: 'fenzu',
-          dir: this.dir
+          dir: this.dir,
+          type:'http'
         },
         validation: {
           name: {
@@ -59,6 +72,9 @@
             max: 20,
             e_name: true
           },
+          type: {
+            required: true
+          }
         },
         attributes: {
           name: '名字1',   //设置表单属性对应的中文名

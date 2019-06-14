@@ -4,7 +4,7 @@
         <Button @click="view_button" size="small" type="primary">按钮可见</Button>
         <Button @click="f5=!f5" size="small" type="primary" id="f5">刷新</Button>
         <br>
-        <div style="width: 170px">
+        <div style="width: 200px">
             <list_index :f5="f5" :zhantie="fuzhi" @fuzhi="fuzhi2" :add="add" @add_content="add_content" dir=".">
             </list_index>
         </div>
