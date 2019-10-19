@@ -4,6 +4,8 @@
 
 相关介绍和教程请移步[**官网**](https://adtl.gitee.io/pages/)
 
+有疑问,有意见请到 [**issues讨论区**](https://gitee.com/adtl/adtl/issues) 进行讨论
+
 > 构建步骤
 
 ``` bash
