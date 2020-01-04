@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cb2ab830-462e-4627-af70-63ad78686d4e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/build/icons/adtl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <list id="0653ea78-3b1b-4ba5-8bd8-f915a59b808b" name="temp" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -22,53 +24,6 @@
         <option value="JavaScript File" />
       </list>
     </option>
-  </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>attributes</find>
-      <find>store</find>
-      <find>@</find>
-      <find>.electron-vue</find>
-      <find>history</find>
-      <find>add_group</find>
-      <find>get</find>
-      <find>json</find>
-      <find>read4</find>
-      <find>open_old</find>
-      <find>shell</find>
-      <find>open</find>
-      <find>now_open</find>
-      <find>watch</find>
-      <find>from2</find>
-      <find>input2</find>
-      <find>init</find>
-      <find>send12</find>
-      <find>form2</find>
-      <find>send</find>
-      <find>read_api</find>
-      <find>this.value</find>
-      <find>value</find>
-      <find>dir</find>
-      <find>is_init</find>
-      <find>承父级信</find>
-      <find>type</find>
-      <find>端口</find>
-      <find>validation</find>
-      <find>运行</find>
-    </findStrings>
-    <replaceStrings>
-      <replace>cloneDeep</replace>
-      <replace>electron-vue</replace>
-      <replace>header</replace>
-    </replaceStrings>
-    <dirStrings>
-      <dir>$PROJECT_DIR$/.electron-vue</dir>
-      <dir>$PROJECT_DIR$</dir>
-      <dir>$PROJECT_DIR$/src/renderer</dir>
-      <dir>$PROJECT_DIR$/src/renderer/components</dir>
-      <dir>$PROJECT_DIR$/src/renderer/components/content</dir>
-      <dir>$PROJECT_DIR$/src</dir>
-    </dirStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -97,7 +52,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/build/icons" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -223,6 +178,7 @@
       <workItem from="1575035165595" duration="663000" />
       <workItem from="1575470830608" duration="5000" />
       <workItem from="1575470922974" duration="6732000" />
+      <workItem from="1578152663125" duration="3554000" />
     </task>
     <task id="LOCAL-00001" summary="持续修改">
       <created>1548204130472</created>
@@ -405,21 +361,25 @@
       <screen x="0" y="32" width="3440" height="1408" />
     </state>
     <state x="2323" y="476" width="504" height="518" key="FileChooserDialogImpl/0.32.3440.1408@0.32.3440.1408" timestamp="1575035991219" />
-    <state width="1686" height="370" key="GridCell.Tab.0.bottom" timestamp="1575613787813">
-      <screen x="0" y="32" width="3440" height="1408" />
+    <state width="1686" height="371" key="GridCell.Tab.0.bottom" timestamp="1578158831067">
+      <screen x="0" y="27" width="3440" height="1413" />
     </state>
+    <state width="1686" height="371" key="GridCell.Tab.0.bottom/0.27.3440.1413@0.27.3440.1413" timestamp="1578158831067" />
     <state width="1686" height="370" key="GridCell.Tab.0.bottom/0.32.3440.1408@0.32.3440.1408" timestamp="1575613787813" />
-    <state width="1686" height="370" key="GridCell.Tab.0.center" timestamp="1575613787812">
-      <screen x="0" y="32" width="3440" height="1408" />
+    <state width="1686" height="371" key="GridCell.Tab.0.center" timestamp="1578158831066">
+      <screen x="0" y="27" width="3440" height="1413" />
     </state>
+    <state width="1686" height="371" key="GridCell.Tab.0.center/0.27.3440.1413@0.27.3440.1413" timestamp="1578158831066" />
     <state width="1686" height="370" key="GridCell.Tab.0.center/0.32.3440.1408@0.32.3440.1408" timestamp="1575613787812" />
-    <state width="1686" height="370" key="GridCell.Tab.0.left" timestamp="1575613787812">
-      <screen x="0" y="32" width="3440" height="1408" />
+    <state width="1686" height="371" key="GridCell.Tab.0.left" timestamp="1578158831066">
+      <screen x="0" y="27" width="3440" height="1413" />
     </state>
+    <state width="1686" height="371" key="GridCell.Tab.0.left/0.27.3440.1413@0.27.3440.1413" timestamp="1578158831066" />
     <state width="1686" height="370" key="GridCell.Tab.0.left/0.32.3440.1408@0.32.3440.1408" timestamp="1575613787812" />
-    <state width="1686" height="370" key="GridCell.Tab.0.right" timestamp="1575613787812">
-      <screen x="0" y="32" width="3440" height="1408" />
+    <state width="1686" height="371" key="GridCell.Tab.0.right" timestamp="1578158831066">
+      <screen x="0" y="27" width="3440" height="1413" />
     </state>
+    <state width="1686" height="371" key="GridCell.Tab.0.right/0.27.3440.1413@0.27.3440.1413" timestamp="1578158831066" />
     <state width="1686" height="370" key="GridCell.Tab.0.right/0.32.3440.1408@0.32.3440.1408" timestamp="1575613787812" />
     <state x="2071" y="371" key="SettingsEditor" timestamp="1575035975722">
       <screen x="0" y="32" width="3440" height="1408" />
@@ -429,5 +389,9 @@
       <screen x="0" y="32" width="3440" height="1408" />
     </state>
     <state x="2170" y="453" width="800" height="565" key="Vcs.Push.Dialog.v2/0.32.3440.1408@0.32.3440.1408" timestamp="1575515954173" />
+    <state x="2118" y="378" width="665" height="578" key="find.popup" timestamp="1578155818037">
+      <screen x="0" y="27" width="3440" height="1413" />
+    </state>
+    <state x="2118" y="378" width="665" height="578" key="find.popup/0.27.3440.1413@0.27.3440.1413" timestamp="1578155818037" />
   </component>
 </project>
