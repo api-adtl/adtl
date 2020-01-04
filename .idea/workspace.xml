@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cb2ab830-462e-4627-af70-63ad78686d4e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/build/icons/adtl.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
@@ -96,7 +97,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../xingshu/b8/antv_admin" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/build/icons" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -108,27 +109,27 @@
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/build/icons" />
+      <recent name="$PROJECT_DIR$/build" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/src/renderer/components/content/api" />
+      <recent name="$PROJECT_DIR$/src/renderer/libs" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/renderer" />
       <recent name="$PROJECT_DIR$/src/renderer/components/libs" />
       <recent name="$PROJECT_DIR$/src/renderer/logic" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/build" />
-      <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/src/renderer/components/content/api" />
-      <recent name="$PROJECT_DIR$/src/renderer/libs" />
-      <recent name="$PROJECT_DIR$/src/renderer/logic" />
-    </key>
   </component>
-  <component name="RunManager" selected="npm.dev">
+  <component name="RunManager" selected="npm.build">
     <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
       <scripts>
         <script value="build" />
       </scripts>
-      <node-interpreter value="project" />
+      <node-interpreter value="$USER_HOME$/.nvm/versions/node/v10.17.0/bin/node" />
       <envs />
       <method v="2" />
     </configuration>
@@ -148,8 +149,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.dev" />
         <item itemvalue="npm.build" />
+        <item itemvalue="npm.dev" />
       </list>
     </recent_temporary>
   </component>
@@ -221,7 +222,7 @@
       <workItem from="1575034866653" duration="160000" />
       <workItem from="1575035165595" duration="663000" />
       <workItem from="1575470830608" duration="5000" />
-      <workItem from="1575470922974" duration="2741000" />
+      <workItem from="1575470922974" duration="6732000" />
     </task>
     <task id="LOCAL-00001" summary="持续修改">
       <created>1548204130472</created>
@@ -314,7 +315,14 @@
       <option name="project" value="LOCAL" />
       <updated>1552484274310</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="创建分之">
+      <created>1575515952482</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1575515952482</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TodoView" selected-index="1">
@@ -371,15 +379,16 @@
     <MESSAGE value="bak" />
     <MESSAGE value="持续编码" />
     <MESSAGE value="修正一处提示错误" />
-    <option name="LAST_COMMIT_MESSAGE" value="修正一处提示错误" />
+    <MESSAGE value="创建分之" />
+    <option name="LAST_COMMIT_MESSAGE" value="创建分之" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="1775" y="379" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1575515772868">
+    <state x="1775" y="379" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1575550924201">
       <screen x="0" y="32" width="3440" height="1408" />
     </state>
-    <state x="1775" y="379" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.32.3440.1408@0.32.3440.1408" timestamp="1575515772868" />
+    <state x="1775" y="379" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.32.3440.1408@0.32.3440.1408" timestamp="1575550924201" />
     <state x="2318" y="604" width="513" height="262" key="#com.intellij.ide.actions.ChooseComponentsToExportDialog" timestamp="1575035024386">
       <screen x="0" y="32" width="3440" height="1408" />
     </state>
@@ -388,29 +397,37 @@
       <screen x="0" y="32" width="3440" height="1408" />
     </state>
     <state x="2268" y="413" width="603" height="645" key="#dev/0.32.3440.1408@0.32.3440.1408" timestamp="1575470995921" />
+    <state x="2170" y="241" width="800" height="990" key="CommitChangelistDialog2" timestamp="1575515951759">
+      <screen x="0" y="32" width="3440" height="1408" />
+    </state>
+    <state x="2170" y="241" width="800" height="990" key="CommitChangelistDialog2/0.32.3440.1408@0.32.3440.1408" timestamp="1575515951759" />
     <state x="2323" y="476" width="504" height="518" key="FileChooserDialogImpl" timestamp="1575035991219">
       <screen x="0" y="32" width="3440" height="1408" />
     </state>
     <state x="2323" y="476" width="504" height="518" key="FileChooserDialogImpl/0.32.3440.1408@0.32.3440.1408" timestamp="1575035991219" />
-    <state width="1686" height="370" key="GridCell.Tab.0.bottom" timestamp="1575515918307">
+    <state width="1686" height="370" key="GridCell.Tab.0.bottom" timestamp="1575613787813">
       <screen x="0" y="32" width="3440" height="1408" />
     </state>
-    <state width="1686" height="370" key="GridCell.Tab.0.bottom/0.32.3440.1408@0.32.3440.1408" timestamp="1575515918307" />
-    <state width="1686" height="370" key="GridCell.Tab.0.center" timestamp="1575515918306">
+    <state width="1686" height="370" key="GridCell.Tab.0.bottom/0.32.3440.1408@0.32.3440.1408" timestamp="1575613787813" />
+    <state width="1686" height="370" key="GridCell.Tab.0.center" timestamp="1575613787812">
       <screen x="0" y="32" width="3440" height="1408" />
     </state>
-    <state width="1686" height="370" key="GridCell.Tab.0.center/0.32.3440.1408@0.32.3440.1408" timestamp="1575515918306" />
-    <state width="1686" height="370" key="GridCell.Tab.0.left" timestamp="1575515918306">
+    <state width="1686" height="370" key="GridCell.Tab.0.center/0.32.3440.1408@0.32.3440.1408" timestamp="1575613787812" />
+    <state width="1686" height="370" key="GridCell.Tab.0.left" timestamp="1575613787812">
       <screen x="0" y="32" width="3440" height="1408" />
     </state>
-    <state width="1686" height="370" key="GridCell.Tab.0.left/0.32.3440.1408@0.32.3440.1408" timestamp="1575515918306" />
-    <state width="1686" height="370" key="GridCell.Tab.0.right" timestamp="1575515918307">
+    <state width="1686" height="370" key="GridCell.Tab.0.left/0.32.3440.1408@0.32.3440.1408" timestamp="1575613787812" />
+    <state width="1686" height="370" key="GridCell.Tab.0.right" timestamp="1575613787812">
       <screen x="0" y="32" width="3440" height="1408" />
     </state>
-    <state width="1686" height="370" key="GridCell.Tab.0.right/0.32.3440.1408@0.32.3440.1408" timestamp="1575515918307" />
+    <state width="1686" height="370" key="GridCell.Tab.0.right/0.32.3440.1408@0.32.3440.1408" timestamp="1575613787812" />
     <state x="2071" y="371" key="SettingsEditor" timestamp="1575035975722">
       <screen x="0" y="32" width="3440" height="1408" />
     </state>
     <state x="2071" y="371" key="SettingsEditor/0.32.3440.1408@0.32.3440.1408" timestamp="1575035975722" />
+    <state x="2170" y="453" width="800" height="565" key="Vcs.Push.Dialog.v2" timestamp="1575515954173">
+      <screen x="0" y="32" width="3440" height="1408" />
+    </state>
+    <state x="2170" y="453" width="800" height="565" key="Vcs.Push.Dialog.v2/0.32.3440.1408@0.32.3440.1408" timestamp="1575515954173" />
   </component>
 </project>
