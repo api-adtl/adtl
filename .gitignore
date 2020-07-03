@@ -11,3 +11,4 @@ thumbs.db
 !.gitkeep
 /nbproject/private/
 .env
+/yarn-error.log

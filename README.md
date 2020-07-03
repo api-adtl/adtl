@@ -1,10 +1,14 @@
 # api_demo
 
-> 一个开源的/无服务器的api测试工具(类POSTMAN)
+> 一个开源的/无服务器的api测试工具(SPMS分支)
 
 相关介绍和教程请移步[**官网**](https://adtl.gitee.io/pages/)
 
 有疑问,有意见请到 [**issues讨论区**](https://gitee.com/adtl/adtl/issues) 进行讨论
+
+> 要求
+
+* node 10
 
 > 构建步骤
 
