@@ -57,7 +57,11 @@ class api {
         //不存在的文件夹
         // 创建文件夹
         fs.mkdir(path.dirname(pathjson), {recursive: true},
-          this.create(pathjson, data, callback))
+        (err)=>{
+          console.log('mkdir_callback61',err);
+          this.create(pathjson, data, callback);
+          
+        })
       } else {
         this.read2(pathjson, callback)
       }

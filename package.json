@@ -1,6 +1,6 @@
 {
   "name": "adtl",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "author": "dongasai <1514582970@qq.com>",
   "description": "一个开源的/无服务器的api测试工具",
   "license": "BSD 2-Clause",
@@ -53,6 +53,9 @@
     },
     "linux": {
       "icon": "build/icons"
+    },
+    "electronDownload":{
+      "mirror":"https://npm.taobao.org/mirrors/electron/"
     }
   },
   "dependencies": {
@@ -73,7 +76,9 @@
     "vue-ls": "^3.2.0",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1",
-    "vuex-electron": "^1.0.0"
+    "vuex-electron": "^1.0.0",
+    "electron-debug": "^1.5.0",
+    "electron-devtools-installer": "^2.2.4"
   },
   "devDependencies": {
     "ajv": "^6.5.0",
@@ -110,14 +115,6 @@
     "file-loader": "^1.1.11",
     "html-webpack-plugin": "^3.2.0",
     "inject-loader": "^4.0.1",
-    "karma": "^2.0.2",
-    "karma-chai": "^0.1.0",
-    "karma-coverage": "^1.1.2",
-    "karma-electron": "^6.0.0",
-    "karma-mocha": "^1.3.0",
-    "karma-sourcemap-loader": "^0.3.7",
-    "karma-spec-reporter": "^0.0.32",
-    "karma-webpack": "^3.0.0",
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
     "mini-css-extract-plugin": "0.4.0",

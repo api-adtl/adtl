@@ -41,8 +41,14 @@ class lists {
       if (err) {
         //不存在的文件夹
         // 创建文件夹
-        fs.mkdir(path.join(store.getters.now_open.toString(), this.dir), {recursive: true}, this.read2(callback))
+        let dir =path.join(store.getters.now_open.toString(), this.dir);
+        console.log('mkdir',dir);
+        fs.mkdir(dir, {recursive: true},(err)=>{
+          console.log('mkdir_callback',err);
+          this.read2(callback)
+        })
       } else {
+        //目录存在
         callback()
       }
     })
