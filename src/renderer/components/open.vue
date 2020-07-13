@@ -3,7 +3,9 @@
         <Layout>
             <Header>
                 <Menu mode="horizontal" theme="dark" active-name="1">
-                    <div class="layout-logo">123</div>
+                    <div class="layout-logo" :class="{'dev-logo':!isPackaged}">
+                      
+                    </div>
                     <div class="layout-nav">
                         <router-link to="/">
                             <Button type="success" @click="edit" ghost>返回首页</Button>
@@ -14,8 +16,9 @@
                             项目信息:                            名字: <span class="info">{{obj_data.name}}</span>
 
                             描述: <span class="info">
-            {{obj_data.description}}
-        </span>
+                              {{obj_data.description}}     {{isPackaged}}
+                          </span>
+                       
                         </span>
                     </div>
                 </Menu>
@@ -50,6 +53,7 @@
   import path from 'path'
   import list from './list'
   import content_index from './content/index'
+  import  process  from 'process'
 
   export default {
     data () {
@@ -60,7 +64,8 @@
         iframesrc: '/#/kong',
         content_index: 0,
         content_list: {},
-        now: this.$store.state.now_open
+        now: this.$store.state.now_open,
+        isPackaged:true,
       }
     },
     name: 'open',
@@ -86,7 +91,7 @@
       },
       read () {
         // 读取数据
-
+        this.isPackaged = !process.env.WEBPACK_DEV_SERVER;
         // 保存历史
         let hist = this.$ls.get('history')
         if (hist == null) {
@@ -157,6 +162,9 @@
 </script>
 
 <style>
+    .dev-logo{
+      border-color:red;
+    }
     .ivu-layout-sider {
         height: 520px;
     }
@@ -176,6 +184,8 @@
     }
 
     .layout-logo {
+      border-style: solid;
+      border-width: 1px;
         width: 100px;
         height: 30px;
         background: #5b6270;
