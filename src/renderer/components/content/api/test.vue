@@ -13,6 +13,8 @@
         <Button @click="test" size="small" type="primary">进行测试</Button>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <Button @click="test13" size="small" type="primary">生成 & 测试</Button>
+       <Button @click="test100" size="small" type="primary">进行测试*100</Button>
+
         <response :response="response" :api="api" :errormsg="errormsg"></response>
 
     </div>
@@ -94,6 +96,11 @@
       test13(){
         this.random();
         this.test();
+      },
+      test100(){
+        for(let i=0;i<100;i++){
+          this.test13();
+        }
       },
       test1 (send) {
          this.errormsg='';
