@@ -12,14 +12,17 @@
                         </router-link>
 
                         <Button type="warning" @click="edit" ghost>编辑</Button>
-                        <span v-if="obj_data">
-                            项目信息:                            名字: <span class="info">{{obj_data.name}}</span>
+                        <span v-if="obj_data" style="    color: white;">
+                            项目名字: <span class="info">{{obj_data.name}}</span>
 
                             描述: <span class="info">
                               {{obj_data.description}}     {{isPackaged}}
                           </span>
-                       
                         </span>
+
+                        <div style="width: 200px;float: right;color: white;">
+                          <envv></envv>  
+                        </div>
                     </div>
                 </Menu>
             </Header>
@@ -32,7 +35,7 @@
                 <Content :style="{padding: '24px 0', minHeight: '280px', background: '#fff'}">
                     <Layout>
                         <Sider hide-trigger :style="{background: '#fff'}">
-                            <div id="lists" style="height: 650px;overflow-y: auto;">
+                            <div id="lists" style="min-height: 650px;">
                                 <list v-model="content_list"></list>
                             </div>
                         </Sider>
@@ -52,6 +55,7 @@
   import fs from 'fs'
   import path from 'path'
   import list from './list'
+  import envv from './envv'
   import content_index from './content/index'
   import  process  from 'process'
 
@@ -69,7 +73,7 @@
       }
     },
     name: 'open',
-    components: {list, content_index},
+    components: {list, content_index,envv},
     beforeRouteUpdate (to, from, next) {
       this.init()
       next()
@@ -135,6 +139,7 @@
                 this.isdir = true
                 this.dir_call()
               } else {
+                // 文件处理逻辑
                 let pp = path.dirname(this.now)
                 this.$store.commit('set_now', pp)
                 this.$Message.success('正在打开!')
@@ -165,9 +170,8 @@
     .dev-logo{
       border-color:red;
     }
-    .ivu-layout-sider {
-        height: 520px;
-    }
+   
+   
 
     .info {
         color: cadetblue;
@@ -180,7 +184,7 @@
         position: relative;
         border-radius: 4px;
         overflow: hidden;
-        height: 900px;
+        height: 100vh;
     }
 
     .layout-logo {
@@ -197,7 +201,7 @@
     }
 
     .layout-nav {
-        width: 540px;
+        width: 600px;
         margin: 0 auto;
         margin-right: 20px;
     }

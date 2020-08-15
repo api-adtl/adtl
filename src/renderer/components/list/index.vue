@@ -3,7 +3,7 @@
         <div :style="style2" style="margin-left: 3px;">
             <div>
                 <Collapse>
-                    <Panel :name="groupobj.e_name" v-for="groupobj in listdata.group">
+                    <Panel :name="groupobj.e_name" v-for="(groupobj,index) in listdata.group" :key="index">
                         {{groupobj.name}} <span class="group_type">{{groupobj.type}}</span>   
                         
                         
@@ -20,7 +20,7 @@
 
                 </Collapse>
                 <div>
-                  <div  v-for="apiobj in listdata.api" >
+                  <div  v-for="(apiobj,index) in listdata.api" :key="index" >
                     <div  :class="apicalss" >
                         <div @click.left="goto(apiobj)" @click.right="youjian(apiobj)"  >
                           <Poptip trigger="focus"  content="点击打开，右击复制,再点取消复制">

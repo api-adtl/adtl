@@ -22,7 +22,7 @@
 
                 <div v-if="input.type=='radio'">
                     <RadioGroup v-model="input.value">
-                        <Radio :label="val87" v-for="opt87,val87 in  input.optional">{{opt87}}</Radio>
+                        <Radio :label="val87" v-for="(opt87,val87) in  input.optional" :key="val87">{{opt87}}</Radio>
 
                     </RadioGroup>
 
@@ -31,7 +31,7 @@
 
                     <Select style="width:200px" v-model="input.value">
                         <Option :key="val87" :value="val87"
-                                v-for="opt87,val87 in  input.optional">{{opt87}}
+                                v-for="(opt87,val87) in  input.optional">{{opt87}}
                         </Option>
                     </Select>
 
@@ -39,7 +39,7 @@
                 <div v-if="input.type=='checkbox'">
 
                     <CheckboxGroup v-model="input.value">
-                        <Checkbox :label="val87" v-for="opt87,val87 in  input.optional">{{opt87}}</Checkbox>
+                        <Checkbox :label="val87" v-for="(opt87,val87) in  input.optional" :key="val87">{{opt87}}</Checkbox>
                     </CheckboxGroup>
 
                 </div>

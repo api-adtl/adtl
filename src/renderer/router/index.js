@@ -24,9 +24,22 @@ const router = new Router({
       component: () => import('@/components/open'),
       children: [
         {
+          path: '/',
+          name:"open_index",
+          component: () => import('@/components/content/index')
+        },
+        {
           path: 'add_api',
           name:'add_api',
           component: () => import('@/components/content/add_api'),
+          props: (route) => ({
+            dir: route.query.dir
+          })
+        },
+        {
+          path: 'editenv',
+          name:'editenv',
+          component: () => import('@/components/content/edit_env'),
           props: (route) => ({
             dir: route.query.dir
           })
@@ -55,14 +68,7 @@ const router = new Router({
             dir: route.query.dir
           })
         },
-        {
-          path: '/',
-          component: () => import('@/components/content/index')
-        },
-        {
-          path: '',
-          component: () => import('@/components/content/index')
-        },
+        
 
         {
           path: 'api',
