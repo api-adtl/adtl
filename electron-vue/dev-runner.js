@@ -1,20 +1,19 @@
 'use strict'
 
-const chalk = require('chalk')
-const electron = require('electron')
-const path = require('path')
-const { say } = require('cfonts')
-const { spawn } = require('child_process')
-const webpack = require('webpack')
-const WebpackDevServer = require('webpack-dev-server')
-const webpackHotMiddleware = require('webpack-hot-middleware')
+const chalk = require('chalk');
+const electron = require('electron');
+const path = require('path');
+const {say} = require('cfonts');
+const {spawn} = require('child_process');
+const webpack = require('webpack');
+const WebpackDevServer = require('webpack-dev-server');
+const webpackHotMiddleware = require('webpack-hot-middleware');
+const mainConfig = require('./webpack.main.config');
+const rendererConfig = require('./webpack.renderer.config');
 
-const mainConfig = require('./webpack.main.config')
-const rendererConfig = require('./webpack.renderer.config')
-
-let electronProcess = null
-let manualRestart = false
-let hotMiddleware
+let electronProcess = null;
+let manualRestart = false;
+let hotMiddleware;
 
 function logStats (proc, data) {
   let log = ''
@@ -62,6 +61,8 @@ function startRenderer () {
     const server = new WebpackDevServer(
       compiler,
       {
+        hot: true,
+        hotOnly: true,
         contentBase: path.join(__dirname, '../'),
         quiet: true,
         before (app, ctx) {

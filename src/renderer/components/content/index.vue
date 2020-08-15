@@ -1,7 +1,6 @@
 <template>
   <div>
-    内容列表/index 1-
-
+    内容展示
     <span>
       list_string: {{tab0}}
     </span>
