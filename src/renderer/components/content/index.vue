@@ -2,7 +2,7 @@
   <div>
     内容展示
     <span>
-      list_string: {{tab0}}
+      list_string: {{tab0}} {{nowselectenv}}
     </span>
   </div>
 </template>
@@ -17,6 +17,11 @@
         tab0: true,
         tab1: true,
         tab2: true
+      }
+    },
+    computed:{
+      nowselectenv(){
+        return this.$store.state.envselect;
       }
     },
     filters: {},

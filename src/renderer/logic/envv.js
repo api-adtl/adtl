@@ -13,8 +13,8 @@ class envv {
   }
 
   read ( callback) {
-    let  default_data={
-      'default':{}
+    let  default_data= {
+      'default': []
     };
     let pathjson = path.join(this.path,   'env.json')
     fs.access(pathjson, fs.constants.F_OK, (err) => {

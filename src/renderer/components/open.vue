@@ -21,7 +21,7 @@
                         </span>
 
                         <div style="width: 200px;float: right;color: white;">
-                          <envv></envv>  
+                          <envv @change="envselect_change"></envv>
                         </div>
                     </div>
                 </Menu>
@@ -79,6 +79,10 @@
       next()
     },
     methods: {
+      envselect_change(){
+        console.log("当前环境变量组改变");
+        this.$forceUpdate();
+      },
       dir_call () {
         this.index = path.join(this.now, 'index.json')
         console.log(this.isdir, this.now, this.index)

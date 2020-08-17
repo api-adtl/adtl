@@ -5,6 +5,7 @@ const state = {
   group_list: [],
   api_list: {},
   api_num: 0,
+  envselect:'default'
 }
 const getters = {
   getcontent_list: state => {
@@ -18,8 +19,10 @@ const getters = {
   },
   apinum: (state) => {
     return state.api_num
+  },
+  env_select:(state)=>{
+    return state.envselect
   }
-
 }
 
 const mutations = {
@@ -31,6 +34,9 @@ const mutations = {
   },
   set_now (state, now) {
     state.now_open = now
+  },
+  set_envselect (state, now) {
+    state.envselect = now
   },
   content_add (state, content) {
     console.log('content_add')

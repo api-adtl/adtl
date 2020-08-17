@@ -86,7 +86,7 @@
         dataempty: false,
         validation: {
           port: {
-            numeric: true
+
           }
         },
         attributes: {
