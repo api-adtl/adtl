@@ -1,10 +1,13 @@
 <template>
     <div style="overflow-y: auto">
-        <div :style="style2" style="margin-left: 3px;">
+        <div :style="style2" style="margin-top: 10px;margin-left: 3px;margin-right: 2px;">
             <div>
                 <Collapse>
-                    <Panel :name="groupobj.e_name" v-for="(groupobj,index) in listdata.group" :key="index">
-                        {{groupobj.name}} <span class="group_type">{{groupobj.type}}</span>   
+                    <Panel :name="groupobj.e_name"
+                           v-for="(groupobj,index) in listdata.group"
+                           :key="index">
+                        {{groupobj.name}}
+                      <span class="group_type">{{groupobj.type}}</span>
                         
                         
                         <p slot="content">

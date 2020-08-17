@@ -1,18 +1,29 @@
 <template>
   <div>
-    123
-    {{value}}
     <form action="">
       <table border="1" style="    width: 100%;">
+        <tr>
+          <th>
+            变量名字
+          </th>
+          <th>
+            变量值
+          </th>
+          <th>
+            提示信息
+          </th>
+        </tr>
         <tr v-for="(input,key) in value">
-          <th>
-            <input type="text" v-model="value[key].name" placeholder="变量名字">
+          <th class="thinput">
+            <Input type="text"
+                   v-model="value[key].name"
+                   placeholder="变量名字" />
           </th>
-          <th>
-            <input type="text" v-model="value[key].value" placeholder="变量值">
+          <th class="thinput">
+            <Input type="text" v-model="value[key].value" placeholder="变量值" />
           </th>
-          <th>
-            <input type="text" v-model="value[key].description" placeholder="提示信息">
+          <th class="thinput">
+            <Input type="text" v-model="value[key].description" placeholder="提示信息" />
           </th>
         </tr>
         <tr>
@@ -54,5 +65,7 @@ export default {
 </script>
 
 <style scoped>
-
+.thinput{
+  padding: 5px;
+}
 </style>

@@ -69,7 +69,7 @@ export default {
      * 增加一个环境变量组
      */
     addenvlist() {
-      this.env_list[this.addenvname] = {};
+      this.env_list[this.addenvname] = [];
       this.listo.save(this.env_list, () => {
         this.$Message.success("保存成功");
         this.$forceUpdate();
@@ -79,44 +79,28 @@ export default {
      * 当前选中改变
      * @param nowselect
      */
-    change_select(nowselect) {
-      console.log('更改', nowselect);
-      this.form = this.env_list[nowselect];
+    change_select(now_select) {
+      console.log('更改', now_select);
+      this.form = this.env_list[now_select];
     },
     /**
      * 
      * @param fdata
      */
     save_select(fdata){
-      this.env_list[this.nowselect] = fdata;
+
+      this.env_list[this.now_select] = fdata;
       this.listo.save(this.env_list, () => {
         this.$Message.success("保存成功");
         this.$forceUpdate();
       });
-    },
-    save() {
-      // 先进行验证
-      this.$validator.validate().then((result) => {
-        console.log('验证结果:', result, this.$validator.errors.all())
-        if (result) {
-          // 验证通过
-          this.save_file()
-        }
-      })
-    },
-    save_file() {
-
-      this.listo.add_group(this.$lodash.clone(this.form), () => {
-        this.$Message.success("保存成功");
-        this.$router.push('/open')
-      })
-
     },
     init() {
       console.log("init", this.dir, this.e_name);
       this.listo = new envv()
       this.listo.read((data) => {
         this.env_list = data
+        this.change_select(this.now_select);
         console.log('106', this.env_list)
       })
     }

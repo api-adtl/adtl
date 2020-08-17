@@ -94,7 +94,7 @@
           },
           ename: {
             required: true,
-            alpha_num: true,
+            alpha_dash: true,
             min: 3,
             max: 50,
             e_name: true
