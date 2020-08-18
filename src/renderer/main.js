@@ -13,7 +13,7 @@ import VueI18n from 'vue-i18n'
 import zh_CN from 'vee-validate/dist/locale/zh_CN'
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
-
+import mixincommon from "./mixin/common";
 Vue.use(mavonEditor)
 
 Vue.use(VueI18n)
@@ -44,6 +44,7 @@ Vue.config.productionTip = false
 /* eslint-disable no-new */
 var bus = new Vue()
 new Vue({
+  mixins:[mixincommon],
   bus: bus,
   components: {App},
   router,

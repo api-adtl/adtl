@@ -1,21 +1,22 @@
 <template>
   <div>
-    <div v-if="info_xy">
+    <div>
       <div>
-        <div >
+        <div v-if="send.get" >
           <span>get参数</span>
           <form_list :list="send.get">
           </form_list>
         </div>
 
-        <div >
+        <div v-if="send.form" >
           <span>form参数</span>
           <div>
-            <form_input v-model="send.form"></form_input>
+            <form_list :list="send.form">
+            </form_list>
           </div>
         </div>
 
-        <div >
+        <div v-if="send.headers" >
           <span>header 参数</span>
 
           <form_list :list="send.headers">

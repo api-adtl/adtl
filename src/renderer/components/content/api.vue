@@ -28,7 +28,7 @@
         <div v-show="select.form">
           <span>form参数</span>
           <div>
-            <form_input v-model="send_env.form"></form_input>
+            <form_list :list="send_env.form"></form_list>
           </div>
         </div>
 
@@ -246,23 +246,6 @@ export default {
       this.send_env = this.apply_env(this.send);
     },
 
-
-    /**
-     * 应用环境变量数据
-     * @param data
-     */
-    apply_env(data) {
-
-      let jsonstring = JSON.stringify(data);
-      this.now_env = this.envlist[this.$store.state.envselect];
-
-      for (let envob of this.now_env) {
-
-        jsonstring = jsonstring.replace('{' + envob.name + '}', envob.value)
-      }
-      console.log("应用环境变量", jsonstring, data, this.now_env);
-      return JSON.parse(jsonstring);
-    },
     deletee() {
       console.log('删除')
       let listb = new lists(this.dd1.dir)
