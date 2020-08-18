@@ -1,10 +1,9 @@
 <template>
     <div>
-        dd:{{dd}}
         <mavon-editor
                 :defaultOpen="defaultOpen"
                 :subfield="false"
-                :toolbarsFlag="toolbarsFlag"
+                toolbarsFlag="true"
                 @save="save"
                 style="height: 100%"
                 v-model="readme"></mavon-editor>
@@ -25,7 +24,7 @@
       return {
         readme: '',
         defaultOpen: 'preview',
-        toolbarsFlag: false,
+        toolbarsFlag: true,
         apiobj: {}
       }
     },
@@ -63,18 +62,6 @@
       }
     },
     watch: {
-      //监听列表
-      edit (new1) {
-        if (new1) {
-          this.toolbarsFlag = true
-          this.defaultOpen = 'edit'
-        } else {
-          this.toolbarsFlag = false
-          this.defaultOpen = 'preview'
-          this.save()
-        }
-        console.log(new1)
-      },
       dd: {
         immediate: true,
         handler (value, old) {

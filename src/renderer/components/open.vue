@@ -32,7 +32,7 @@
                     <BreadcrumbItem> 神马API（我还没想好这个怎么弄） </BreadcrumbItem>
                 </Breadcrumb>
               
-                <Content :style="{padding: '24px 0', minHeight: '280px', background: '#fff'}">
+                <Content :style="{padding: '24px 0', minHeight: '280px',overflowY:true, background: '#fff'}">
                     <Layout>
                         <Sider hide-trigger :style="{background: '#fff'}">
                             <div id="lists" style="min-height: 650px;">
@@ -185,9 +185,8 @@
     .layout {
         border: 1px solid #d7dde4;
         background: #f5f7f9;
-        position: relative;
+
         border-radius: 4px;
-        overflow: hidden;
         height: 100vh;
     }
 

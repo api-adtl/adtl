@@ -1,93 +1,85 @@
 <template>
     <div>
-        表单信息信息编辑 {{edit}}
-        <div v-if="edit">
-            编辑
-            <form action="">
-                <table border="1" style="    width: 100%;">
-                  <tr >
-                    <th>表单name</th>
-                    <th>表单value</th>
-                    <th>表单类型</th>
-                    <th>注释</th>
-                    <th>选项</th>
-                  </tr>
-                    <tr v-for="input,key in form">
-                        <th style="width:90px">
-                            <input placeholder="名字" style="width: 80px"
-                                   type="text"
-                                   v-model="input.name">
-                        </th>
-                        <th>
-                            
-                            <input v-if="input.type != 'json'" style="width: 95%" placeholder="默认值" 
-                            type="text" v-model="input.value">
-                            <div v-if="input.type == 'json'" >
-                              {{ input.value }}
-                              
-                            </div>
+      <form action="">
+        <table border="1" style="    width: 100%;">
+          <tr>
+            <th>表单name</th>
+            <th>表单value</th>
+            <th>表单类型</th>
+            <th>注释</th>
+            <th>选项</th>
+          </tr>
+          <tr v-for="(input,key) in form">
+            <th style="width:90px">
+              <input placeholder="名字" style="width: 80px"
+                     type="text"
+                     v-model="input.name">
+            </th>
+            <th>
 
-                        </th>
-                        <th>
-                            <div style="min-width: 150px;max-width:300px">
-                                <RadioGroup @on-change="type_change(input)" v-model="input.type">
-                                    <Radio label="text"></Radio>
-                                    <Radio label="number"></Radio>
-                                    <Radio label="textarea"></Radio>
-                                    <Radio label="radio"></Radio>
-                                    <Radio label="select"></Radio>
-                                    <Radio label="checkbox"></Radio>
-                                    <Radio label="date"></Radio>
-                                    <Radio label="time"></Radio>
-                                    <Radio label="file_pro"></Radio>
-                                    <Radio label="json"></Radio>
-                                </RadioGroup>
-                            </div>
-                        </th>
-                        <th>
-                            <input placeholder="描述信息" type="text" v-model="input.description">
-                        </th>
-                        <th>
-                            <div v-if="input.optional1">
-                                选项
-                                <div>
-                                    <div v-for="val40,key40 in input.optional">
+              <input v-if="input.type != 'json'"
+                     style="width: 95%" placeholder="默认值"
+                     type="text" v-model="input.value">
+              <div v-if="input.type == 'json'">
+                {{ input.value }}
 
-                                        <span>{{key40}}</span>:{{val40}}
-                                    </div>
+              </div>
 
-                                    <input placeholder="默认值" type="text" v-model="option.name">
-                                    <input placeholder="默认值" type="text" v-model="option.value">
-                                    <input @click="option_clean(input)" type="button" value="清空">
-                                    <input @click="add_option(input)" type="button" value="增加/修改">
-                                </div>
-                                <span>
-                                   {{tip[input.type]}}
-                               </span>
-                            </div>
+            </th>
+            <th>
+              <div style="min-width: 150px;max-width:300px">
+                <RadioGroup @on-change="type_change(input)" v-model="input.type">
+                  <Radio label="text"></Radio>
+                  <Radio label="number"></Radio>
+                  <Radio label="textarea"></Radio>
+                  <Radio label="radio"></Radio>
+                  <Radio label="select"></Radio>
+                  <Radio label="checkbox"></Radio>
+                  <Radio label="date"></Radio>
+                  <Radio label="time"></Radio>
+                  <Radio label="file_pro"></Radio>
+                  <Radio label="json"></Radio>
+                </RadioGroup>
+              </div>
+            </th>
+            <th>
+              <input placeholder="描述信息" type="text" v-model="input.description">
+            </th>
+            <th>
+              <div v-if="input.optional1">
+                选项
+                <div>
+                  <div v-for="val40,key40 in input.optional">
+
+                    <span>{{ key40 }}</span>:{{ val40 }}
+                  </div>
+
+                  <input placeholder="默认值" type="text" v-model="option.name">
+                  <input placeholder="默认值" type="text" v-model="option.value">
+                  <input @click="option_clean(input)" type="button" value="清空">
+                  <input @click="add_option(input)" type="button" value="增加/修改">
+                </div>
+                <span>
+                                 {{ tip[input.type] }}
+                             </span>
+              </div>
 
 
-                        </th>
-                    </tr>
-                    <tr>
-                        <th colspan="5">
+            </th>
+          </tr>
+          <tr>
+            <th colspan="5">
 
-                            <div @click="add_one">
-                                增加一个
-                            </div>
-                        </th>
-                    </tr>
+              <div @click="add_one">
+                增加一个
+              </div>
+            </th>
+          </tr>
 
-                </table>
+        </table>
 
-            </form>
-        </div>
-
-        <div v-if="!edit">
-
-            <form_input v-model="form2"></form_input>
-
-        </div>
+      </form>
+      <Button  @click="save" type="warning" >保存</Button>
     </div>
 </template>
 
@@ -234,7 +226,8 @@
             va[vv.name] = vv.value
           }
           //this.value = va
-          this.$emit('input', va)
+          this.$emit('input', now2);
+          this.$emit('save', now2);
         },
         deep: true
       }

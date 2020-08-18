@@ -1,29 +1,15 @@
 <template>
   <div>
-    <h3>
-      headert头信息
-    </h3>
     <envlist v-model="form" @save="save">
-
     </envlist>
 
-
-    <div>
-      <div v-for="(input,key) in form2" :key="key">
-        {{ input.name }} :
-        <Input style="width: 300px" v-model="input.value" />
-        <span>
-            {{ input.description }}
-        </span>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
 import api from '@/logic/api'
-
 import envlist from "../env/envlist";
+
 export default {
   name: 'get',
 
@@ -52,7 +38,7 @@ export default {
       })
     },
     save() {
-      console.log('save4header')
+
       let newdata = []
       for (let val of this.form) {
         if (val.name != '') {
@@ -60,8 +46,9 @@ export default {
         }
       }
       this.form = newdata
-      this.$emit('input', newdata);
-      this.$emit('save', newdata);
+      console.log('save4header',newdata)
+
+
       this.form2 = this.$lodash.cloneDeep(this.form)
       this.apiobj.save('header', newdata, () => {
         console.log('保存成功')
@@ -88,7 +75,9 @@ export default {
         va[vv.name] = vv.value
       }
       //this.value = va
-      this.$emit('input', va)
+
+      this.$emit('input', now2);
+      this.$emit('save', now2);
     }
 
   },

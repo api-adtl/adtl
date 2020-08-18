@@ -1,53 +1,13 @@
 <template>
     <div>
-        GET数据
-        <form action="">
-            <table border="1" style="    width: 100%;">
-                <tr>
-                  <th width="200px">
-
-                  </th>
-                  <th width="200px">
-
-                  </th>
-                  <th>
-
-                  </th>
-                </tr>
-                <tr v-for="input,key in form">
-                    <th>
-                        <input type="text" v-model="form[key].name" placeholder="参数名字" >
-                    </th>
-                    <th><input type="text" v-model="form[key].value" placeholder="默认值"></th>
-                    <th><input type="text" v-model="form[key].description" placeholder="提示信息"></th>
-                </tr>
-                <tr>
-                    <th colspan="3">
-
-                        <div @click="add_one">
-                            增加一个
-                        </div>
-                    </th>
-                </tr>
-            </table>
-        </form>
-
-
-        <div v-if="!edit">
-            <div v-for="input in form2">
-                {{ input.name }} :
-                <Input style="width: 300px" v-model="input.value"/>
-                <span>
-                    {{ input.description }}
-                </span>
-
-            </div>
-        </div>
+      <envlist v-model="form" @save="save">
+      </envlist>
     </div>
 </template>
 
 <script>
   import api from '@/logic/api'
+  import envlist from "../env/envlist";
 
   export default {
     name: 'get',
@@ -59,6 +19,7 @@
         ddata1: {}
       }
     },
+    components:{envlist},
     props: [
       //数据传参
       'dd',
@@ -109,8 +70,8 @@
         this.$lodash.forIn(this.form2, (d) => {
           this.ddata1[d.name] = d.value
         })
-        this.$emit('input', this.ddata1)
-        console.log('ddata', this.ddata1)
+        this.$emit('input', this.form2);
+        this.$emit('save', this.form2)
       }
     },
     watch: {

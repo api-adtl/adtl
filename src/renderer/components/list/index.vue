@@ -142,16 +142,17 @@
       apito(value)
       {
         if(this.dd.type=='test'){
-          return {name: 'test', query: {number: value.number}}
+          return {name: 'test', params: {apiid: value.number}}
         }else{
           if (value.request_type == 'ws') {
-            return {name: 'api_ws', query: {number: value.number}}
+            return {name: 'api_ws', params: {apiid: value.number}}
           } else {
-            return {name: 'api', query: {number: value.number}}
+            return {name: 'api', params: {apiid: value.number}}
           }
         }
       },
       goto(api){
+        console.log(11155,this.apito(api));
         this.$router.push(this.apito(api));
         console.log(api);
       },
