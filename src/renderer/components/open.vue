@@ -34,12 +34,12 @@
               
                 <Content :style="{padding: '24px 0', minHeight: '280px',overflowY:true, background: '#fff'}">
                     <Layout>
-                        <Sider hide-trigger :style="{background: '#fff'}">
+                        <Sider hide-trigger width="250" :style="{background: '#fff'}">
                             <div id="lists" style="min-height: 650px;">
                                 <list v-model="content_list"></list>
                             </div>
                         </Sider>
-                        <Content :style="{padding: '2px', minHeight: '380px', background: '#fff'}">
+                        <Content :style="{padding: '2px', minHeight: '650px', background: '#fff'}">
                             <router-view v-if="now"></router-view>
                         </Content>
                     </Layout>

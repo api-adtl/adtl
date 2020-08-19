@@ -26,7 +26,7 @@
           </form_list>
         </div>
       </div>
-      <div >
+      <div style="display: none">
         {{send}} <br>
         {{send2}}<br>
         {{grnerated}}

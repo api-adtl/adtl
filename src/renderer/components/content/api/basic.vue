@@ -118,17 +118,7 @@ export default {
       console.log('save_file')
       this.listo.savefile(this.listdata, () => {
         console.log('保存成功')
-        this.$Modal.confirm({
-          title: 'Title',
-          content: '<p>保存成功,是否跳转到首页?</p>',
-          onOk: () => {
-            this.$router.push('/open')
-
-          },
-          onCancel: () => {
-
-          }
-        })
+        this.$Message.info("保存成功!");
       })
     },
     init () {
