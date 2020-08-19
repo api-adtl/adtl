@@ -78,7 +78,7 @@
 
         <MenuItem name="generated" style="padding: 0 10px;">
           <Icon type="ios-alarm"/>
-          generated
+          数据生成
         </MenuItem>
 
 
@@ -116,19 +116,16 @@
         </api_header>
       </div>
 
-      <div v-if="is_init" v-show="select.test">
+      <div v-if="is_init && select.test">
         <api_test :api="dd1" :grnerated="grnerated"
                   :group="group_env"
                   :send="send_env"></api_test>
       </div>
 
       <div v-if="is_init" v-show="select.generated">
-        <Button @click="()=>{this.edit.generated=!this.edit.generated}" icon="ios-search"
-                shape="circle"
-                type="primary">编辑
-        </Button>
+
         <generated :api="dd1"
-                   :edit="edit.generated"
+                   :edit="true"
                    :group="group_env"
                    :send="send"
 

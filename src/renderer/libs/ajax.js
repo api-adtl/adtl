@@ -46,11 +46,12 @@ class ajax {
   }
 
   post_send (url, senddata, callbak,callbak2) {
-    console.log('post_send', arguments)
-
+    console.log('post_send', senddata)
+    let headers = senddata.headers;
+    // headers['Content-Type']= 'application/x-www-form-urlencoded';
     this.axios.post(url, qs.stringify(senddata.form), {
       params: senddata.get,
-      headers: senddata.headers
+      headers: headers
     }).then(callbak).catch(callbak2)
   }
 

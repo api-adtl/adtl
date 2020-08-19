@@ -2,26 +2,34 @@
   <div>
     <div>
       <div>
-        <div v-if="send.get" >
+        <div v-if="!empty2(send.get)" >
           <span>get参数</span>
-          <form_list :list="send.get">
+          <form_list :list="send.get"  :form="send2.get" index2="get" @save="send_save">
           </form_list>
         </div>
 
-        <div v-if="send.form" >
+        <div v-if="!empty2(send.form)" >
           <span>form参数</span>
           <div>
-            <form_list :list="send.form">
-            </form_list>
+            <form_input2 :list="send.form"
+                       :form="send2.form"
+                       index2="form"
+                       @save="send_save">
+            </form_input2>
           </div>
         </div>
 
-        <div v-if="send.headers" >
+        <div v-if="!empty2(send.headers)" >
           <span>header 参数</span>
 
-          <form_list :list="send.headers">
+          <form_list :list="send.headers"  :form="send2.headers" index2="headers" @save="send_save">
           </form_list>
         </div>
+      </div>
+      <div >
+        {{send}} <br>
+        {{send2}}<br>
+        {{grnerated}}
       </div>
 
     </div>
@@ -33,8 +41,10 @@
     <Button @click="test" size="small" type="primary">进行测试</Button>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <Button @click="test13" size="small" type="primary">生成 & 测试</Button>
-    <Button @click="test100" size="small" type="primary">进行测试*100</Button>
 
+    <Button @click="test100" size="small" type="primary">生成 & 测试 *100</Button>
+
+    {{request_end -request_start }}ms
     <response :response="response" :api="api" :errormsg="errormsg"></response>
 
   </div>
@@ -44,13 +54,15 @@ import test from '../../../logic/test'
 import response from './response'
 import Mock from 'mockjs'
 import jsonFormat from 'json-format'
-import form_input from './form_input'
+import form_input2 from './form_input2'
 import form_list from './form_list'
 
 export default {
   name: 'test',
   data() {
     return {
+      request_start:0,
+      request_end:0,
       testob: {},
       response: {},
       send2: {},
@@ -73,10 +85,17 @@ export default {
   components: {
     //注册组件
     response,
-    form_input,
+    form_input2,
     form_list
   },
   methods: {
+    send_save(index,fdata){
+
+      console.log('save',index,fdata);
+      // this.send2[index]=fdata;
+      this.$set(this.send2,index,fdata);
+      this.$forceUpdate();
+    },
     //方法列表
     info() {
       this.info_xy = !this.info_xy;
@@ -84,7 +103,7 @@ export default {
     random() {
       console.log('应用生成器!')
       let mmrule = {}
-      let send = this.send2
+       let send = this.send2
       var Random = Mock.Random
       for (let valu of this.grnerated) {
         if (typeof mmrule[valu.name] == 'undefined') {
@@ -104,8 +123,13 @@ export default {
           }
         }
       }
+      send = this.$lodash.merge(send, mmrule)
+      for (let li126 in send){
+        this.$set(this.send2,li126,send[li126]);
+      }
+      // this.send2 = this.$lodash.merge(send, mmrule)
 
-      this.send2 = this.$lodash.merge(send, mmrule)
+      this.$forceUpdate();
       console.log('se4nd', this.send2)
 
     },
@@ -123,6 +147,7 @@ export default {
     },
     test100() {
       for (let i = 0; i < 100; i++) {
+        this.loading=false;
         this.test13();
       }
     },
@@ -131,11 +156,16 @@ export default {
       if (this.$lodash.isEmpty(this.testob)) {
         this.init();
       }
+      this.request_start = new Date();
       this.testob.send(send, (data) => {
+        console.log(136,data);
+        this.request_end = new Date();
         // 成功处理
         this.loading = false;
-        this.response = this.$lodash.cloneDeep(data)
+        this.response = this.$lodash.cloneDeep(data);
+
       }, (error) => {
+        this.request_end = new Date();
         this.errormsg = error;
         // 错误处理
         this.loading = false;
@@ -163,8 +193,14 @@ export default {
     },
     init() {
       this.response = {};
+
       this.loading = false;
-      this.send2 = this.$lodash.cloneDeep(this.send)
+      this.send2 = {
+        get:{},
+        form:{},
+        headers:{}
+
+      };
 
       if (!this.$lodash.isEmpty(this.api) && !this.$lodash.isEmpty(this.group)) {
         this.testob = new test(this.api, this.group)

@@ -1,3 +1,4 @@
+import lodash from 'lodash';
 export default {
     methods: {
 
@@ -17,5 +18,10 @@ export default {
             console.log("应用环境变量", jsonstring, data, this.now_env);
             return JSON.parse(jsonstring);
         },
-    }
+        empty2(vall){
+            console.log('empty2',vall);
+            return lodash.isEmpty(vall);
+        }
+    },
+
 }

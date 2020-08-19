@@ -3,7 +3,7 @@
         测试结果组件
         <br>
         <div>
-          <div　class="error" v-if="errormsg">
+          <div class="error" v-if="errormsg">
           
              <Alert type="error" show-icon>
                 出错了
@@ -20,6 +20,10 @@
               <Button :style="bus" @click="open('status')" ghost type="primary">status</Button>
               <Button :style="bus" @click="open('headers')" ghost type="primary">headers</Button>
               <Button :style="bus" @click="open('all')" ghost type="primary">ALL</Button>
+              <Button
+                      :style="bus"
+                      @click="open('view')"
+                      ghost type="primary">渲染展示</Button>
             </ButtonGroup>
             </dir>
             <div>
@@ -27,14 +31,13 @@
               <div v-if="api.request_type != 'view' & api.request_type != 'image'" >
                 <pre>{{response.data|format_data(api.data_type)}}</pre>
               </div>
-              <Button @click="view=!view" ghost type="primary">渲染展示</Button>
-              <div v-if="view" v-html="response.data">
-                
-              </div>
+
+
               <div v-if="api.request_type== 'view'">
                 视图显示(红框不是内容)
                 <br>
-                <iframe width="100%" height="500px" style="border: 1px red solid;" frameborder="0" 
+                <iframe width="100%" height="500px" style="border: 1px red solid;"
+                        frameborder="0"
                 :src="response.config.url">
                 </iframe>
               </div>
@@ -61,6 +64,14 @@
             </div>
             <div v-if="status.all">
                 <pre>{{response|format}}</pre>
+            </div>
+            <div v-if="status.view">
+                <!--                   v-html="response.data"  > -->
+                渲染显示(框框不是内容,1px宽)
+                <iframe
+                    width="100%" height="500px" style="border: 1px burlywood solid;"
+                    :srcdoc="response.request.responseText"
+                    frameborder="0"></iframe>
             </div>
           </div>
             
@@ -89,7 +100,8 @@
           config: false,
           status: false,
           headers: false,
-          all: false
+          all: false,
+          view:false
         },
         view:false
       }
@@ -111,6 +123,10 @@
     ],
     computed: {
       //计算属性
+      data_html(){
+        console.log('data_html',this.response.request.responseText);
+        return this.response.request.responseText;
+      }
     },
     components: {
       //注册组件
@@ -123,6 +139,7 @@
         this.status.headers = false
         this.status.status = false
         this.status.all = false
+        this.status.view = false
         this.status[name] = true
       }
     },

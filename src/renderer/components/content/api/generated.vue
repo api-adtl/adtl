@@ -1,52 +1,60 @@
 <template>
     <div>
-        数据生成 编辑{{edit}}
-        <br>
-        send :{{value}}
-        生成规则 :{{value}}
+
         <div v-if="edit">
             编辑
             <form action="">
-                <table border="1" style="    width: 100%;">
-                    <tr v-for="input,key in form">
+                <table class="generated_table" border="1" style="    width: 100%;">
+                    <tr>
+                      <th>
+                        位置
+                      </th>
+                      <th>
+                        unit生成器
+                      </th>
+                      <th>
+                        规则
+                      </th>
+                    </tr>
+                    <tr v-for="(input,key) in form">
                         <th>
-                            <span>位置</span>:
-                            <Select size="small" style="width:100px"
+
+                            <Select style="width:200px"
                                     v-model="form[key].name">
-                                <Option :key="key"
-                                        :value="key"
-                                        v-for="item,key in send">{{ key }}
+                                <Option :key="key18"
+                                        :value="key18"
+                                        v-for="(item,key18) in send">{{ key18 }}
                                 </Option>
                             </Select>
-                            <Select size="small" style="width:100px"
+                            <br>
+                            <Select  style="width:200px"
                                     v-model="form[key].name2">
-                                <Option :key="key"
-                                        :value="key"
-                                        v-for="item,key in send[form[key].name]">{{ key }}
+                                <Option :key="item.name"
+                                        :value="item.name"
+                                        v-for="(item,key2) in send[form[key].name]">{{ item.name }}
                                 </Option>
                             </Select>
 
 
                         </th>
                         <th>
-                            unit生成器
-                            <Select size="small" style="width:100px"
+                            <Select  style="width:100px"
                                     v-model="form[key].unit">
-                                <Option :key="key"
-                                        :value="key"
-                                        v-for="item,key in format">{{ key }}
+                                <Option :key="key3"
+                                        :value="key3"
+                                        v-for="(item,key3) in format">{{ key3 }}
                                 </Option>
                             </Select>
-
                         </th>
                         <th>
                             <div>
-                                <input :rows="4"
-                                       placeholder="format格式,JSON格式化字符串,数组将作为多参数传递" type="textarea"
-                                       v-model="form[key].format2">
-                                <span>
-                                {{format[form[key].unit]}}
-                            </span>
+                                <Input :rows="4"
+                                       placeholder="format格式,JSON格式化字符串,数组将作为多参数传递"
+                                       type="textarea"
+                                       v-model="form[key].format2"></Input>
+                                <br> <br>
+                                <div style="line-height: 12px;white-space: pre;"
+                                     v-html="format[form[key].unit]"></div>
                             </div>
 
                         </th>
@@ -74,6 +82,7 @@
 
             </div>
         </div>
+      <Button  @click="save" type="warning" >保存</Button>
     </div>
 </template>
 
@@ -81,7 +90,7 @@
   import api from '@/logic/api'
   import formatdata from './formatdata'
   export default {
-    name: 'get',
+    name: 'generated',
     data () {
       return {
         form: [],
@@ -172,6 +181,12 @@
   }
 </script>
 
-<style>
+<style lang="less">
+.generated_table{
+    th{
+      padding: 5px;
 
+    }
+
+}
 </style>

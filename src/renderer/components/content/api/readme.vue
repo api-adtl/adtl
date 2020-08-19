@@ -3,7 +3,7 @@
         <mavon-editor
                 :defaultOpen="defaultOpen"
                 :subfield="false"
-                toolbarsFlag="true"
+                :toolbarsFlag="true"
                 @save="save"
                 style="height: 100%"
                 v-model="readme"></mavon-editor>
@@ -56,7 +56,8 @@
       },
       save () {
         this.apiobj.readme_save(this.readme, () => {
-          console.log('保存成功')
+          // console.log('保存成功')
+          this.$Message.info('保存成功');
         })
 
       }
