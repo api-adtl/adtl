@@ -23,6 +23,7 @@ class lists {
   read (callback) {
 
     fs.access(this.path, fs.constants.F_OK, (err) => {
+      console.debug('list.read',err);
       if (err) {
         this.create(callback)
       } else {
@@ -45,7 +46,7 @@ class lists {
         console.log('mkdir',dir);
         fs.mkdir(dir, {recursive: true},(err)=>{
           console.log('mkdir_callback',err);
-          this.read2(callback)
+          this.read(callback)
         })
       } else {
         //目录存在
@@ -149,12 +150,18 @@ class lists {
     console.log('remove', this.obj_data, index)
 
     //修改
-    this.create(() => {
-      files.rmdirSync(index)
-      callback()
+    this.savefile(this.obj_data,() => {
+
+      this.remove1call(index,callback)
 
     })
   }
+
+  remove1call(index,callback){
+    files.rmdirSync(index);
+    callback();
+  }
+
 
 }
 

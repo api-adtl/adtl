@@ -11,15 +11,15 @@
           </tr>
           <tr v-for="(input,key) in form">
             <th style="width:90px">
-              <input placeholder="名字" style="width: 80px"
+              <Input placeholder="名字" style="width: 80px"
                      type="text"
-                     v-model="input.name">
+                     v-model="input.name"></Input>
             </th>
             <th>
 
-              <input v-if="input.type != 'json'"
+              <Input v-if="input.type != 'json'"
                      style="width: 95%" placeholder="默认值"
-                     type="text" v-model="input.value">
+                     type="text" v-model="input.value"></Input>
               <div v-if="input.type == 'json'">
                 {{ input.value }}
 
@@ -43,13 +43,13 @@
               </div>
             </th>
             <th>
-              <input placeholder="描述信息" type="text" v-model="input.description">
+              <Input placeholder="描述信息" type="text" v-model="input.description"></Input>
             </th>
             <th>
               <div v-if="input.optional1">
                 选项
                 <div>
-                  <div v-for="val40,key40 in input.optional">
+                  <div v-for="(val40,key40) in input.optional">
 
                     <span>{{ key40 }}</span>:{{ val40 }}
                   </div>

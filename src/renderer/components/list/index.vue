@@ -208,13 +208,15 @@
         console.log('shanchu', this.dd)
         this.$Modal.confirm({
           title: '删除警告!',
-          content: '<p>您确定要删除这个分组么?名字:' + this.dir,
+          content: '<p>您确定要删除这个分组么?名字:' + this.name,
           onOk: () => {
             let listo = new lists(this.dd.dir)
             listo.read(() => {
               listo.remove_group(this.dd.e_name, () => {
                 this.$Message.info('删除完成!')
-                this.$router.push('/open')
+                // this.$router.currentRoute;
+
+                // this.$router.push('/open')
               })
             })
 
