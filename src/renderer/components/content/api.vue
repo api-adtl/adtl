@@ -28,7 +28,7 @@
         <div v-show="select.form">
           <span>form参数</span>
           <div>
-            <form_list :list="send_env.form"></form_list>
+            <form_input2 :list="send_env.form"></form_input2>
           </div>
         </div>
 
@@ -151,6 +151,8 @@ import group from '@/logic/group'
 import generated from './api/generated'
 import envv from "../../logic/envv";
 import form_input from './api/form_input'
+import form_input2 from './api/form_input2'
+
 import form_list from './api/form_list'
 
 export default {
@@ -211,6 +213,7 @@ export default {
     api_test,
     generated,
     form_input,
+    form_input2,
     form_list
   },
   watch: {
