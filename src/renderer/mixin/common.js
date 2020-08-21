@@ -1,5 +1,12 @@
 import lodash from 'lodash';
+import process from "process";
+
 export default {
+    computed: {
+        isPackaged() {
+            return !process.env.WEBPACK_DEV_SERVER;
+        }
+    },
     methods: {
 
         /**
@@ -10,16 +17,15 @@ export default {
 
             let jsonstring = JSON.stringify(data);
             this.now_env = this.envlist[this.$store.state.envselect];
-
             for (let envob of this.now_env) {
 
                 jsonstring = jsonstring.replace('{' + envob.name + '}', envob.value)
             }
-            console.log("应用环境变量", jsonstring, data, this.now_env);
+            console.log("应用环境变量", jsonstring,jsonstring);
             return JSON.parse(jsonstring);
         },
-        empty2(vall){
-            console.log('empty2',vall);
+        empty2(vall) {
+            console.log('empty2', vall);
             return lodash.isEmpty(vall);
         }
     },

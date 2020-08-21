@@ -88,8 +88,15 @@ export default {
      * @param fdata
      */
     save_select(fdata){
+      let data = [];
+      for (let aa of fdata){
+        if(aa.name){
+          data.push(aa);
+        }
+      }
+      // this.env_list[this.now_select] = data;
+      this.$set(this.env_list,this.now_select,data)
 
-      this.env_list[this.now_select] = fdata;
       this.listo.save(this.env_list, () => {
         this.$Message.success("保存成功");
         this.$forceUpdate();

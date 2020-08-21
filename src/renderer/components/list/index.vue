@@ -29,14 +29,14 @@
                           <Poptip trigger="focus"  content="点击打开，右击复制,再点取消复制">
                             <div>
                              
-                              <div class="fl">
+                              <span >
                                  {{apiobj.name}}
-                              </div> 
-                              <div class="fl" >
+                              </span>
+                              <span >
                                 <span class="request_type">
                                   {{apiobj.request_type}}
                                 </span>
-                              </div>
+                              </span>
 
                             </div>
                           </Poptip>

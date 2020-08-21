@@ -26,7 +26,7 @@
           </form_list>
         </div>
       </div>
-      <div style="display: none">
+      <div v-if="!isPackaged">
         {{send}} <br>
         {{send2}}<br>
         {{grnerated}}
@@ -65,7 +65,11 @@ export default {
       request_end:0,
       testob: {},
       response: {},
-      send2: {},
+      send2: {
+        get:{},
+        form:{},
+        headers:{}
+      },
       loading: true,
       errormsg: '',
       info_xy: false
@@ -193,18 +197,16 @@ export default {
     },
     init() {
       this.response = {};
-
       this.loading = false;
-      this.send2 = {
-        get:{},
-        form:{},
-        headers:{}
-
-      };
-
+      // this.send2 = {
+      //   get:{},
+      //   form:{},
+      //   headers:{}
+      // };
       if (!this.$lodash.isEmpty(this.api) && !this.$lodash.isEmpty(this.group)) {
         this.testob = new test(this.api, this.group)
       }
+      this.$forceUpdate();
     }
   },
   watch: {
@@ -215,7 +217,20 @@ export default {
         console.log(noww1)
         this.init()
       }
-
+    },
+    api: {
+      deep: true,
+      handler(noww1) {
+        console.log(noww1)
+        this.init()
+      }
+    },
+    group:{
+      deep: true,
+      handler(noww1) {
+        console.log(noww1)
+        this.init()
+      }
     },
     loading(new1) {
       if (new1 == true) {
