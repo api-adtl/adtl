@@ -14,6 +14,15 @@
                   <Input  style="width: 400px" type="textarea" v-model="input.value"/>
                 </div>
 
+                <div v-if="input.type=='swich'">
+
+                  <i-switch
+                          true-value="1"
+                          false-value="0"
+                          v-model="input.value" >
+                  </i-switch>
+                </div>
+
                 <div v-if="input.type=='json'">
                   <Input  style="width: 400px" type="textarea" v-model="input.value"/>
                 </div>

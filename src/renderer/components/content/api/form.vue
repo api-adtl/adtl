@@ -31,12 +31,14 @@
                 <RadioGroup @on-change="type_change(input)" v-model="input.type">
                   <Radio label="text"></Radio>
                   <Radio label="number"></Radio>
+                  <Radio label="swich"></Radio>
                   <Radio label="textarea"></Radio>
                   <Radio label="radio"></Radio>
                   <Radio label="select"></Radio>
                   <Radio label="checkbox"></Radio>
                   <Radio label="date"></Radio>
                   <Radio label="time"></Radio>
+<!--                  // swich-->
                   <Radio label="file_pro"></Radio>
                   <Radio label="json"></Radio>
                 </RadioGroup>

@@ -17,6 +17,16 @@
                           v-model="formRight[input.name]"/>
                 </div>
 
+                <div v-if="input.type == 'swich'">
+                  <i-switch
+                      true-value="1"
+                      false-value="0"
+                      @on-change="input_data"
+                      v-model="formRight[input.name]"  />
+
+                </div>
+
+
                 <div v-if="input.type=='json'">
                   <Input  style="width: 400px" type="textarea"
                           @on-change="input_data"
