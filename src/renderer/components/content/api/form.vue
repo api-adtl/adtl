@@ -62,8 +62,8 @@
                   <input @click="add_option(input)" type="button" value="增加/修改">
                 </div>
                 <span>
-                                 {{ tip[input.type] }}
-                             </span>
+                     {{ tip[input.type] }}
+                 </span>
               </div>
 
 

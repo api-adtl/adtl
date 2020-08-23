@@ -21,12 +21,20 @@ export default {
 
                 jsonstring = jsonstring.replace('{' + envob.name + '}', envob.value)
             }
-            console.log("应用环境变量", jsonstring,jsonstring);
+            console.log("应用环境变量", jsonstring, jsonstring);
             return JSON.parse(jsonstring);
         },
         empty2(vall) {
             console.log('empty2', vall);
             return lodash.isEmpty(vall);
+        },
+        refresh_list() {
+            let f5 = document.getElementById("f5");
+            if (typeof f5 == 'object') {
+                f5.click();
+            }
+            this.$Message.success("刷新列表完成!");
+
         }
     },
 

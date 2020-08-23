@@ -11,7 +11,7 @@
                 </div>
 
                 <div v-if="input.type=='textarea'">
-                  <Input  style="width: 400px" type="textarea" v-model="input.value"/>
+                  <Input type="textarea" v-model="input.value"/>
                 </div>
 
                 <div v-if="input.type=='swich'">
@@ -24,7 +24,7 @@
                 </div>
 
                 <div v-if="input.type=='json'">
-                  <Input  style="width: 400px" type="textarea" v-model="input.value"/>
+                  <Input type="textarea" v-model="input.value"/>
                 </div>
 
                 <div v-if="input.type=='number'">

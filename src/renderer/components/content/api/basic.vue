@@ -119,6 +119,7 @@ export default {
       this.listo.savefile(this.listdata, () => {
         console.log('保存成功')
         this.$Message.info("保存成功!");
+        this.refresh_list();
       })
     },
     init () {

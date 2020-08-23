@@ -4,7 +4,7 @@
 
 <script>
 export default {
-name: "optional"
+  name: "optional"
 }
 </script>
 

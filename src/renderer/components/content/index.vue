@@ -30,12 +30,7 @@
     methods: {},
     mounted(){
       //组件激活
-      let f5 = document.getElementById("f5");
-      if(typeof f5 == 'object'){
-        
-        f5.click();
-      }
-      this.$Message.success("刷新列表完成!");
+      this.refresh_list();
     
     }
   }
