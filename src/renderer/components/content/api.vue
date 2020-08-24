@@ -18,7 +18,14 @@
         <span style="color: #a1a1a1">
                 {{ dd1.e_name }}
               </span>
-        <Button @click="deletee" size="small" type="primary">删除API</Button>
+        <Button @click="deletee" v-if="!empty2(dd_softlink)"
+                size="small" type="primary">
+          删除API
+        </Button>
+        <Button @click="deletee_link" v-if="empty2(dd_softlink)"
+                size="small" type="primary">
+          删除软连接
+        </Button>
       </div>
 
       <div v-if="!select.test">
@@ -272,6 +279,17 @@ export default {
         })
       })
 
+    },
+    deletee_link(){
+      console.log('删除软连接')
+      let listb = new lists(this.dd_softlink.dir)
+      listb.read((data) => {
+        console.log('data', data)
+        listb.remove_api(this.dd_softlink.e_name, () => {
+          this.$Message.success('删除软连接成功!')
+          this.$router.push('/open/')
+        })
+      })
     },
     //方法列表
     select1(name) {

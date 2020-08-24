@@ -78,7 +78,7 @@
         <div  v-if="form.soft_link">
           链接目标：
           <span style="font-size: 15px;font-weight: 900;">
-            {{ oldata.dir }}  {{ oldata.name }}
+            {{ linkdata.dir }}  {{ linkdata.name }}
           </span>
         </div>
 
@@ -97,13 +97,13 @@
   import path from 'path'
   import tool from "../../libs/tool";
 
-
   export default {
     name: 'fuzhiapi',
     data () {
       return {
         listo: {},
         lists: {},
+        linkdata:{},
         soft_link_can:false,
         olddir:'',
           oldata:{},
@@ -171,11 +171,15 @@
         })
       },
       save_file () {
-        if(this.form.soft_link){
-          this.form.soft_link_id= this.oldata.uniqid;
+        if(typeof this.oldata.soft_link === 'boolean' && this.oldata.soft_link){
+          this.form.soft_link_id= this.linkdata.soft_link_id;
+        }else{
+          this.form.soft_link_id= this.linkdata.uniqid;
         }
         this.listo.add_api(this.form, () => {
-          files.copydirSync(this.olddir, path.join(path.join(this.$store.getters.now_open.toString(),this.form.dir),this.form.e_name) );
+          if(!this.form.soft_link){
+             files.copydirSync(this.olddir, path.join(path.join(this.$store.getters.now_open.toString(),this.form.dir),this.form.e_name) );
+          }
           this.$Message.success("保存成功");
           this.$router.push('/open')
         })
@@ -186,6 +190,11 @@
         this.oldata = this.object_copy(fuzhi);
         if(typeof this.oldata.uniqid === 'string'){
           this.soft_link_can = true;
+          if(typeof this.oldata.soft_link ==='boolean' && this.oldata.soft_link){
+            this.linkdata = this.$store.state.api_list[this.oldata.soft_link_id];
+          }else{
+            this.linkdata = this.oldata;
+          }
         }
         this.olddir =  path.join(path.join(this.$store.getters.now_open.toString(),fuzhi.dir),fuzhi.e_name);
         this.form = fuzhi
