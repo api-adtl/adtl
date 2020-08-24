@@ -37,7 +37,7 @@
                       </span>
                     <span>
                       <span class="request_type">
-                        {{ apiobj.request_type }} {{apiobj.number}}
+                        {{ apiobj.request_type }}
                       </span>
                     </span>
 
