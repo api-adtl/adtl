@@ -5,9 +5,12 @@
             {{dd}}
             <Button @click="deletee" size="small" type="primary">删除API</Button>
             <br>
-            分组信息 : {{group}} <br>
-            SEND : {{send}} <br>
-            grnerated: {{grnerated}}
+          apiid : {{apiid}} <br>
+          dd1 : {{dd1}} <br>
+          分组信息 : {{group}} <br>
+          SEND : {{send}} <br>
+          grnerated: {{grnerated}}
+
         </div>
 
         <br>
@@ -186,10 +189,11 @@
     extends: {
       // 扩展
     },
-
-    props: [
-      'number'
-    ],
+    computed:{
+      apiid(){
+        return this.$route.params.apiid;
+      },
+    },
 
     components: {
       //注册组件
@@ -258,7 +262,7 @@
 
         this.group = {}
         this.is_init = false
-        this.dd1 = this.$store.state.api_list[this.number]
+        this.dd1 = this.$store.state.api_list[this.apiid]
         this.dd = {}
         this.send = {
           get: {},

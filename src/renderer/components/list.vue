@@ -3,6 +3,9 @@
         <!-- 这是列表 -->
         <Button @click="view_button" size="small" type="primary">按钮可见</Button>
         <Button @click="f5=!f5" size="small" type="primary" id="f5">刷新</Button>
+        <Button @click="view_all" size="small" type="primary">全部展示</Button>
+
+
         <br>
         <div style="width: 230px">
             <list_index :f5="f5" :zhantie="fuzhi"
@@ -46,7 +49,11 @@
         }
 
       },
-
+      view_all(){
+        this.$router.push({
+          name: 'all_api'
+        })
+      },
       view_button () {
         this.add = !this.add
       }

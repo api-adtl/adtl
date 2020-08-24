@@ -8,7 +8,9 @@ export default {
         }
     },
     methods: {
-
+        object_copy(a) {
+            return JSON.parse(JSON.stringify(a));
+        },
         /**
          * 应用环境变量数据
          * @param data

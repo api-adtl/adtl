@@ -14,9 +14,15 @@ import zh_CN from 'vee-validate/dist/locale/zh_CN';
 import mavonEditor from 'mavon-editor';
 import 'mavon-editor/dist/css/index.css';
 import mixincommon from "./mixin/common";
+
 Vue.use(mavonEditor);
 Vue.mixin(mixincommon);
 Vue.use(VueI18n)
+// 加载  vxe-table 表格组件
+import 'xe-utils'
+import VXETable from 'vxe-table'
+import 'vxe-table/lib/index.css'
+Vue.use(VXETable)
 
 const i18n = new VueI18n({
   locale: 'zh_CN',

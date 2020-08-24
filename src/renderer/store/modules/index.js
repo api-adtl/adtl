@@ -54,6 +54,11 @@ const mutations = {
   },
   add_api (state, api) {
     console.log(51)
+    if(typeof api.uniqid === 'string'){
+      api.number= api.uniqid;
+      state.api_list[api.uniqid] = api
+      return api.uniqid
+    }
     state.api_num++
     api.number = state.api_num
     state.api_list[state.api_num] = api

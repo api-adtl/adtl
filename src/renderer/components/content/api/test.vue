@@ -27,6 +27,8 @@
         </div>
       </div>
       <div v-if="!isPackaged">
+        {{api}} <br>
+
         {{send}} <br>
         {{send2}}<br>
         {{grnerated}}

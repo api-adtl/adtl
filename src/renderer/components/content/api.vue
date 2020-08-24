@@ -3,6 +3,9 @@
     <div>
       <h3>
         {{ dd1.name }}
+        <span v-if="!empty2(dd_softlink)" style="color: #a1a1a1">
+          {{ dd_softlink.name }} - {{ dd_softlink.e_name }}
+        </span>
       </h3>
       <div style="font-size: 20px">
               <span class="request_type">
@@ -55,6 +58,11 @@
           <Icon type="ios-settings"/>
           基本信息
         </MenuItem>
+
+        <MenuItem v-if="!empty2(dd_softlink)" name="jiben2" style="padding: 0 10px;">
+          <Icon type="ios-infinite"/>
+          软连接信息
+        </MenuItem>
         <MenuItem name="get" style="padding: 0 10px;">
           <Icon type="ios-construct"/>
           get
@@ -95,6 +103,11 @@
       <div v-if="is_init" v-show="select.jiben">
         <basic :dd="dd1" :edit="edit.jiben"></basic>
       </div>
+
+      <div v-if="is_init" v-show="select.jiben2">
+        <basic :dd="dd_softlink" :edit="edit.jiben2"></basic>
+      </div>
+
       <div v-if="is_init" v-show="select.get">
         <api_get :dd="dd1"
                  :edit="edit.get"
@@ -164,6 +177,7 @@ export default {
   ],
   data() {
     return {
+      dd_softlink:{},//
       envlist: {},
       now_env: [],
       group: {},
@@ -178,6 +192,7 @@ export default {
       select: {
         readme: true,
         jiben: false,
+        jiben2:false,
         get: false,
         form: false,
         header: false,
@@ -263,6 +278,7 @@ export default {
       console.log('select1')
       this.select.readme = false
       this.select.jiben = false
+      this.select.jiben2=false;
       this.select.get = false
       this.select.form = false
       this.select.header = false
@@ -301,8 +317,20 @@ export default {
     },
     //初始化
     init() {
-      this.dd1 = this.$store.state.api_list[this.apiid]
+      this.dd1 = this.$store.state.api_list[this.apiid];
+      this.dd_softlink={};
+      if(typeof this.dd1.soft_link === 'boolean'){
+        if(this.dd1.soft_link){
+          // 跳转
+          console.log('软连接');
+          this.dd_softlink = this.object_copy(this.dd1);
+          this.dd1 = this.$store.state.api_list[this.dd_softlink.soft_link_id];
+
+          // return '软连接';
+        }
+      }
       this.read_env();
+
     },
     read_api() {
       console.log('read_api', this.dd1.dir)

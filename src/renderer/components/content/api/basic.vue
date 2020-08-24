@@ -40,6 +40,9 @@
       </RadioGroup>
     </div>
     <br>
+    <div v-if="!isPackaged">
+      {{form}}
+    </div>
 
     <Button @click="save" type="primary">保存</Button>
     <Button @click="go_api" type="primary">返回API页面</Button>
@@ -49,8 +52,8 @@
 <script>
 
 import {Validator} from 'vee-validate'
-import lists from '@/logic/lists'
 import e_name from '@/validation/e_name'
+import api_basic from "../../../logic/api_basic";
 
 Validator.localize('zh_CN', {
   attributes: {
@@ -66,6 +69,7 @@ export default {
   data () {
     return {
       listo: {},
+      api_basic:{},
       listdata: {},
       dir:'',
       e_name:'',
@@ -116,7 +120,7 @@ export default {
     },
     save_file () {
       console.log('save_file')
-      this.listo.savefile(this.listdata, () => {
+      this.api_basic.save(this.form, () => {
         console.log('保存成功')
         this.$Message.info("保存成功!");
         this.refresh_list();
@@ -126,11 +130,10 @@ export default {
       this.dir = this.dd.dir;
       this.e_name = this.dd.e_name;
 
-      this.listo = new lists( this.dir)
-      this.listo.read((data) => {
+      this.api_basic = new api_basic( this.dir,this.e_name)
+      this.api_basic.read((data) => {
         console.log('data', data)
-        this.listdata = data
-        this.form = this.listdata.api[this.e_name]
+        this.form = data
       })
     }
   },

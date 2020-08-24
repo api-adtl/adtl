@@ -29,6 +29,11 @@ const router = new Router({
           component: () => import('@/components/content/index')
         },
         {
+          path:'all_api',
+          name:"all_api",
+          component: () => import('@/components/list/all_api')
+        },
+        {
           path: 'add_api',
           name:'add_api',
           component: () => import('@/components/content/add_api'),
