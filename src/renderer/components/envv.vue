@@ -1,9 +1,13 @@
 <template>
     <div >
-      <Select  @on-change="select_change" v-model="selectmodel" size="small" style="width:100px">
-        <Option v-for="(item,index) in env_list" :value="index" :key="index">{{ index}}</Option>
+      <Select  @on-change="select_change"
+               v-model="selectmodel"
+               size="small" style="width:100px">
+        <Option v-for="(item,index) in env_list" :value="index"
+                :key="index">{{ index}}</Option>
       </Select>
-      <Button type="primary" shape="circle" icon="md-settings" @click="editenv"></Button>
+      <Button type="primary" shape="circle" icon="md-settings"
+              @click="editenv"></Button>
     </div>
 </template>
 
@@ -27,6 +31,7 @@
         console.log("改变当前选中的环境变量");
         this.$store.commit('set_envselect', now)
         this.$emit('change',[])
+        this.init();
       },
       init(){
         this.envv = new envv();
@@ -38,6 +43,7 @@
       },
       editenv(){
         console.log('修改环境变量')
+        this.init();
         this.$router.push('/open/editenv')
       }
     },
