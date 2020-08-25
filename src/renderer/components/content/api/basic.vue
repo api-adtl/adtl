@@ -120,10 +120,15 @@ export default {
     },
     save_file () {
       console.log('save_file')
+
+
+      // eslint-disable-next-line no-unreachable
       this.api_basic.save(this.form, () => {
         console.log('保存成功')
+        this.$emit('save',[]);
         this.$Message.info("保存成功!");
         this.refresh_list();
+
       })
     },
     init () {

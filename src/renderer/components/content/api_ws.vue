@@ -226,12 +226,7 @@ export default {
     generated,
     api_structure
   },
-  watch: {
-    apiid(new1) {
-      this.dd1 = this.$store.state.api_list[new1]
-      this.init()
-    }
-  },
+
   methods: {
 
     read_group() {
@@ -272,7 +267,7 @@ export default {
 
       this.group = {}
       this.is_init = false
-
+      this.$store.commit('set_nowapi', this.apiid)
       this.dd1 = this.$store.state.api_list[this.apiid];
       this.dd_softlink = {};
       if (typeof this.dd1.soft_link === 'boolean') {

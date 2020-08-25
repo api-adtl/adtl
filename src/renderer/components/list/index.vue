@@ -2,9 +2,10 @@
   <div style="overflow-y: auto">
     <div :style="style2" style="margin-top: 10px;margin-left: 3px;margin-right: 2px;">
       <div>
-        <Collapse>
-          <Panel :name="groupobj.e_name"
+        <Collapse v-model="openname">
+          <Panel
                  v-for="(groupobj,index) in listdata.group"
+                 :name="groupobj.e_name"
                  :key="index">
             {{ groupobj.name }}
             <span class="group_type">{{ groupobj.type }}</span>
@@ -18,6 +19,8 @@
                           :zhantie="zhantie"
                           v-on:fuzhi="fuzhi"
                           :f5="f5"
+                          :nowapi="nowapi"
+                          @open="open_panel"
                           @add_content="add_content">
               </list_index>
             </p>
@@ -32,12 +35,13 @@
                 <Poptip trigger="focus"
                         content="点击打开，右击复制,再点取消复制">
                   <div>
-                    <Icon v-if="apiobj.soft_link" type="ios-link"/>
+
                     <span>
-                         {{ apiobj.name }}
-                      </span>
-                    <span>
-                      <span class="request_type">
+                       {{ apiobj.name }}
+                    </span>
+                    <span  >
+                      <Icon v-if="apiobj.soft_link" type="ios-link"/>
+                      <span v-if="!apiobj.soft_link" class="request_type">
                         {{ apiobj.request_type }}
                       </span>
                     </span>
@@ -57,6 +61,8 @@
 
         <br>
         分组:{{ now_group_count }};合计 {{ count.group_count }}
+
+        {{openname}}
 
       </span>
       <div style="margin-bottom: 1px" v-if="add">
@@ -104,6 +110,7 @@ export default {
   name: 'list_index',
   data() {
     return {
+      openname:'',
       count: {
         api_count: 0,
         group_count: 0
@@ -120,13 +127,19 @@ export default {
     'add',
     'dd',
     'f5',
+    'nowapi',
     'zhantie'
   ],
   watch: {
     f5() {
       console.log('f5')
       this.init()
+    },
+    nowapi(){
+      // 当前分组有API
+      this.openopen();
     }
+
   },
   //dir
   filters: {
@@ -169,6 +182,21 @@ export default {
   },
   components: {list_index},
   methods: {
+    openopen(){
+      if(this.now_api_count){
+        let  noinowapi =this.nowapi;
+        let has = lodash.findKey(this.listdata.api,['number',noinowapi]);
+        console.log('nowapi',noinowapi,has,this.dd['e_name'] )
+        if(has){
+          // 存在
+          this.$emit('open',this.dd['e_name']);
+        }
+      }
+    },
+    open_panel(nowopen){
+      this.openname=[nowopen];
+      this.$emit('open',this.dd.e_name)
+    },
     countfun([ename, sub_count]) {
       if (ename) {
         // this.count_list[ename]= sub_count;
@@ -342,6 +370,7 @@ export default {
           group_count: this.now_group_count
         };
         this.countfun([false, {}]);
+        this.openopen();
       })
     }
   },

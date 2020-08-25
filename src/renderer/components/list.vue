@@ -8,7 +8,9 @@
 
         <br>
         <div style="width: 230px">
-            <list_index :f5="f5" :zhantie="fuzhi"
+            <list_index :f5="f5"
+                        :nowapi="nowapi"
+                        :zhantie="fuzhi"
                         @fuzhi="fuzhi2" :add="add" @add_content="add_content" dir=".">
             </list_index>
         </div>
@@ -32,6 +34,12 @@
       }
     },
     components: {list_index},
+    computed:{
+      nowapi(){
+        return this.$store.state.nowapi;
+
+      }
+    },
     methods: {
       fuzhi2(){
         this.fuzhi=!this.fuzhi;

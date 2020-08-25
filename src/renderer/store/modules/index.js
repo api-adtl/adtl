@@ -5,7 +5,8 @@ const state = {
   group_list: [],
   api_list: {},
   api_num: 0,
-  envselect:'default'
+  envselect:'default',
+  nowapi:''
 }
 const getters = {
   getcontent_list: state => {
@@ -22,6 +23,9 @@ const getters = {
   },
   env_select:(state)=>{
     return state.envselect
+  },
+  now_api(state){
+    return state.nowapi
   }
 }
 
@@ -37,6 +41,9 @@ const mutations = {
   },
   set_envselect (state, now) {
     state.envselect = now
+  },
+  set_nowapi (state, now) {
+    state.nowapi = now
   },
   content_add (state, content) {
     console.log('content_add')
@@ -83,6 +90,9 @@ const actions = {
   },
   set_now (context, reload) {
     context.commit('set_now', reload.content)
+  },
+  set_nowapi (context, reload) {
+    context.commit('set_nowapi', reload.content)
   },
   content_add (context, reload) {
     console.log('content_add,action')

@@ -2,8 +2,12 @@
 import lists from "../logic/lists";
 
 export default {
+    watch: {
+        apiid() {
+            this.init()
+        }
+    },
     methods: {
-
         deletee() {
             console.log('删除')
             let listb = new lists(this.dd1.dir)

@@ -110,11 +110,11 @@
 
       </div>
       <div v-if="is_init" v-show="select.jiben">
-        <basic :dd="dd1" :edit="edit.jiben"></basic>
+        <basic :dd="dd1" :edit="edit.jiben" @save="init"></basic>
       </div>
 
       <div v-if="is_init" v-show="select.jiben2">
-        <basic :dd="dd_softlink" :edit="edit.jiben2"></basic>
+        <basic :dd="dd_softlink" @save="init"></basic>
       </div>
 
       <div v-if="is_init" v-show="select.get">
@@ -241,9 +241,6 @@ export default {
     form_list
   },
   watch: {
-    apiid() {
-      this.init()
-    },
     envselect() {
       this.group_env = this.apply_env(this.group)
     },
@@ -314,6 +311,8 @@ export default {
     },
     //初始化
     init() {
+      this.$store.commit('set_nowapi', this.apiid)
+      console.log('change');
       this.dd1 = this.$store.state.api_list[this.apiid];
       this.dd_softlink={};
       if(typeof this.dd1.soft_link === 'boolean'){

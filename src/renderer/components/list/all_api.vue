@@ -10,17 +10,29 @@
 
     <vxe-table
         height="300"
-        max-height="1000"
+        max-height="700"
         :data="list2">
       <vxe-table-column type="seq" width="50">
       </vxe-table-column>
-      <vxe-table-column field="number" title="标识符" min-width="100">
+      <vxe-table-column field="number" title="标识符"
+                        min-width="100">
       </vxe-table-column>
-      <vxe-table-column field="name" title="名字" type="html" min-width="200">
+      <vxe-table-column field="name" title="名字"
+                        type="html" min-width="200">
       </vxe-table-column>
-      <vxe-table-column field="request_type" title="请求类型" min-width="100">
+      <vxe-table-column field="request_type"
+                        title="请求类型" min-width="80">
       </vxe-table-column>
-      <vxe-table-column field="url" title="地址"  type="html" min-width="200">
+      <vxe-table-column
+          field="soft_link"
+          :filters="[{data: null}]"
+          :filter-render="{name: 'iSwitch'}"
+          :cell-render="{name: 'iSwitch', props: {disabled: true}}"
+
+                        title="链接" min-width="80">
+      </vxe-table-column>
+      <vxe-table-column field="url" title="地址"
+                        type="html" min-width="200">
       </vxe-table-column>
       <vxe-table-column type="seq"
                         width="160"
@@ -78,9 +90,17 @@ export default {
       }
     },
     init(){
-      for (let api in this.$store.state.api_list){
+      for (let li in this.$store.state.api_list){
         // console.log('46',api)
-        this.data2.push(this.$store.state.api_list[api]);
+        let api = this.object_copy(this.$store.state.api_list[li]);
+        if(typeof api.soft_link === 'boolean' && api.soft_link){
+            let api2 = this.object_copy(this.$store.state.api_list[api.soft_link_id]);
+            api.request_type = api2.request_type;
+            api.url = api2.url;
+            api.dir = api2.dir;
+            api.data_type = api2.data_type;
+        }
+        this.data2.push(this.object_copy(api));
       }
     }
   },

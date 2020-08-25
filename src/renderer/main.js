@@ -21,8 +21,14 @@ Vue.use(VueI18n)
 // 加载  vxe-table 表格组件
 import 'xe-utils'
 import VXETable from 'vxe-table'
+// 加载 VXETable 插件
+import VXETablePluginIView from 'vxe-table-plugin-iview'
+import 'vxe-table-plugin-iview/dist/style.css'
+VXETable.use(VXETablePluginIView)
+// 加载 VXETable 插件 end
 import 'vxe-table/lib/index.css'
 Vue.use(VXETable)
+// 加载  vxe-table 表格组件 end
 
 const i18n = new VueI18n({
   locale: 'zh_CN',
