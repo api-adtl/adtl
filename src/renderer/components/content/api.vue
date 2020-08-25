@@ -5,7 +5,12 @@
         {{ dd1.name }}
         <span v-if="!empty2(dd_softlink)" style="color: #a1a1a1">
           {{ dd_softlink.name }} - {{ dd_softlink.e_name }}
+          <Button @click="deletee_link" v-if="!empty2(dd_softlink)"
+                  size="small" type="primary">
+          删除软连接
+        </Button>
         </span>
+
       </h3>
       <div style="font-size: 20px">
               <span class="request_type">
@@ -18,14 +23,11 @@
         <span style="color: #a1a1a1">
                 {{ dd1.e_name }}
               </span>
-        <Button @click="deletee" v-if="!empty2(dd_softlink)"
+        <Button @click="deletee" v-if="empty2(dd_softlink)"
                 size="small" type="primary">
           删除API
         </Button>
-        <Button @click="deletee_link" v-if="empty2(dd_softlink)"
-                size="small" type="primary">
-          删除软连接
-        </Button>
+
       </div>
 
       <div v-if="!select.test">
@@ -172,13 +174,13 @@ import generated from './api/generated'
 import envv from "../../logic/envv";
 import form_input from './api/form_input'
 import form_input2 from './api/form_input2'
-
+import api from "../../mixin/api";
 import form_list from './api/form_list'
 
 export default {
   name: 'api',
   //混合
-  mixins: [],
+  mixins: [api],
   delimiters: [
     //改变纯文本插入分隔符
   ],
@@ -268,29 +270,6 @@ export default {
       this.send_env = this.apply_env(this.send);
     },
 
-    deletee() {
-      console.log('删除')
-      let listb = new lists(this.dd1.dir)
-      listb.read((data) => {
-        console.log('data', data)
-        listb.remove_api(this.dd1.e_name, () => {
-          this.$Message.success('删除成功!')
-          this.$router.push('/open/')
-        })
-      })
-
-    },
-    deletee_link(){
-      console.log('删除软连接')
-      let listb = new lists(this.dd_softlink.dir)
-      listb.read((data) => {
-        console.log('data', data)
-        listb.remove_api(this.dd_softlink.e_name, () => {
-          this.$Message.success('删除软连接成功!')
-          this.$router.push('/open/')
-        })
-      })
-    },
     //方法列表
     select1(name) {
       console.log('select1')

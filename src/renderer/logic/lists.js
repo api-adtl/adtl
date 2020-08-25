@@ -128,6 +128,21 @@ class lists {
   }
 
   /**
+   * 删除API
+   * @param e_name
+   * @param callback
+   */
+  remove_softapi (e_name, callback) {
+    //修改列表文件
+    _.unset(this.obj_data, ['api', e_name])
+    let index = path.join(store.getters.now_open.toString(), this.dir, e_name)
+    console.log('remove', this.obj_data, index)
+
+    //修改
+    this.savefile(this.obj_data,callback)
+  }
+
+  /**
    * 删除Test
    * @param e_name
    * @param callback

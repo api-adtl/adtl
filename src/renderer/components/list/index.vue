@@ -8,7 +8,7 @@
                  :key="index">
             {{ groupobj.name }}
             <span class="group_type">{{ groupobj.type }}</span>
-            ({{groupobj['api_count'] }})
+            ({{ groupobj['api_count'] }})
 
             <p slot="content">
               <list_index :add="add"
@@ -32,7 +32,8 @@
                 <Poptip trigger="focus"
                         content="点击打开，右击复制,再点取消复制">
                   <div>
-                      <span>
+                    <Icon v-if="apiobj.soft_link" type="ios-link"/>
+                    <span>
                          {{ apiobj.name }}
                       </span>
                     <span>
@@ -40,6 +41,7 @@
                         {{ apiobj.request_type }}
                       </span>
                     </span>
+
 
                   </div>
                 </Poptip>
@@ -97,15 +99,16 @@ import list_index from './index'
 import path from 'path'
 import {shell} from 'electron'
 import lodash from 'lodash';
+
 export default {
   name: 'list_index',
   data() {
     return {
-      count:{
-        api_count:0,
-        group_count:0
+      count: {
+        api_count: 0,
+        group_count: 0
       },
-      count_list:{},
+      count_list: {},
       listdata: {
         group: {},
         api: {}
@@ -148,10 +151,10 @@ export default {
 
     },
     now_api_count() {
-      return Object.keys( this.listdata.api).length;
+      return Object.keys(this.listdata.api).length;
     },
-    now_group_count(){
-      return Object.keys( this.listdata.group).length;
+    now_group_count() {
+      return Object.keys(this.listdata.group).length;
     },
     apicalss() {
       if (this.dd.type == 'test') {
@@ -166,37 +169,37 @@ export default {
   },
   components: {list_index},
   methods: {
-    countfun([ename,sub_count]){
-      if(ename){
+    countfun([ename, sub_count]) {
+      if (ename) {
         // this.count_list[ename]= sub_count;
-        let gg169 =this.object_copy(lodash.merge(this.listdata.group[ename],sub_count));
+        let gg169 = this.object_copy(lodash.merge(this.listdata.group[ename], sub_count));
         console.log(gg169);
         this.$set(this.listdata.group,
             ename,
             gg169
         );
 
-        let api_count =this.now_api_count;
-        let group_count =this.now_group_count;
-        for(let li in this.listdata.group){
+        let api_count = this.now_api_count;
+        let group_count = this.now_group_count;
+        for (let li in this.listdata.group) {
           let gg = this.listdata.group[li];
 
-          if(typeof gg['api_count'] === 'number'){
-            api_count = api_count+ gg['api_count'];
+          if (typeof gg['api_count'] === 'number') {
+            api_count = api_count + gg['api_count'];
             group_count = group_count + gg['group_count'];
           }
         }
-        this.count={
-          api_count:api_count,
-          group_count:group_count
+        this.count = {
+          api_count: api_count,
+          group_count: group_count
         };
 
       }
 
-      if(typeof(this.dd) === 'object'){
-        console.log('emit1911',this.dd['e_name'],this.count)
+      if (typeof (this.dd) === 'object') {
+        console.log('emit1911', this.dd['e_name'], this.count)
         // let argg= [];
-        this.$emit('count',[this.dd['e_name'],this.count]);
+        this.$emit('count', [this.dd['e_name'], this.count]);
       }
 
 
@@ -323,7 +326,7 @@ export default {
         this.listdata = this.$lodash.cloneDeep(data)
         this.$lodash.forIn(this.listdata.api, (b, key) => {
 
-          this.$store.commit('add_api', b,key)
+          this.$store.commit('add_api', b, key)
           // this.listdata.api[key].number = this.$store.getters.apinum
 
         })

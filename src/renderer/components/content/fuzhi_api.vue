@@ -171,11 +171,11 @@
         })
       },
       save_file () {
-        if(typeof this.oldata.soft_link === 'boolean' && this.oldata.soft_link){
-          this.form.soft_link_id= this.linkdata.soft_link_id;
-        }else{
+        if(this.form.soft_link){
           this.form.soft_link_id= this.linkdata.uniqid;
         }
+        console.log("178",this.form);
+
         this.listo.add_api(this.form, () => {
           if(!this.form.soft_link){
              files.copydirSync(this.olddir, path.join(path.join(this.$store.getters.now_open.toString(),this.form.dir),this.form.e_name) );
