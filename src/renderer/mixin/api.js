@@ -9,6 +9,19 @@ export default {
     },
     methods: {
         deletee() {
+            // 判断是否有引用
+            for (let li in this.$store.state.api_list) {
+                let api = this.object_copy(this.$store.state.api_list[li]);
+                if(typeof api.soft_link ==='boolean' && api.soft_link){
+                    if(api.soft_link_id ===this.dd1.uniqid){
+                        console.log("不可删除");
+                        this.$Message.error('存在软连接,不能删除!')
+                        return ;
+                    }
+                }
+            }
+
+            // eslint-disable-next-line no-unreachable
             console.log('删除')
             let listb = new lists(this.dd1.dir)
             listb.read((data) => {

@@ -351,14 +351,15 @@ export default {
     init() {
       let listo = new lists(this.dir)
       listo.read((data) => {
+        let api={};
+        let group={};
         this.$lodash.forIn(data.group, (b, key) => {
           if(typeof this.listdata.group[key] ==='undefined'){
             this.$store.commit('add_group', this.$lodash.clone(b))
           }
-          this.$set(this.listdata.group,key,b);
-          // this.listdata.group[key] = b;
+          group[key] = b;
         })
-
+        this.$set(this.listdata,'group',group);
         // this.listdata = this.object_copy(data);
         this.$lodash.forIn(data.api,(b,key)=>{
         //
@@ -369,9 +370,10 @@ export default {
               this.$store.commit('add_api', b)
             }
 
-            // this.listdata.api[key] = b;
-            this.$set(this.listdata.api,key,b);
+            api[key] = b;
+
           }
+          this.$set(this.listdata,'api',api);
         });
 
 
