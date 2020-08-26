@@ -3,7 +3,7 @@
       <Form label-position="right" :label-width="100">
         <FormItem v-for="(input,key) in value" :label="input.name" >
           <Row>
-            <Col span="6">
+            <Col span="8">
               <div >
                 <div >
                   <Input v-if="input.type=='text'"
@@ -11,7 +11,7 @@
                 </div>
 
                 <div v-if="input.type=='textarea'">
-                  <Input type="textarea" v-model="input.value"/>
+                  <Input type="textarea" :rows="4"  v-model="input.value"/>
                 </div>
 
                 <div v-if="input.type=='swich'">
@@ -24,7 +24,7 @@
                 </div>
 
                 <div v-if="input.type=='json'">
-                  <Input type="textarea" v-model="input.value"/>
+                  <Input type="textarea" :rows="4"  v-model="input.value"/>
                 </div>
 
                 <div v-if="input.type=='number'">
@@ -77,7 +77,7 @@
               </div>
             </Col>
 
-            <Col span="6">
+            <Col span="4">
             <span>
                &nbsp; &nbsp;{{ input.description }}
             </span>

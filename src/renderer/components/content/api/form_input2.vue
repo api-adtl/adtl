@@ -14,6 +14,7 @@
                 <div v-if="input.type=='textarea'">
                   <Input type="textarea"
                          @on-change="input_data"
+                         :rows="4"
                          v-model="formRight[input.name]"/>
                 </div>
 
@@ -30,6 +31,7 @@
                 <div v-if="input.type=='json'">
                   <Input type="textarea"
                          @on-change="input_data"
+                         :rows="4"
                          v-model="formRight[input.name]"/>
                 </div>
 
