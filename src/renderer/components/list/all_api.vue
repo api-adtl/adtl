@@ -1,6 +1,9 @@
 <template>
   <div>
     all_api
+    <Button @click="update_unqid">
+      升级标识符
+    </Button>
     <vxe-toolbar>
       <template v-slot:buttons>
         <vxe-input v-model="filterName" type="search" placeholder="搜索">
@@ -14,7 +17,7 @@
         :data="list2">
       <vxe-table-column type="seq" width="50">
       </vxe-table-column>
-      <vxe-table-column field="number" title="标识符"
+      <vxe-table-column field="uniqid" title="标识符"
                         min-width="100">
       </vxe-table-column>
       <vxe-table-column field="name" title="名字"
@@ -57,6 +60,7 @@
 
 <script>
 import XEUtils from 'xe-utils';
+import api_basic from "../../logic/api_basic";
 export default {
   name: "all_api",
   data() {
@@ -78,6 +82,24 @@ export default {
     }
   },
   methods:{
+    /**
+     * 更新唯一标识符
+     */
+    update_unqid(){
+      for (let li in this.$store.state.api_list){
+        let api = this.object_copy(this.$store.state.api_list[li]);
+        console.log(api);
+
+        // eslint-disable-next-line no-unreachable
+        let apiob = new api_basic(api.dir,api.e_name);
+        apiob.read((data)=>{
+          apiob.save(data,()=>{
+
+          });
+        })
+        break;
+      }
+    },
     showDetailEvent(api){
       console.log(11155, this.apito(api));
       this.$router.push(this.apito(api));

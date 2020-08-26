@@ -201,7 +201,7 @@ export default {
       if (ename) {
         // this.count_list[ename]= sub_count;
         let gg169 = this.object_copy(lodash.merge(this.listdata.group[ename], sub_count));
-        console.log(gg169);
+        console.log('gg169',ename,gg169);
         this.$set(this.listdata.group,
             ename,
             gg169
@@ -351,20 +351,37 @@ export default {
     init() {
       let listo = new lists(this.dir)
       listo.read((data) => {
-        this.listdata = this.$lodash.cloneDeep(data)
-        this.$lodash.forIn(this.listdata.api, (b, key) => {
-
-          this.$store.commit('add_api', b, key)
-          // this.listdata.api[key].number = this.$store.getters.apinum
-
+        this.$lodash.forIn(data.group, (b, key) => {
+          if(typeof this.listdata.group[key] ==='undefined'){
+            this.$store.commit('add_group', this.$lodash.clone(b))
+          }
+          this.$set(this.listdata.group,key,b);
+          // this.listdata.group[key] = b;
         })
 
-        this.$lodash.forIn(this.listdata.group, (b, key) => {
+        // this.listdata = this.object_copy(data);
+        this.$lodash.forIn(data.api,(b,key)=>{
+        //
+          console.log(360,b)
+          if(lodash.findIndex(this.listdata.api,['e_name',b.e_name] )=== -1){
+            // 不存在
+            if(typeof this.listdata.api[key] ==='undefined'){
+              this.$store.commit('add_api', b)
+            }
 
-          this.$store.commit('add_group', this.$lodash.clone(b))
-          this.listdata.group[key].number = this.$store.getters.apinum
+            // this.listdata.api[key] = b;
+            this.$set(this.listdata.api,key,b);
+          }
+        });
 
-        })
+
+        // this.$lodash.forIn(this.listdata.api, (b,key) => {
+        //   this.$store.commit('add_api', b)
+        //   this.listdata.api[key].number = this.$store.getters.apinum
+        //
+        // })
+
+
         this.count = {
           api_count: this.now_api_count,
           group_count: this.now_group_count

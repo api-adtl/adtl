@@ -68,7 +68,12 @@ class lists {
       if (err) {
         throw err
       }
-      this.obj_data = JSON.parse(data1)
+      try{
+        this.obj_data = JSON.parse(data1)
+      }catch (e) {
+        throw this.path + ",文件内容不是json串"+data1
+      }
+
       let biaoshi = []
       console.log('path', this.obj_data.api)
 
