@@ -1,9 +1,16 @@
 <template>
   <div style="overflow: auto;height: 100%;">
-    <div>
-      <h3>
-        {{ dd1.name }}
-        <span v-if="!empty2(dd_softlink)" style="color: #a1a1a1">
+    <div v-if="!dd1">
+      未成功读取数据
+      <Button @click="refresh">
+        点击刷新
+      </Button>
+    </div>
+    <div v-if="dd1">
+      <div>
+        <h3>
+          {{ dd1.name }}
+          <span v-if="!empty2(dd_softlink)" style="color: #a1a1a1">
           {{ dd_softlink.name }} - {{ dd_softlink.e_name }}
           <Button @click="deletee_link" v-if="!empty2(dd_softlink)"
                   size="small" type="primary">
@@ -11,151 +18,154 @@
         </Button>
         </span>
 
-      </h3>
-      <div style="font-size: 20px">
+        </h3>
+        <div style="font-size: 20px">
               <span class="request_type">
                 {{ dd1.request_type }}
               </span>
-        <span>
+          <span>
                 {{ request_true_url }}
               </span>
 
-        <span style="color: #a1a1a1">
+          <span style="color: #a1a1a1">
                 {{ dd1.e_name }}
               </span>
-        <Button @click="deletee" v-if="empty2(dd_softlink)"
-                size="small" type="primary">
-          删除API
-        </Button>
+          <Button @click="deletee" v-if="empty2(dd_softlink)"
+                  size="small" type="primary">
+            删除API
+          </Button>
 
-      </div>
-
-      <div v-if="!select.test">
-        <div v-show="select.get">
-          <span>get参数</span>
-          <form_list :list="send_env.get">
-          </form_list>
         </div>
 
-        <div v-show="select.form">
-          <span>form参数</span>
-          <div>
-            <form_input2 :list="send_env.form"></form_input2>
+        <div v-if="!select.test">
+          <div v-show="select.get">
+            <span>get参数</span>
+            <form_list :list="send_env.get">
+            </form_list>
+          </div>
+
+          <div v-show="select.form">
+            <span>form参数</span>
+            <div>
+              <form_input2 :list="send_env.form"></form_input2>
+            </div>
+          </div>
+
+          <div v-show="select.header">
+            <span>header 参数</span>
+
+            <form_list :list="send_env.headers">
+            </form_list>
           </div>
         </div>
 
-        <div v-show="select.header">
-          <span>header 参数</span>
 
-          <form_list :list="send_env.headers">
-          </form_list>
-        </div>
       </div>
 
+      <br>
+      <div>
+        <Menu @on-select="select1" active-name="readme" mode="horizontal" theme="light">
+          <MenuItem name="readme" style="padding: 0 10px;">
+            <Icon type="ios-paper"/>
+            readme
+          </MenuItem>
+          <MenuItem name="jiben" style="padding: 0 10px;">
+            <Icon type="ios-settings"/>
+            基本信息
+          </MenuItem>
 
-    </div>
+          <MenuItem v-if="!empty2(dd_softlink)" name="jiben2" style="padding: 0 10px;">
+            <Icon type="ios-infinite"/>
+            软连接信息
+          </MenuItem>
+          <MenuItem name="get" style="padding: 0 10px;">
+            <Icon type="ios-construct"/>
+            get
+          </MenuItem>
 
-    <br>
+          <MenuItem name="form" style="padding: 0 10px;">
 
-    <div>
-      <Menu @on-select="select1" active-name="readme" mode="horizontal" theme="light">
-        <MenuItem name="readme" style="padding: 0 10px;">
-          <Icon type="ios-paper"/>
-          readme
-        </MenuItem>
-        <MenuItem name="jiben" style="padding: 0 10px;">
-          <Icon type="ios-settings"/>
-          基本信息
-        </MenuItem>
+            <Icon type="ios-apps"/>
+            form
+          </MenuItem>
 
-        <MenuItem v-if="!empty2(dd_softlink)" name="jiben2" style="padding: 0 10px;">
-          <Icon type="ios-infinite"/>
-          软连接信息
-        </MenuItem>
-        <MenuItem name="get" style="padding: 0 10px;">
-          <Icon type="ios-construct"/>
-          get
-        </MenuItem>
+          <MenuItem name="header" style="padding: 0 10px;">
+            <Icon type="md-attach"/>
+            header
+          </MenuItem>
 
-        <MenuItem name="form" style="padding: 0 10px;">
+          <MenuItem name="test" style="padding: 0 10px;">
+            <Icon type="ios-alarm"/>
+            test
+          </MenuItem>
 
-          <Icon type="ios-apps"/>
-          form
-        </MenuItem>
-
-        <MenuItem name="header" style="padding: 0 10px;">
-          <Icon type="md-attach"/>
-          header
-        </MenuItem>
-
-        <MenuItem name="test" style="padding: 0 10px;">
-          <Icon type="ios-alarm"/>
-          test
-        </MenuItem>
-
-        <MenuItem name="generated" style="padding: 0 10px;">
-          <Icon type="ios-alarm"/>
-          数据生成
-        </MenuItem>
+          <MenuItem name="generated" style="padding: 0 10px;">
+            <Icon type="ios-alarm"/>
+            数据生成
+          </MenuItem>
 
 
-      </Menu>
+        </Menu>
 
-      <div v-show="select.readme">
-        <div>
+        <div v-show="select.readme">
+          <div>
 
-          <readme :dd="dd1" v-model="is_init"></readme>
+            <readme :dd="dd1" v-model="is_init"></readme>
+
+          </div>
 
         </div>
+        <div v-if="is_init" v-show="select.jiben">
+          <basic :dd="dd1" :edit="edit.jiben" @save="init"></basic>
+        </div>
 
-      </div>
-      <div v-if="is_init" v-show="select.jiben">
-        <basic :dd="dd1" :edit="edit.jiben" @save="init"></basic>
-      </div>
+        <div v-if="is_init" v-show="select.jiben2">
+          <basic :dd="dd_softlink" @save="init"></basic>
+        </div>
 
-      <div v-if="is_init" v-show="select.jiben2">
-        <basic :dd="dd_softlink" @save="init"></basic>
-      </div>
-
-      <div v-if="is_init" v-show="select.get">
-        <api_get :dd="dd1"
-                 :edit="edit.get"
-                 @save="send_save"
-                 v-model="send.get"></api_get>
-      </div>
-      <div v-if="is_init" v-show="select.form">
-        <api_form :dd="dd1"
-                  :edit="edit.form"
-                  @save="send_save"
-                  v-model="send.form">
-        </api_form>
-      </div>
-      <div v-if="is_init" v-show="select.header">
-
-        <api_header :dd="dd1"
+        <div v-if="is_init" v-show="select.get">
+          <api_get :dd="dd1"
+                   :edit="edit.get"
+                   @save="send_save"
+                   v-model="send.get"></api_get>
+        </div>
+        <div v-if="is_init" v-show="select.form">
+          <api_form :dd="dd1"
+                    :edit="edit.form"
                     @save="send_save"
-                    v-model="send.headers">
-        </api_header>
+                    v-model="send.form">
+          </api_form>
+        </div>
+        <div v-if="is_init" v-show="select.header">
+
+          <api_header :dd="dd1"
+                      @save="send_save"
+                      v-model="send.headers">
+          </api_header>
+        </div>
+
+        <div v-if="is_init && select.test">
+          <api_test :api="dd1" :grnerated="grnerated"
+                    :group="group_env"
+                    :send="send_env"></api_test>
+        </div>
+
+        <div v-if="is_init" v-show="select.generated">
+
+          <generated :api="dd1"
+                     :edit="true"
+                     :group="group_env"
+                     :send="send"
+
+                     v-model="grnerated"></generated>
+        </div>
+
+
       </div>
-
-      <div v-if="is_init && select.test">
-        <api_test :api="dd1" :grnerated="grnerated"
-                  :group="group_env"
-                  :send="send_env"></api_test>
-      </div>
-
-      <div v-if="is_init" v-show="select.generated">
-
-        <generated :api="dd1"
-                   :edit="true"
-                   :group="group_env"
-                   :send="send"
-
-                   v-model="grnerated"></generated>
-      </div>
-
-
     </div>
+
+
+
 
 
   </div>
@@ -187,6 +197,7 @@ export default {
   data() {
     return {
       dd_softlink:{},//
+      dd1:{},
       envlist: {},
       now_env: [],
       group: {},
@@ -312,10 +323,14 @@ export default {
     //初始化
     init() {
       this.$store.commit('set_nowapi', this.apiid)
-      console.log('change');
+      console.log('change',this.apiid);
       this.dd1 = this.$store.state.api_list[this.apiid];
+      console.log('change',this.apiid, this.dd1);
       this.dd_softlink={};
-      if(typeof this.dd1.soft_link === 'boolean'){
+      if(typeof this.dd1 !=='object'){
+        return true;
+      }
+      if(typeof this.dd1['soft_link'] === 'boolean'){
         if(this.dd1.soft_link){
           // 跳转
           console.log('软连接');

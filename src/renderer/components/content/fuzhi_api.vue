@@ -176,12 +176,14 @@
         }
         console.log("178",this.form);
 
-        this.listo.add_api(this.form, () => {
+        this.listo.add_api(this.form, (apiinfo) => {
+          this.refresh_list();
           if(!this.form.soft_link){
              files.copydirSync(this.olddir, path.join(path.join(this.$store.getters.now_open.toString(),this.form.dir),this.form.e_name) );
           }
           this.$Message.success("保存成功");
-          this.$router.push('/open')
+          this.$router.push({name: 'api', params: {apiid: apiinfo.uniqid}})
+
         })
 
       },

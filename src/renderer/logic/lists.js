@@ -50,7 +50,7 @@ class lists {
         })
       } else {
         //目录存在
-        callback()
+        callback(this.obj_data)
       }
     })
   }
@@ -103,7 +103,9 @@ class lists {
 
   add_api (data, callback) {
     this.obj_data.api[data.e_name] = _.clone(data)
-    this.create(callback)
+    this.savefile(this.obj_data,()=>{
+      callback(data);
+    })
   }
 
   add_test (data, callback) {

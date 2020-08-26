@@ -1,9 +1,16 @@
 <template>
   <div style="overflow: auto;height: 600px;">
-    <div>
-      <h3>
-        {{ dd1.name }}
-        <span v-if="!empty2(dd_softlink)" style="color: #a1a1a1">
+    <div v-if="!dd1">
+      未成功读取数据
+      <Button @click="refresh">
+        点击刷新
+      </Button>
+    </div>
+    <div v-if="dd1">
+      <div>
+        <h3>
+          {{ dd1.name }}
+          <span v-if="!empty2(dd_softlink)" style="color: #a1a1a1">
           {{ dd_softlink.name }} - {{ dd_softlink.e_name }}
           <Button @click="deletee_link" v-if="!empty2(dd_softlink)"
                   size="small" type="primary">
@@ -11,136 +18,139 @@
         </Button>
         </span>
 
-      </h3>
-      <div style="font-size: 20px">
+        </h3>
+        <div style="font-size: 20px">
               <span class="request_type">
                 {{ dd1.request_type }}
               </span>
-        <span>
+          <span>
                 {{ dd1.url }}
               </span>
 
-        <span style="color: #a1a1a1">
+          <span style="color: #a1a1a1">
                 {{ dd1.e_name }}
               </span>
-        <Button @click="deletee" v-if="empty2(dd_softlink)"
-                size="small" type="primary">
-          删除API
-        </Button>
+          <Button @click="deletee" v-if="empty2(dd_softlink)"
+                  size="small" type="primary">
+            删除API
+          </Button>
 
-      </div>
-
-
-    </div>
-    apiid : {{ apiid }} <br>
-    dd1 : {{ dd1 }} <br>
-    分组信息 : {{ group }} <br>
-    SEND : {{ send }} <br>
-    grnerated: {{ grnerated }}
-    <br>
-
-    <div>
-      <Menu @on-select="select1" active-name="readme" mode="horizontal" theme="light">
-        <MenuItem name="readme" style="padding: 0 10px;">
-          <Icon type="ios-paper"/>
-          readme
-        </MenuItem>
-        <MenuItem name="jiben" style="padding: 0 10px;">
-          <Icon type="ios-settings"/>
-          基本信息
-        </MenuItem>
-        <MenuItem name="jiben2" style="padding: 0 10px;">
-          <Icon type="ios-settings"/>
-          软连接信息
-        </MenuItem>
-
-
-        <MenuItem name="structure" style="padding: 0 10px;">
-          <Icon type="ios-construct"/>
-          结构
-        </MenuItem>
-        <MenuItem name="get" style="padding: 0 10px;">
-          <Icon type="ios-construct"/>
-          get
-        </MenuItem>
-
-        <MenuItem name="form" style="padding: 0 10px;">
-
-          <Icon type="ios-apps"/>
-          form
-        </MenuItem>
-
-
-        <MenuItem name="test" style="padding: 0 10px;">
-          <Icon type="ios-alarm"/>
-          test
-        </MenuItem>
-
-        <MenuItem name="generated" style="padding: 0 10px;">
-          <Icon type="ios-alarm"/>
-          generated
-        </MenuItem>
-
-
-      </Menu>
-
-      <div v-show="select.readme">
-        <div>
-          <readme :dd="dd" :edit="edit.readme"></readme>
         </div>
 
+
       </div>
-      <div v-if="is_init" v-show="select.jiben">
-        基本信息
-        <basic :dd="dd" :edit="edit.jiben"></basic>
+      apiid : {{ apiid }} <br>
+      dd1 : {{ dd1 }} <br>
+      分组信息 : {{ group }} <br>
+      SEND : {{ send }} <br>
+      grnerated: {{ grnerated }}
+      <br>
+      <div>
+        <Menu @on-select="select1" active-name="readme" mode="horizontal" theme="light">
+          <MenuItem name="readme" style="padding: 0 10px;">
+            <Icon type="ios-paper"/>
+            readme
+          </MenuItem>
+          <MenuItem name="jiben" style="padding: 0 10px;">
+            <Icon type="ios-settings"/>
+            基本信息
+          </MenuItem>
+          <MenuItem name="jiben2" style="padding: 0 10px;">
+            <Icon type="ios-settings"/>
+            软连接信息
+          </MenuItem>
+
+
+          <MenuItem name="structure" style="padding: 0 10px;">
+            <Icon type="ios-construct"/>
+            结构
+          </MenuItem>
+          <MenuItem name="get" style="padding: 0 10px;">
+            <Icon type="ios-construct"/>
+            get
+          </MenuItem>
+
+          <MenuItem name="form" style="padding: 0 10px;">
+
+            <Icon type="ios-apps"/>
+            form
+          </MenuItem>
+
+
+          <MenuItem name="test" style="padding: 0 10px;">
+            <Icon type="ios-alarm"/>
+            test
+          </MenuItem>
+
+          <MenuItem name="generated" style="padding: 0 10px;">
+            <Icon type="ios-alarm"/>
+            generated
+          </MenuItem>
+
+
+        </Menu>
+
+        <div v-show="select.readme">
+          <div>
+            <readme :dd="dd" :edit="edit.readme"></readme>
+          </div>
+
+        </div>
+        <div v-if="is_init" v-show="select.jiben">
+          基本信息
+          <basic :dd="dd" :edit="edit.jiben"></basic>
+        </div>
+        <div v-if="is_init" v-show="select.jiben2">
+          基本信息
+          <basic :dd="dd_softlink" :edit="edit.jiben"></basic>
+        </div>
+
+        <div v-if="is_init" v-show="select.structure">
+          <Button @click="()=>{this.edit.structure=!this.edit.structure}" icon="ios-search"
+                  shape="circle"
+                  type="primary">编辑
+          </Button>
+          <api_structure :dd="dd" :edit="edit.structure" v-model="send.structure"></api_structure>
+        </div>
+
+        <div v-if="is_init" v-show="select.get">
+
+          <api_get :dd="dd" :edit="edit.get" v-model="send.get"></api_get>
+        </div>
+
+
+        <div v-if="is_init" v-show="select.form">
+
+          <api_form :dd="dd" :edit="edit.form" v-model="send.form">
+          </api_form>
+        </div>
+
+
+        <div v-if="is_init" v-show="select.test">
+          <api_test :api="dd" :grnerated="grnerated"
+                    :group="group"
+                    :send="send"></api_test>
+        </div>
+
+        <div v-if="is_init" v-show="select.generated">
+          <Button @click="()=>{this.edit.generated=!this.edit.generated}" icon="ios-search"
+                  shape="circle"
+                  type="primary">编辑
+          </Button>
+          <generated :api="dd"
+                     :edit="edit.generated"
+                     :group="group"
+                     :send="send"
+
+                     v-model="grnerated"></generated>
+        </div>
+
+
       </div>
-      <div v-if="is_init" v-show="select.jiben2">
-        基本信息
-        <basic :dd="dd_softlink" :edit="edit.jiben"></basic>
-      </div>
-
-      <div v-if="is_init" v-show="select.structure">
-        <Button @click="()=>{this.edit.structure=!this.edit.structure}" icon="ios-search"
-                shape="circle"
-                type="primary">编辑
-        </Button>
-        <api_structure :dd="dd" :edit="edit.structure" v-model="send.structure"></api_structure>
-      </div>
-
-      <div v-if="is_init" v-show="select.get">
-
-        <api_get :dd="dd" :edit="edit.get" v-model="send.get"></api_get>
-      </div>
-
-
-      <div v-if="is_init" v-show="select.form">
-
-        <api_form :dd="dd" :edit="edit.form" v-model="send.form">
-        </api_form>
-      </div>
-
-
-      <div v-if="is_init" v-show="select.test">
-        <api_test :api="dd" :grnerated="grnerated"
-                  :group="group"
-                  :send="send"></api_test>
-      </div>
-
-      <div v-if="is_init" v-show="select.generated">
-        <Button @click="()=>{this.edit.generated=!this.edit.generated}" icon="ios-search"
-                shape="circle"
-                type="primary">编辑
-        </Button>
-        <generated :api="dd"
-                   :edit="edit.generated"
-                   :group="group"
-                   :send="send"
-
-                   v-model="grnerated"></generated>
-      </div>
-
-
     </div>
+
+
+
 
 
   </div>

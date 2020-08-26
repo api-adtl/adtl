@@ -8,6 +8,10 @@ export default {
         }
     },
     methods: {
+        refresh(){
+            this.refresh_list();
+            this.init();
+        },
         deletee() {
             // 判断是否有引用
             for (let li in this.$store.state.api_list) {
