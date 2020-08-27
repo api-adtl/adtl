@@ -9,6 +9,9 @@
 .fl{
     float: left;
 }
+.fr{
+    float: right;
+}
 .request_type{
     color: blueviolet;
     font-weight: bold;

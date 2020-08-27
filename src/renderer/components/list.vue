@@ -1,12 +1,23 @@
 <template>
     <div>
         <!-- 这是列表 -->
-        <Button @click="view_button" size="small" type="primary">按钮可见</Button>
-        <Button @click="f5=!f5" size="small" type="primary" id="f5">刷新</Button>
-        <Button @click="view_all" size="small" type="primary">全部展示</Button>
 
-
-        <br>
+        <div style="line-height: 25px;width: 230px;">
+          <Button @click="view_button" size="small"
+                  icon="md-eye"
+                  type="error">按钮可见</Button>
+          <Button @click="f5=!f5" size="small"
+                  icon="md-refresh"
+                  type="primary" id="f5">刷新</Button>
+          <Button @click="view_all" size="small"
+                  icon="md-list"
+                  type="info">全部展示</Button>
+          <Button type="warning" shape="circle"
+                  size="small"
+                  @click="openopenapiinlist"
+                  icon="md-locate">定位当前API</Button>
+          <br>
+        </div>
         <div style="width: 230px">
             <list_index :f5="f5"
                         :nowapi="nowapi"
@@ -30,17 +41,20 @@
         listdata: {},
         add: true,
         f5:true,
-        fuzhi:false
+        fuzhi:false,
+        nowapi:''
       }
     },
     components: {list_index},
     computed:{
-      nowapi(){
-        return this.$store.state.nowapi;
-
-      }
     },
     methods: {
+      /**
+       * 打开当前一打开的API所属的位置
+       */
+      openopenapiinlist(){
+        this.nowapi =this.$store.state.nowapi;
+      },
       fuzhi2(){
         this.fuzhi=!this.fuzhi;
         console.log('fuzhi2fuzhi2fuzhi2');
