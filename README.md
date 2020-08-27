@@ -54,3 +54,6 @@ https://gitee.com/adtl/storage_demonstration
 
 项目采用 [electron-vue](https://github.com/SimulatedGREG/electron-vue) 构建.
 
+# 感谢
+
+发版附件储存于 ![https://www.wanyuanyun.com/](http://adtl.hz.wanyuanyun.com/wangenlogo.png "万源网络")
