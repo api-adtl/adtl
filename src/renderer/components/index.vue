@@ -1,218 +1,232 @@
 <template>
-    <div id="wrapper">
-        <main>
-            <div class="left-side">
+  <div id="wrapper">
+    <main>
+      <div class="left-side">
                 <span class="title">
                   欢迎使用API测试工具
                 </span>
+        {{ path }}
 
-                <div @dragover="dragover" @drop="dropopen" id="holder">
-                    <div style="    font-size: 3em;    color: green;    font-weight: 900;">
-                      拖动项目文件夹/项目描述文件到这里
-                    </div>
-                    <div class="hist-list" v-if="hist">
-                      项目列表:
-                      <br><br>
-                      <div>
-                        <div v-for="(hi,index) in hist" :key="index">
-                           <div class="hist-li" >
-                              <span style="margin-right: 25px;" @click="open_obj(hi)" > 
-                                {{hi}}
-                              </span> 
-                              <Icon color="#ff005a" size="30" type="md-trash" @click="shanchu(index)" /> 
-                          </div>
-                        </div> 
-                      </div>
-                      </div>
+        <div @dragover="dragover" @drop="dropopen" id="holder">
+          <div style="    font-size: 3em;    color: green;    font-weight: 900;">
+            拖动项目文件夹/项目描述文件到这里
+          </div>
+          <div class="hist-list" v-if="hist">
+            项目列表:
+            <br><br>
+            <div>
+              <div v-for="(hi,index) in hist" :key="index">
+                <div class="hist-li">
+                              <span style="margin-right: 25px;" @click="open_obj(hi)">
+                                {{ hi }}
+                              </span>
+                  <Icon color="#ff005a" size="30" type="md-trash" @click="shanchu(index)"/>
                 </div>
-
-                
-
+              </div>
             </div>
-        </main>
-    </div>
+          </div>
+        </div>
+
+
+      </div>
+    </main>
+  </div>
 </template>
 
 <script>
-  import fs from 'fs'
-  import path from 'path'
-  import lodash from 'lodash'
+import fs from 'fs';
+import path from 'path';
+import lodash from 'lodash';
+import {app} from 'electron';
+import Autoupdate from '../logic/autoupdate';
 
-  export default {
-    name: 'landing-page',
-    data () {
-      return {
-        hist: null,
-        w:100,
-        h:100
-      }
-    },
-    components: {},
-    methods: {
-      shanchu(index){
-        let hist = this.$ls.get('history')
-        let hist2 = lodash.pullAt(hist,[index-1]);
-        this.$ls.set('history',hist2);
-        console.log('shanchu', hist2)
-        this.hist = hist2
-        
-      },
-      open_obj (now) {
-        console.log('open', now)
-        this.$store.commit('set_now', now)
-        this.$router.push('/open/')
-      },
-
-      dropopen (e) {
-        e.preventDefault()
-        e.stopPropagation()
-        for (let f of e.dataTransfer.files) {
-          //跳转
-          this.now = f.path
-          this.is_dir()
-        }
-      },
-      is_dir () {
-        console.log('now', this.now)
-        fs.stat(this.now, (err, stats) => {
-          console.log(err, stats)
-          if (err) {
-            throw err
-          } else {
-            this.$Message.success('正在打开!')
-            if (stats.isDirectory()) {
-              //文件夹
-              this.$store.commit('set_now', this.now)
-            } else {
-              let pp = path.dirname(this.now)
-              this.$store.commit('set_now', pp)
-
-            }
-            this.$router.push('/open/')
-          }
-
-        })
-
-      },
-      dragover (e) {
-        e.preventDefault()
-        e.stopPropagation()
-      }
-    },
-    created () {
-      let hist = this.$ls.get('history')
-      this.hist = hist
-     
-    },
-    mounted(){
-      console.log(process.env);
-      this.h = document.body.clientHeight;
-      this.w = document.body.clientWidth;
+export default {
+  name: 'landing-page',
+  data() {
+    return {
+      path: [],
+      update_url: 'http://127.0.0.1/app.json',
+      hist: null,
+      w: 100,
+      h: 100
     }
-    //document.body.clientHeight
+  },
+  components: {},
+  methods: {
+    shanchu(index) {
+      let hist = this.$ls.get('history')
+      let hist2 = lodash.pullAt(hist, [index - 1]);
+      this.$ls.set('history', hist2);
+      console.log('shanchu', hist2)
+      this.hist = hist2
+
+    },
+    open_obj(now) {
+      console.log('open', now)
+      this.$store.commit('set_now', now)
+      this.$router.push('/open/')
+    },
+
+    dropopen(e) {
+      e.preventDefault()
+      e.stopPropagation()
+      for (let f of e.dataTransfer.files) {
+        //跳转
+        this.now = f.path
+        this.is_dir()
+      }
+    },
+    is_dir() {
+      console.log('now', this.now)
+      fs.stat(this.now, (err, stats) => {
+        console.log(err, stats)
+        if (err) {
+          throw err
+        } else {
+          this.$Message.success('正在打开!')
+          if (stats.isDirectory()) {
+            //文件夹
+            this.$store.commit('set_now', this.now)
+          } else {
+            let pp = path.dirname(this.now)
+            this.$store.commit('set_now', pp)
+
+          }
+          this.$router.push('/open/')
+        }
+
+      })
+
+    },
+    dragover(e) {
+      e.preventDefault()
+      e.stopPropagation()
+    },
+    init() {
+      console.log(app)
+      this.path = [__dirname, __static, __filename];
+      this.path.push(app.getPath('temp'));
+      let autoob = new Autoupdate();
+      autoob.getinfo();
+    }
+  },
+  created() {
+    let hist = this.$ls.get('history');
+    this.hist = hist;
+    this.init();
+
+  },
+  mounted() {
+    console.log(process.env);
+    this.h = document.body.clientHeight;
+    this.w = document.body.clientWidth;
   }
+  //document.body.clientHeight
+}
 </script>
 
 <style>
-    .hist-list{
-      font-size: 2em;
+.hist-list {
+  font-size: 2em;
 
-    }
-    .hist-li{
-      line-height:65px;
-      height:auto;
-      word-wrap : break-word ;
-    }
-    #holder {
-        padding: 30px;
-        width: 100%;
-        height: 100%;
-        background-color: blanchedalmond;
-    }
+}
 
-    @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
+.hist-li {
+  line-height: 65px;
+  height: auto;
+  word-wrap: break-word;
+}
 
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-    }
+#holder {
+  padding: 30px;
+  width: 100%;
+  height: 100%;
+  background-color: blanchedalmond;
+}
 
-    body {
-        font-family: 'Source Sans Pro', sans-serif;
-    }
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
 
-    #wrapper {
-        background: radial-gradient(
-                ellipse at top left,
-                rgba(255, 255, 255, 1) 40%,
-                rgba(229, 229, 229, .9) 100%
-        );
-        height: 100vh;
-        padding: 60px 80px;
-        width: 100vw;
-    }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-    #logo {
-        height: auto;
-        margin-bottom: 20px;
-        width: 420px;
-    }
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+}
 
-    main {
-       width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: space-between;
-    }
+#wrapper {
+  background: radial-gradient(
+      ellipse at top left,
+      rgba(255, 255, 255, 1) 40%,
+      rgba(229, 229, 229, .9) 100%
+  );
+  height: 100vh;
+  padding: 60px 80px;
+  width: 100vw;
+}
 
-    
-    .left-side {
-      width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-    }
+#logo {
+  height: auto;
+  margin-bottom: 20px;
+  width: 420px;
+}
 
-    .welcome {
-        color: #555;
-        font-size: 23px;
-        margin-bottom: 10px;
-    }
+main {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+}
 
-    .title {
-        color: #2c3e50;
-        font-size: 20px;
-        font-weight: bold;
-        margin-bottom: 6px;
-    }
 
-    .title.alt {
-        font-size: 18px;
-        margin-bottom: 10px;
-    }
+.left-side {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
 
-    .doc p {
-        color: black;
-        margin-bottom: 10px;
-    }
+.welcome {
+  color: #555;
+  font-size: 23px;
+  margin-bottom: 10px;
+}
 
-    .doc button {
-        font-size: .8em;
-        cursor: pointer;
-        outline: none;
-        padding: 0.75em 2em;
-        border-radius: 2em;
-        display: inline-block;
-        color: #fff;
-        background-color: #4fc08d;
-        transition: all 0.15s ease;
-        box-sizing: border-box;
-        border: 1px solid #4fc08d;
-    }
+.title {
+  color: #2c3e50;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
 
-    .doc button.alt {
-        color: #42b983;
-        background-color: transparent;
-    }
+.title.alt {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.doc p {
+  color: black;
+  margin-bottom: 10px;
+}
+
+.doc button {
+  font-size: .8em;
+  cursor: pointer;
+  outline: none;
+  padding: 0.75em 2em;
+  border-radius: 2em;
+  display: inline-block;
+  color: #fff;
+  background-color: #4fc08d;
+  transition: all 0.15s ease;
+  box-sizing: border-box;
+  border: 1px solid #4fc08d;
+}
+
+.doc button.alt {
+  color: #42b983;
+  background-color: transparent;
+}
 </style>

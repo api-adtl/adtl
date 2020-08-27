@@ -31,14 +31,15 @@ function createWindow () {
   })
 
   mainWindow.loadURL(winURL)
-  mainWindow.webContents.openDevTools()
+
   mainWindow.on('closed', () => {
     mainWindow = null
   })
   if (process.env.NODE_ENV === 'development') {
-
+    mainWindow.webContents.openDevTools()
     BrowserWindow.addDevToolsExtension(process.env.VUE_DEVTOOL_DIR);
   }
+  // console.log(app.getPath('temp'));
   //"/mnt/d/www/front_end/vue-devtools-4.1.5/shells/chrome"
 }
 
@@ -49,6 +50,8 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 })
+
+
 
 app.on('activate', () => {
   if (mainWindow === null) {
