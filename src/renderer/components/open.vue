@@ -45,7 +45,7 @@
                     </Layout>
                 </Content>
             </Layout>
-            <Footer class="layout-footer-center">2018-2019 &copy;青岛兴数网络科技有限公司</Footer>
+            <Footer class="layout-footer-center">2018-2020 &copy; ADTl项目组</Footer>
         </Layout>
     </div>
 </template>
