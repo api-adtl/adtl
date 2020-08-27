@@ -1,6 +1,6 @@
 # api_demo
 
-> 一个开源的/无服务器的api测试工具(SPMS分支)
+> 一个开源的/无服务器的api测试工具
 
 > 最新动态 [**博客**](https://adtl.gitee.io/pages/)
 
