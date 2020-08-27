@@ -14,7 +14,7 @@
                       项目列表:
                       <br><br>
                       <div>
-                        <div v-for="(hi,index) in hist">
+                        <div v-for="(hi,index) in hist" :key="index">
                            <div class="hist-li" >
                               <span style="margin-right: 25px;" @click="open_obj(hi)" > 
                                 {{hi}}

@@ -1,78 +1,91 @@
 <template>
     <div>
-        <div v-for="input,key in value">
-
-            <div style="border: cadetblue solid 1px;margin-top: 20px">
-                {{ input.name }} :
-                <div v-if="input.type=='text'">
-                    <Input style="width: 300px" v-model="input.value"/>
+      <Form label-position="right" :label-width="100">
+        <FormItem v-for="(input,key) in value" :label="input.name" >
+          <Row>
+            <Col span="8">
+              <div >
+                <div >
+                  <Input v-if="input.type=='text'"
+                          v-model="input.value"/>
                 </div>
 
                 <div v-if="input.type=='textarea'">
-                    <Input :rows="4" style="width: 400px" type="textarea" v-model="input.value"/>
+                  <Input type="textarea" :rows="4"  v-model="input.value"/>
+                </div>
+
+                <div v-if="input.type=='swich'">
+
+                  <i-switch
+                          true-value="1"
+                          false-value="0"
+                          v-model="input.value" >
+                  </i-switch>
                 </div>
 
                 <div v-if="input.type=='json'">
-                    <Input :rows="4" style="width: 400px" type="textarea" v-model="input.value"/>
+                  <Input type="textarea" :rows="4"  v-model="input.value"/>
                 </div>
 
                 <div v-if="input.type=='number'">
-                    <Input style="width: 400px" type="number" v-model="input.value"/>
+                  <Input  type="number" v-model="input.value"/>
                 </div>
 
                 <div v-if="input.type=='radio'">
-                    <RadioGroup v-model="input.value">
-                        <Radio :label="val87" v-for="opt87,val87 in  input.optional">{{opt87}}</Radio>
+                  <RadioGroup v-model="input.value">
+                    <Radio :label="val87" v-for="(opt87,val87) in  input.optional" :key="val87">{{opt87}}</Radio>
 
-                    </RadioGroup>
+                  </RadioGroup>
 
                 </div>
                 <div v-if="input.type=='select'">
 
-                    <Select style="width:200px" v-model="input.value">
-                        <Option :key="val87" :value="val87"
-                                v-for="opt87,val87 in  input.optional">{{opt87}}
-                        </Option>
-                    </Select>
+                  <Select style="width:200px" v-model="input.value">
+                    <Option :key="val87" :value="val87"
+                            v-for="(opt87,val87) in  input.optional">{{opt87}}
+                    </Option>
+                  </Select>
 
                 </div>
                 <div v-if="input.type=='checkbox'">
 
-                    <CheckboxGroup v-model="input.value">
-                        <Checkbox :label="val87" v-for="opt87,val87 in  input.optional">{{opt87}}</Checkbox>
-                    </CheckboxGroup>
+                  <CheckboxGroup v-model="input.value">
+                    <Checkbox :label="val87" v-for="(opt87,val87) in  input.optional" :key="val87">{{opt87}}</Checkbox>
+                  </CheckboxGroup>
 
                 </div>
 
 
                 <div v-if="input.type=='date'">
 
-                    <DatePicker :format="input.optional|dateformat"
-                                placeholder="Select date and time(Excluding seconds)"
-                                style="width: 200px"
-                                type="datetime"
-                                v-model="input.value"></DatePicker>
+                  <DatePicker :format="input.optional|dateformat"
+                              placeholder="Select date and time(Excluding seconds)"
+                              style="width: 200px"
+                              type="datetime"
+                              v-model="input.value"></DatePicker>
 
 
                 </div>
 
                 <div v-if="input.type=='time'">
 
-                    <TimePicker :format="input.optional|timeformat" :value="input.value" style="width: 112px"
-                                type="time"
-                                v-model="input.value"></TimePicker>
+                  <TimePicker :format="input.optional|timeformat" :value="input.value" style="width: 112px"
+                              type="time"
+                              v-model="input.value"></TimePicker>
 
                 </div>
+              </div>
+            </Col>
 
+            <Col span="4">
+            <span>
+               &nbsp; &nbsp;{{ input.description }}
+            </span>
+            </Col>
+          </Row>
+        </FormItem>
+      </Form>
 
-                <p>当前值:<span>{{ input.value }}</span></p>
-
-                描述: <span>{{ input.description }}</span><br>
-                类型: {{ input.type }}
-                <br>
-                配置项: {{ input.optional }}
-            </div>
-        </div>
 
     </div>
 </template>

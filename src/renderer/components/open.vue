@@ -3,20 +3,26 @@
         <Layout>
             <Header>
                 <Menu mode="horizontal" theme="dark" active-name="1">
-                    <div class="layout-logo">123</div>
+                    <div class="layout-logo" :class="{'dev-logo':!isPackaged}">
+                      
+                    </div>
                     <div class="layout-nav">
                         <router-link to="/">
                             <Button type="success" @click="edit" ghost>返回首页</Button>
                         </router-link>
 
                         <Button type="warning" @click="edit" ghost>编辑</Button>
-                        <span v-if="obj_data">
-                            项目信息:                            名字: <span class="info">{{obj_data.name}}</span>
+                        <span v-if="obj_data" style="    color: white;">
+                            项目名字: <span class="info">{{obj_data.name}}</span>
 
                             描述: <span class="info">
-            {{obj_data.description}}
-        </span>
+                              {{obj_data.description}}     {{isPackaged}}
+                          </span>
                         </span>
+
+                        <div style="width: 200px;float: right;color: white;">
+                          <envv @change="envselect_change"></envv>
+                        </div>
                     </div>
                 </Menu>
             </Header>
@@ -26,14 +32,14 @@
                     <BreadcrumbItem> 神马API（我还没想好这个怎么弄） </BreadcrumbItem>
                 </Breadcrumb>
               
-                <Content :style="{padding: '24px 0', minHeight: '280px', background: '#fff'}">
+                <Content :style="{padding: '24px 0', minHeight: '280px',overflowY:true, background: '#fff'}">
                     <Layout>
-                        <Sider hide-trigger :style="{background: '#fff'}">
-                            <div id="lists" style="height: 650px;overflow-y: auto;">
+                        <Sider hide-trigger width="250" :style="{background: '#fff'}">
+                            <div id="lists" style="min-height: 650px;">
                                 <list v-model="content_list"></list>
                             </div>
                         </Sider>
-                        <Content :style="{padding: '2px', minHeight: '380px', background: '#fff'}">
+                        <Content :style="{padding: '2px', minHeight: '650px', background: '#fff'}">
                             <router-view v-if="now"></router-view>
                         </Content>
                     </Layout>
@@ -49,7 +55,9 @@
   import fs from 'fs'
   import path from 'path'
   import list from './list'
+  import envv from './envv'
   import content_index from './content/index'
+  import  process  from 'process'
 
   export default {
     data () {
@@ -60,16 +68,21 @@
         iframesrc: '/#/kong',
         content_index: 0,
         content_list: {},
-        now: this.$store.state.now_open
+        now: this.$store.state.now_open,
+        isPackaged:true,
       }
     },
     name: 'open',
-    components: {list, content_index},
+    components: {list, content_index,envv},
     beforeRouteUpdate (to, from, next) {
       this.init()
       next()
     },
     methods: {
+      envselect_change(){
+        console.log("当前环境变量组改变");
+        this.$forceUpdate();
+      },
       dir_call () {
         this.index = path.join(this.now, 'index.json')
         console.log(this.isdir, this.now, this.index)
@@ -86,7 +99,7 @@
       },
       read () {
         // 读取数据
-
+        this.isPackaged = !process.env.WEBPACK_DEV_SERVER;
         // 保存历史
         let hist = this.$ls.get('history')
         if (hist == null) {
@@ -130,6 +143,7 @@
                 this.isdir = true
                 this.dir_call()
               } else {
+                // 文件处理逻辑
                 let pp = path.dirname(this.now)
                 this.$store.commit('set_now', pp)
                 this.$Message.success('正在打开!')
@@ -157,9 +171,11 @@
 </script>
 
 <style>
-    .ivu-layout-sider {
-        height: 520px;
+    .dev-logo{
+      border-color:red;
     }
+   
+   
 
     .info {
         color: cadetblue;
@@ -169,13 +185,14 @@
     .layout {
         border: 1px solid #d7dde4;
         background: #f5f7f9;
-        position: relative;
+
         border-radius: 4px;
-        overflow: hidden;
-        height: 900px;
+        height: 100vh;
     }
 
     .layout-logo {
+      border-style: solid;
+      border-width: 1px;
         width: 100px;
         height: 30px;
         background: #5b6270;
@@ -187,7 +204,7 @@
     }
 
     .layout-nav {
-        width: 540px;
+        width: 600px;
         margin: 0 auto;
         margin-right: 20px;
     }

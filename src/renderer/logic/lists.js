@@ -23,6 +23,7 @@ class lists {
   read (callback) {
 
     fs.access(this.path, fs.constants.F_OK, (err) => {
+      console.debug('list.read',err);
       if (err) {
         this.create(callback)
       } else {
@@ -41,9 +42,15 @@ class lists {
       if (err) {
         //不存在的文件夹
         // 创建文件夹
-        fs.mkdir(path.join(store.getters.now_open.toString(), this.dir), {recursive: true}, this.read2(callback))
+        let dir =path.join(store.getters.now_open.toString(), this.dir);
+        console.log('mkdir',dir);
+        fs.mkdir(dir, {recursive: true},(err)=>{
+          console.log('mkdir_callback',err);
+          this.read(callback)
+        })
       } else {
-        callback()
+        //目录存在
+        callback(this.obj_data)
       }
     })
   }
@@ -61,7 +68,12 @@ class lists {
       if (err) {
         throw err
       }
-      this.obj_data = JSON.parse(data1)
+      try{
+        this.obj_data = JSON.parse(data1)
+      }catch (e) {
+        throw this.path + ",文件内容不是json串"+data1
+      }
+
       let biaoshi = []
       console.log('path', this.obj_data.api)
 
@@ -91,7 +103,9 @@ class lists {
 
   add_api (data, callback) {
     this.obj_data.api[data.e_name] = _.clone(data)
-    this.create(callback)
+    this.savefile(this.obj_data,()=>{
+      callback(data);
+    })
   }
 
   add_test (data, callback) {
@@ -121,6 +135,21 @@ class lists {
   }
 
   /**
+   * 删除API
+   * @param e_name
+   * @param callback
+   */
+  remove_softapi (e_name, callback) {
+    //修改列表文件
+    _.unset(this.obj_data, ['api', e_name])
+    let index = path.join(store.getters.now_open.toString(), this.dir, e_name)
+    console.log('remove', this.obj_data, index)
+
+    //修改
+    this.savefile(this.obj_data,callback)
+  }
+
+  /**
    * 删除Test
    * @param e_name
    * @param callback
@@ -143,12 +172,18 @@ class lists {
     console.log('remove', this.obj_data, index)
 
     //修改
-    this.create(() => {
-      files.rmdirSync(index)
-      callback()
+    this.savefile(this.obj_data,() => {
+
+      this.remove1call(index,callback)
 
     })
   }
+
+  remove1call(index,callback){
+    files.rmdirSync(index);
+    callback();
+  }
+
 
 }
 

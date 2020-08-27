@@ -7,6 +7,19 @@
         <br>
         <br>
         <div>
+          软链接：
+
+          <i-switch v-model="form.soft_link"
+                    :disabled="!soft_link_can"
+                    @on-change="link_change" >
+          </i-switch>
+          <span v-if="!soft_link_can" style="color: red">
+            不可先修,该API没有标识符,可编辑该API基本信息,会自动构建标识符
+          </span>
+
+        </div>
+
+        <div>
             名字：
             <Input name="name" placeholder="请输入分组名字" style="width: 300px"
                    v-model="form.name"  v-validate="validation.name"/>
@@ -23,19 +36,20 @@
         </div>
         <br>
 
-        <div>
+        <div v-if="!form.soft_link">
             地址：
             <Input placeholder="请输入API地址" style="width: 300px"
                    v-model="form.url"
+                   :disabled="form.soft_link"
                    v-validate="validation.url"/>
             <span>{{ errors.first('url') }}</span>
             <span> 不包含域名 </span>
         </div>
         <br>
 
-        <div>
+        <div v-if="!form.soft_link">
             请求类型/展示方式：
-            <RadioGroup v-model="form.request_type">
+            <RadioGroup :disabled="form.soft_link" v-model="form.request_type">
                 <Radio label="ws"></Radio>
                 <Radio label="get"></Radio>
                 <Radio label="post"></Radio>
@@ -47,9 +61,9 @@
             </RadioGroup>
         </div>
 
-        <div>
+        <div v-if="!form.soft_link">
             请求类型/展示方式：
-            <RadioGroup v-model="form.data_type">
+            <RadioGroup  v-model="form.data_type">
                 <Radio label="json"></Radio>
                 <Radio label="xml"></Radio>
                 <Radio label="string"></Radio>
@@ -59,6 +73,13 @@
         <div>
             文件夹：
             <span style="font-size: 15px;font-weight: 900;">{{form.dir}}</span>
+        </div>
+
+        <div  v-if="form.soft_link">
+          链接目标：
+          <span style="font-size: 15px;font-weight: 900;">
+            {{ linkdata.dir }}  {{ linkdata.name }}
+          </span>
         </div>
 
 
@@ -74,7 +95,7 @@
   import lodash from 'lodash'
   import files from '../../libs/files'
   import path from 'path'
-
+  import tool from "../../libs/tool";
 
   export default {
     name: 'fuzhiapi',
@@ -82,14 +103,19 @@
       return {
         listo: {},
         lists: {},
+        linkdata:{},
+        soft_link_can:false,
         olddir:'',
+          oldata:{},
         form: {
           request_type: 'post',
           data_type: 'json',
           name: '默认名字',
           e_name: 'api',
           dir: this.dir,
-          url: '/'
+          url: '/',
+          soft_link: true,
+          soft_link_id: ''
         },
         validation: {
           name: {
@@ -99,7 +125,7 @@
           },
           ename: {
             required: true,
-            alpha_num: true,
+            alpha_dash: true,
             min: 3,
             max: 50,
             e_name: true
@@ -128,6 +154,9 @@
     ],
     components: {},
     methods: {
+      link_change(){
+
+      },
       save () {
         // 先进行验证
         this.$validator.validate().then((result) => {
@@ -141,25 +170,45 @@
           }
         })
       },
-      save_file () {        
-        this.listo.add_api(this.form, () => {
-          files.copydirSync(this.olddir, path.join(path.join(this.$store.getters.now_open.toString(),this.form.dir),this.form.e_name) );
+      save_file () {
+        if(this.form.soft_link){
+          this.form.soft_link_id= this.linkdata.uniqid;
+        }
+        console.log("178",this.form);
+
+        this.listo.add_api(this.form, (apiinfo) => {
+          this.refresh_list();
+          if(!this.form.soft_link){
+             files.copydirSync(this.olddir, path.join(path.join(this.$store.getters.now_open.toString(),this.form.dir),this.form.e_name) );
+          }
           this.$Message.success("保存成功");
-          this.$router.push('/open')
+          this.$router.push({name: 'api', params: {apiid: apiinfo.uniqid}})
+
         })
 
       },
       init(){
         let fuzhi = this.$ls.get('fuzhi');
+        this.oldata = this.object_copy(fuzhi);
+        if(typeof this.oldata.uniqid === 'string'){
+          this.soft_link_can = true;
+          if(typeof this.oldata.soft_link ==='boolean' && this.oldata.soft_link){
+            this.linkdata = this.$store.state.api_list[this.oldata.soft_link_id];
+          }else{
+            this.linkdata = this.oldata;
+          }
+        }
         this.olddir =  path.join(path.join(this.$store.getters.now_open.toString(),fuzhi.dir),fuzhi.e_name);
         this.form = fuzhi
         this.form.dir = this.dir;
+        this.form.uniqid = tool.uniqid()
         console.log('old',this.olddir);
         this.init2();
       },
       init2 () {
         this.listo = new lists(this.form.dir)
         this.listo.read((data) => {
+
           this.lists = data
         })
       }

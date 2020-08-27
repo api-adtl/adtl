@@ -9,6 +9,9 @@
 .fl{
     float: left;
 }
+.fr{
+    float: right;
+}
 .request_type{
     color: blueviolet;
     font-weight: bold;
@@ -21,18 +24,21 @@
 .api-li{
     width: auto;
     border: #515a6e 2px solid;
-    font-size: 20px;
+    font-size: 16px;
     margin-bottom: 3px;
 }
 .api-li-ws{
     width: auto;
     border: #5bbe21 2px solid;
-    font-size: 20px;
+    font-size: 16px;
     margin-bottom: 3px;
 }
 .api-li-test{
     width: auto;
     border: #e42b92 2px solid;
-    font-size: 20px;
+    font-size: 16px;
     margin-bottom: 3px;
+}
+.layout{
+    min-width: 1200px;
 }

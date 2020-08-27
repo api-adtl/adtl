@@ -71,6 +71,7 @@
 
   import lists from '@/logic/lists'
   import lodash from 'lodash'
+  import tool from "../../libs/tool";
 
   export default {
     name: 'kong',
@@ -94,7 +95,7 @@
           },
           ename: {
             required: true,
-            alpha_num: true,
+            alpha_dash: true,
             min: 3,
             max: 50,
             e_name: true
@@ -137,10 +138,12 @@
         })
       },
       save_file () {
-
-        this.listo.add_api(this.form, () => {
+        this.form.uniqid = tool.uniqid()
+        this.listo.add_api(this.form, (apiinfo) => {
+          console.log('apiinfo',apiinfo);
+          this.refresh_list();
           this.$Message.success("保存成功");
-          this.$router.push('/open')
+          this.$router.push({name: 'api', params: {apiid: apiinfo.uniqid}})
         })
 
       },

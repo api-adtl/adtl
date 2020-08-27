@@ -24,16 +24,19 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     height: 800,
     useContentSize: true,
-    width: 1300
+    width: 1300,
+    webPreferences: {
+      nodeIntegration: true, // 是否集成 Nodejs,把之前预加载的js去了，发现也可以运行
+    }
   })
 
   mainWindow.loadURL(winURL)
-
+  mainWindow.webContents.openDevTools()
   mainWindow.on('closed', () => {
     mainWindow = null
   })
   if (process.env.NODE_ENV === 'development') {
-    
+
     BrowserWindow.addDevToolsExtension(process.env.VUE_DEVTOOL_DIR);
   }
   //"/mnt/d/www/front_end/vue-devtools-4.1.5/shells/chrome"

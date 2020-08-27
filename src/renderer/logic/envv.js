@@ -3,15 +3,20 @@ import path from 'path'
 import jsonFormat from 'json-format'
 import store from '@/store'
 
-class api {
-  constructor (data) {
-    this.dir = data.dir
+/**
+ *  环境便令的处理
+ */
+class envv {
+  constructor () {
     this.obj_data = {}
-    this.path = path.join(store.getters.now_open.toString(), this.dir, data.e_name)
+    this.path = path.join(store.getters.now_open.toString())
   }
 
-  read (type, default_data, callback) {
-    let pathjson = path.join(this.path, type + '.json')
+  read ( callback) {
+    let  default_data= {
+      'default': []
+    };
+    let pathjson = path.join(this.path,   'env.json')
     fs.access(pathjson, fs.constants.F_OK, (err) => {
       if (err) {
         this.create(pathjson, jsonFormat(default_data), callback)
@@ -22,30 +27,12 @@ class api {
     })
   }
 
-  save (type, data, callback) {
-    let pathjson = path.join(this.path, type + '.json')
+  save ( data, callback) {
+    let pathjson = path.join(this.path, 'env.json')
 
     this.create(pathjson, jsonFormat(data), callback)
   }
-
-  readme (callback) {
-    let pathjson = path.join(this.path, 'readme.md')
-    console.log(pathjson)
-    fs.access(pathjson, fs.constants.F_OK, (err) => {
-      if (err) {
-        this.create(pathjson, '# readme', callback)
-      } else {
-        this.read2(pathjson, callback)
-      }
-    })
-  }
-
-  readme_save (data, callback) {
-    let pathjson = path.join(this.path, 'readme.md')
-
-    this.create(pathjson, data, callback)
-  }
-
+ 
   create (pathjson, data, callback) {
     console.log(arguments)
     fs.writeFile(pathjson, data, {
@@ -57,11 +44,7 @@ class api {
         //不存在的文件夹
         // 创建文件夹
         fs.mkdir(path.dirname(pathjson), {recursive: true},
-        (err)=>{
-          console.log('mkdir_callback61',err);
-          this.create(pathjson, data, callback);
-          
-        })
+          this.create(pathjson, data, callback))
       } else {
         this.read2(pathjson, callback)
       }
@@ -90,4 +73,4 @@ class api {
 
 }
 
-export default api
+export default envv

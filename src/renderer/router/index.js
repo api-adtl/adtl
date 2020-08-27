@@ -24,9 +24,27 @@ const router = new Router({
       component: () => import('@/components/open'),
       children: [
         {
+          path: '/',
+          name:"open_index",
+          component: () => import('@/components/content/index')
+        },
+        {
+          path:'all_api',
+          name:"all_api",
+          component: () => import('@/components/list/all_api')
+        },
+        {
           path: 'add_api',
           name:'add_api',
           component: () => import('@/components/content/add_api'),
+          props: (route) => ({
+            dir: route.query.dir
+          })
+        },
+        {
+          path: 'editenv',
+          name:'editenv',
+          component: () => import('@/components/content/edit_env'),
           props: (route) => ({
             dir: route.query.dir
           })
@@ -55,20 +73,12 @@ const router = new Router({
             dir: route.query.dir
           })
         },
-        {
-          path: '/',
-          component: () => import('@/components/content/index')
-        },
-        {
-          path: '',
-          component: () => import('@/components/content/index')
-        },
+        
 
         {
-          path: 'api',
+          path: 'api/:apiid',
           name: 'api',
-          component: () => import('@/components/content/api'),
-          props: (route) => ({number: route.query.number})
+          component: () => import('@/components/content/api')
         },
         {
           path: 'test',
@@ -77,10 +87,9 @@ const router = new Router({
           props: (route) => ({number: route.query.number})
         },
         {
-          path: 'api_ws',
+          path: 'api_ws/:apiid',
           name: 'api_ws',
-          component: () => import('@/components/content/api_ws'),
-          props: (route) => ({number: route.query.number})
+          component: () => import('@/components/content/api_ws')
         },
         {
           path: 'edit_api',

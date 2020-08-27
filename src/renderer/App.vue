@@ -6,8 +6,7 @@
 
 <script>
   export default {
-    name: 'api_demo'
-    ,
+    name: 'api_demo',
     created () {
 // fails and will log a warning.
       //this.$validator.locale = 'zh_CN'
