@@ -40,6 +40,14 @@
       </RadioGroup>
     </div>
     <br>
+    <div>
+      请求类型/展示方式：
+      <RadioGroup v-model="form.data_type">
+        <Radio label="json"></Radio>
+        <Radio label="xml"></Radio>
+        <Radio label="string"></Radio>
+      </RadioGroup>
+    </div>
     <div v-if="!isPackaged">
       {{form}}
     </div>

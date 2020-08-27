@@ -28,7 +28,10 @@ VXETable.use(VXETablePluginIView)
 // 加载 VXETable 插件 end
 import 'vxe-table/lib/index.css'
 Vue.use(VXETable)
-// 加载  vxe-table 表格组件 end
+// 加载 vxe-table 表格组件 end
+// 加载 json展示
+import TreeView from "vue-json-tree-view"
+Vue.use(TreeView)
 
 const i18n = new VueI18n({
   locale: 'zh_CN',

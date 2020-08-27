@@ -9912,6 +9912,19 @@ vue-i18n@^8.7.0:
   resolved "https://registry.npm.taobao.org/vue-i18n/download/vue-i18n-8.21.0.tgz#526450525fdbb9c877685b5ba6cb9573b73d3940"
   integrity sha1-UmRQUl/buch3aFtbpsuVc7c9OUA=
 
+vue-json-component@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.npm.taobao.org/vue-json-component/download/vue-json-component-0.4.1.tgz#a21d4ddaeec6358c614a96d8f3fac6716666d92b"
+  integrity sha1-oh1N2u7GNYxhSpbY8/rGcWZm2Ss=
+
+vue-json-tree-view@^2.1.6:
+  version "2.1.6"
+  resolved "https://registry.npm.taobao.org/vue-json-tree-view/download/vue-json-tree-view-2.1.6.tgz#a153ac1b18432b8671c65930f545ce134e38cf2d"
+  integrity sha1-oVOsGxhDK4Zxxlkw9UXOE044zy0=
+  dependencies:
+    lodash "^4.17.4"
+    vue "^2.5.16"
+
 vue-json-ui-editor@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npm.taobao.org/vue-json-ui-editor/download/vue-json-ui-editor-1.0.0.tgz#e4d7dcd2ca85a115e0ed86855d9126ff4f12dcd1"
